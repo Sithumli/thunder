@@ -129,12 +129,12 @@ func (e *emailExecutor) executeSend(ctx *core.NodeContext) (*common.ExecutorResp
 				propertyKeyEmailTemplate, tmplProp, tmplProp)
 		}
 		if tmplStr == "" {
-			scenario = template.ScenarioUserInvite
-		} else {
-			scenario = template.ScenarioType(tmplStr)
+			return nil, fmt.Errorf("email template property is empty in node configuration")
 		}
+		scenario = template.ScenarioType(tmplStr)
 	} else {
-		scenario = template.ScenarioUserInvite
+		// No more guessing! If it's missing, fail loudly.
+		return nil, fmt.Errorf("missing required property: %s", propertyKeyEmailTemplate)
 	}
 
 	templateData := e.resolveTemplateData(ctx)
