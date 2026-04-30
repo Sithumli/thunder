@@ -54,14 +54,14 @@ func (s *ThemeDeclarativeSuite) SetupSuite() {
 			Enabled: false,
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err := config.InitializeThunderRuntime(tempDir, testConfig)
 	s.Require().NoError(err, "Failed to initialize ThunderRuntime")
 }
 
 func (s *ThemeDeclarativeSuite) TearDownSuite() {
 	// Clean up ThunderRuntime after all tests
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 func (s *ThemeDeclarativeSuite) TestThemeExporter_GetResourceType() {

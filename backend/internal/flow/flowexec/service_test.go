@@ -482,7 +482,7 @@ func TestExecute_ContextDecryptionFailure(t *testing.T) {
 			},
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("/tmp/test", testConfig)
 
 	mockStore := newFlowStoreInterfaceMock(t)
@@ -515,7 +515,7 @@ func TestExecute_ContextDecryptionSuccess(t *testing.T) {
 			},
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("/tmp/test", testConfig)
 
 	flowFactory, _ := core.Initialize()
@@ -579,7 +579,7 @@ func TestExecute_ExistingFlowWithoutChallengeToken(t *testing.T) {
 			},
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("/tmp/test", testConfig)
 
 	flowFactory, _ := core.Initialize()
@@ -642,7 +642,7 @@ func TestExecute_ExistingFlowWithDifferentChallengeTokens(t *testing.T) {
 			},
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("/tmp/test", testConfig)
 
 	flowFactory, _ := core.Initialize()
@@ -733,7 +733,7 @@ func TestExecute_EngineError_InvalidChallengeToken_PreservesContext(t *testing.T
 			},
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("/tmp/test", testConfig)
 
 	flowFactory, _ := core.Initialize()
@@ -792,7 +792,7 @@ func TestExecute_EngineError_NonChallengeToken_RemovesContext(t *testing.T) {
 			},
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("/tmp/test", testConfig)
 
 	flowFactory, _ := core.Initialize()
@@ -859,7 +859,7 @@ func TestExecute_EngineError_NonChallengeToken_RemovesContext(t *testing.T) {
 
 func TestExecute_EngineError_NewFlow_ContextNeverRemoved(t *testing.T) {
 	testConfig := &config.Config{}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("/tmp/test", testConfig)
 
 	flowFactory, _ := core.Initialize()

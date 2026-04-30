@@ -112,10 +112,10 @@ func (suite *ResourceServiceTestSuite) SetupTest() {
 			Identifier: "test-deployment",
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err := config.InitializeThunderRuntime("/tmp/test", testConfig)
 	require.NoError(suite.T(), err)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	suite.mockStore = newResourceStoreInterfaceMock(suite.T())
 	suite.mockOU = new(oumock.OrganizationUnitServiceInterfaceMock)
@@ -126,7 +126,7 @@ func (suite *ResourceServiceTestSuite) SetupTest() {
 
 func (suite *ResourceServiceTestSuite) TearDownTest() {
 	// Reset config to clear singleton state for next test
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 // Service Initialization Tests
@@ -152,7 +152,7 @@ func (suite *ResourceServiceTestSuite) TestNewResourceService_InvalidDelimiter()
 		},
 	}
 	_ = config.InitializeThunderRuntime("test-invalid-delimiter", testConfig)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	mockStore := newResourceStoreInterfaceMock(suite.T())
 	mockOU := new(oumock.OrganizationUnitServiceInterfaceMock)
@@ -4208,10 +4208,10 @@ func (suite *ResourceServiceTestSuite) TestValidatePermissions() {
 			Identifier: "test-deployment",
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err := config.InitializeThunderRuntime("/tmp/test-validate-permissions", testConfig)
 	suite.Require().NoError(err)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	testCases := []struct {
 		name             string

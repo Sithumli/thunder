@@ -88,7 +88,7 @@ func (s *InitTestSuite) SetupTest() {
 }
 
 func (s *InitTestSuite) TearDownTest() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 func TestInitTestSuite(t *testing.T) {
@@ -284,9 +284,9 @@ func (s *InitTestSuite) TestGetFlowStoreMode_Mutable() {
 			Store: string(serverconst.StoreModeMutable),
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("test", testConfig)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	mode := getFlowStoreMode()
 
@@ -299,9 +299,9 @@ func (s *InitTestSuite) TestGetFlowStoreMode_Declarative() {
 			Store: string(serverconst.StoreModeDeclarative),
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("test", testConfig)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	mode := getFlowStoreMode()
 
@@ -317,9 +317,9 @@ func (s *InitTestSuite) TestGetFlowStoreMode_Composite() {
 			Enabled: true,
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("test", testConfig)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	mode := getFlowStoreMode()
 
@@ -332,9 +332,9 @@ func (s *InitTestSuite) TestGetFlowStoreMode_DefaultMutable() {
 			Store: "",
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("test", testConfig)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	mode := getFlowStoreMode()
 
@@ -350,9 +350,9 @@ func (s *InitTestSuite) TestIsCompositeModeEnabled_Enabled() {
 			Enabled: true,
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("test", testConfig)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	enabled := isCompositeModeEnabled()
 
@@ -365,9 +365,9 @@ func (s *InitTestSuite) TestIsCompositeModeEnabled_Disabled() {
 			Store: string(serverconst.StoreModeMutable),
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("test", testConfig)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	enabled := isCompositeModeEnabled()
 
@@ -383,9 +383,9 @@ func (s *InitTestSuite) TestGetFlowStoreMode_InvalidMode() {
 			Store: "invalid-mode",
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("test", testConfig)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	mode := getFlowStoreMode()
 
@@ -400,9 +400,9 @@ func (s *InitTestSuite) TestGetFlowStoreMode_WithWhitespace() {
 			Store: "  composite  ",
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("test", testConfig)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	mode := getFlowStoreMode()
 
@@ -417,9 +417,9 @@ func (s *InitTestSuite) TestGetFlowStoreMode_MixedCase() {
 			Store: "Declarative",
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("test", testConfig)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	mode := getFlowStoreMode()
 
@@ -437,9 +437,9 @@ func (s *InitTestSuite) TestGetFlowStoreMode_FallbackToGlobalDeclarative() {
 			Enabled: true,
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("test", testConfig)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	mode := getFlowStoreMode()
 
@@ -457,9 +457,9 @@ func (s *InitTestSuite) TestGetFlowStoreMode_FallbackToGlobalMutable() {
 			Enabled: false,
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("test", testConfig)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	mode := getFlowStoreMode()
 
@@ -477,9 +477,9 @@ func (s *InitTestSuite) TestGetFlowStoreMode_ExplicitOverridesGlobal() {
 			Enabled: true, // Global says declarative
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("test", testConfig)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	mode := getFlowStoreMode()
 
@@ -494,9 +494,9 @@ func (s *InitTestSuite) TestIsCompositeModeEnabled_True() {
 			Store: string(serverconst.StoreModeComposite),
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("test", testConfig)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	enabled := isCompositeModeEnabled()
 
@@ -510,9 +510,9 @@ func (s *InitTestSuite) TestIsCompositeModeEnabled_FalseForMutable() {
 			Store: string(serverconst.StoreModeMutable),
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("test", testConfig)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	enabled := isCompositeModeEnabled()
 
@@ -526,9 +526,9 @@ func (s *InitTestSuite) TestIsCompositeModeEnabled_FalseForDeclarative() {
 			Store: string(serverconst.StoreModeDeclarative),
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("test", testConfig)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	enabled := isCompositeModeEnabled()
 
@@ -542,9 +542,9 @@ func (s *InitTestSuite) TestGetFlowStoreMode_Uppercase() {
 			Store: "COMPOSITE",
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("test", testConfig)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	mode := getFlowStoreMode()
 
@@ -559,9 +559,9 @@ func (s *InitTestSuite) TestGetFlowStoreMode_SpecialCharacters() {
 			Store: "mutable@#$",
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("test", testConfig)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	mode := getFlowStoreMode()
 
@@ -576,9 +576,9 @@ func (s *InitTestSuite) TestGetFlowStoreMode_NilFlowConfig() {
 			Enabled: false,
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("test", testConfig)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	mode := getFlowStoreMode()
 
@@ -636,9 +636,9 @@ func (s *InitTestSuite) TestGetFlowStoreMode_PriorityOrder() {
 					Enabled: tc.declarativeEnabled,
 				},
 			}
-			config.ResetThunderRuntime()
+			config.ResetServerRuntime()
 			_ = config.InitializeThunderRuntime("test", testConfig)
-			defer config.ResetThunderRuntime()
+			defer config.ResetServerRuntime()
 
 			mode := getFlowStoreMode()
 
@@ -662,9 +662,9 @@ func (s *InitTestSuite) TestGetFlowStoreMode_AllValidModes() {
 					Store: string(validMode),
 				},
 			}
-			config.ResetThunderRuntime()
+			config.ResetServerRuntime()
 			_ = config.InitializeThunderRuntime("test", testConfig)
-			defer config.ResetThunderRuntime()
+			defer config.ResetServerRuntime()
 
 			mode := getFlowStoreMode()
 
@@ -684,9 +684,9 @@ func (s *InitTestSuite) TestGetFlowStoreMode_EmptyStringVsNil() {
 				Enabled: true,
 			},
 		}
-		config.ResetThunderRuntime()
+		config.ResetServerRuntime()
 		_ = config.InitializeThunderRuntime("test", testConfig)
-		defer config.ResetThunderRuntime()
+		defer config.ResetServerRuntime()
 
 		mode := getFlowStoreMode()
 
@@ -717,9 +717,9 @@ func (s *InitTestSuite) TestGetFlowStoreMode_NormalizationCases() {
 					Store: tc.input,
 				},
 			}
-			config.ResetThunderRuntime()
+			config.ResetServerRuntime()
 			_ = config.InitializeThunderRuntime("test", testConfig)
-			defer config.ResetThunderRuntime()
+			defer config.ResetServerRuntime()
 
 			mode := getFlowStoreMode()
 
@@ -748,9 +748,9 @@ func (s *InitTestSuite) TestInitializeStore_MutableMode() {
 			Identifier: "test-deployment",
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("test", testConfig)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	cleanup := setupMockDBProvider()
 	defer cleanup()
@@ -788,9 +788,9 @@ func (s *InitTestSuite) TestInitializeStore_DeclarativeMode() {
 			Enabled: true,
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("test", testConfig)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	store, compositeStore, _, err := initializeStore()
 
@@ -827,9 +827,9 @@ func (s *InitTestSuite) TestInitializeStore_CompositeMode() {
 			Enabled: true,
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("test", testConfig)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	cleanup := setupMockDBProvider()
 	defer cleanup()
@@ -871,9 +871,9 @@ func (s *InitTestSuite) TestInitializeStore_DeclarativeMode_ResourceLoadingError
 			Enabled: true,
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("test", testConfig)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	store, compositeStore, _, err := initializeStore()
 
@@ -912,9 +912,9 @@ func (s *InitTestSuite) TestInitializeStore_CompositeMode_ResourceLoadingError()
 			Enabled: true,
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("test", testConfig)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	cleanup := setupMockDBProvider()
 	defer cleanup()
@@ -956,9 +956,9 @@ func (s *InitTestSuite) TestInitializeStore_DefaultMode() {
 			Enabled: false,
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("test", testConfig)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	cleanup := setupMockDBProvider()
 	defer cleanup()
@@ -996,9 +996,9 @@ func (s *InitTestSuite) TestInitializeStore_ModeNormalization() {
 			Enabled: true,
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("test", testConfig)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	cleanup := setupMockDBProvider()
 	defer cleanup()

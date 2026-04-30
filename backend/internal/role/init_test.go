@@ -723,7 +723,7 @@ func (suite *InitTestSuite) TestInitialize_Success() {
 
 // TestInitialize_StoreInitError tests Initialize when store initialization fails
 func (suite *InitTestSuite) TestInitialize_StoreInitError() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	testDir := suite.T().TempDir()
 
 	// Create invalid roles yaml
@@ -743,7 +743,7 @@ func (suite *InitTestSuite) TestInitialize_StoreInitError() {
 	}
 	_ = config.InitializeThunderRuntime(testDir, testConfig)
 	defer func() {
-		config.ResetThunderRuntime()
+		config.ResetServerRuntime()
 		suite.SetupSuite()
 	}()
 

@@ -46,7 +46,7 @@ func (suite *CacheManagerTestSuite) SetupSuite() {
 			Disabled: true, // Disable cache globally for tests
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err := config.InitializeThunderRuntime("/test/thunder/home", mockConfig)
 	if err != nil {
 		suite.T().Fatal("Failed to initialize ThunderRuntime:", err)
@@ -54,7 +54,7 @@ func (suite *CacheManagerTestSuite) SetupSuite() {
 }
 
 func (suite *CacheManagerTestSuite) TearDownSuite() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 func (suite *CacheManagerTestSuite) SetupTest() {
@@ -96,7 +96,7 @@ func (suite *CacheManagerTestSuite) TestCacheManagerInit() {
 			CleanupInterval: 60,
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err := config.InitializeThunderRuntime("/test/thunder/home", enabledConfig)
 	assert.NoError(t, err)
 
@@ -257,7 +257,7 @@ func (suite *CacheManagerTestSuite) TestConcurrentAccess() {
 			Disabled: false,
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err := config.InitializeThunderRuntime("/test/thunder/home", enabledConfig)
 	assert.NoError(t, err)
 
@@ -330,7 +330,7 @@ func (suite *CacheManagerTestSuite) TestNewCache() {
 	originalConfig := config.GetServerRuntime().Config
 	defer func() {
 		// Reset config to original
-		config.ResetThunderRuntime()
+		config.ResetServerRuntime()
 		err := config.InitializeThunderRuntime("/test/thunder/home", &originalConfig)
 		assert.NoError(t, err)
 	}()
@@ -341,7 +341,7 @@ func (suite *CacheManagerTestSuite) TestNewCache() {
 			Disabled: true,
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err := config.InitializeThunderRuntime("/test/thunder/home", &disabledConfig)
 	assert.NoError(t, err)
 
@@ -361,7 +361,7 @@ func (suite *CacheManagerTestSuite) TestNewCache() {
 			},
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err = config.InitializeThunderRuntime("/test/thunder/home", &enabledConfig)
 	assert.NoError(t, err)
 
@@ -383,7 +383,7 @@ func (suite *CacheManagerTestSuite) TestNewCache() {
 			},
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err = config.InitializeThunderRuntime("/test/thunder/home", &inMemConfig)
 	assert.NoError(t, err)
 
@@ -398,7 +398,7 @@ func (suite *CacheManagerTestSuite) TestNewCache() {
 			Type:     "unknown-type",
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err = config.InitializeThunderRuntime("/test/thunder/home", &unknownTypeConfig)
 	assert.NoError(t, err)
 
@@ -421,7 +421,7 @@ func (suite *CacheManagerTestSuite) TestBuildRedisKeyPrefix() {
 	// Preserve runtime config because this test mutates the global runtime singleton.
 	originalConfig := config.GetServerRuntime().Config
 	defer func() {
-		config.ResetThunderRuntime()
+		config.ResetServerRuntime()
 		err := config.InitializeThunderRuntime("/test/thunder/home", &originalConfig)
 		assert.NoError(t, err)
 	}()
@@ -462,7 +462,7 @@ func (suite *CacheManagerTestSuite) TestBuildRedisKeyPrefix() {
 		t.Run(tc.name, func(t *testing.T) {
 			cfg := originalConfig
 			cfg.Server.Identifier = tc.deploymentID
-			config.ResetThunderRuntime()
+			config.ResetServerRuntime()
 			err := config.InitializeThunderRuntime("/test/thunder/home", &cfg)
 			assert.NoError(t, err)
 

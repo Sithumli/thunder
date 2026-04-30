@@ -69,7 +69,7 @@ func (suite *InviteExecutorTestSuite) SetupTest() {
 }
 
 func (suite *InviteExecutorTestSuite) TearDownTest() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 func (suite *InviteExecutorTestSuite) TestExecute_GenerateMode() {

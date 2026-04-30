@@ -51,7 +51,7 @@ func (suite *RedisCacheTestSuite) SetupSuite() {
 			},
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err := config.InitializeThunderRuntime("/test/thunder/home", mockConfig)
 	if err != nil {
 		suite.T().Fatal("Failed to initialize ThunderRuntime:", err)
@@ -59,7 +59,7 @@ func (suite *RedisCacheTestSuite) SetupSuite() {
 }
 
 func (suite *RedisCacheTestSuite) TearDownSuite() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 func (suite *RedisCacheTestSuite) TestNewRedisCacheDisabled() {

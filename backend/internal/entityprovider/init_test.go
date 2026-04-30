@@ -51,7 +51,7 @@ func (suite *InitEntityProviderTestSuite) SetupTest() {
 }
 
 func (suite *InitEntityProviderTestSuite) TearDownTest() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 func TestInitEntityProviderTestSuite(t *testing.T) {

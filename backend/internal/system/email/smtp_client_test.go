@@ -727,8 +727,8 @@ func (suite *SMTPClientTestSuite) TestSendViaSMTP_DataTerminationError() {
 
 func (suite *SMTPClientTestSuite) TestNewSMTPClientFromConfig_Defaults() {
 	// Reset and set up config with nil boolean pointers (should default to true).
-	config.ResetThunderRuntime()
-	defer config.ResetThunderRuntime()
+	config.ResetServerRuntime()
+	defer config.ResetServerRuntime()
 
 	testConfig := &config.Config{
 		Email: config.EmailConfig{
@@ -764,8 +764,8 @@ func (suite *SMTPClientTestSuite) TestNewSMTPClientFromConfig_Defaults() {
 }
 
 func (suite *SMTPClientTestSuite) TestNewSMTPClientFromConfig_ExplicitFalse() {
-	config.ResetThunderRuntime()
-	defer config.ResetThunderRuntime()
+	config.ResetServerRuntime()
+	defer config.ResetServerRuntime()
 
 	falseVal := false
 	testConfig := &config.Config{
@@ -795,8 +795,8 @@ func (suite *SMTPClientTestSuite) TestNewSMTPClientFromConfig_ExplicitFalse() {
 }
 
 func (suite *SMTPClientTestSuite) TestNewSMTPClientFromConfig_ExplicitTrue() {
-	config.ResetThunderRuntime()
-	defer config.ResetThunderRuntime()
+	config.ResetServerRuntime()
+	defer config.ResetServerRuntime()
 
 	trueVal := true
 	testConfig := &config.Config{
@@ -1260,8 +1260,8 @@ func (suite *SMTPClientTestSuite) runMockSMTPServerRejectQuit(listener net.Liste
 
 func (suite *SMTPClientTestSuite) TestNewSMTPClientFromConfig_RuntimeNotInitialized() {
 	// Reset the runtime to simulate an uninitialized state.
-	config.ResetThunderRuntime()
-	defer config.ResetThunderRuntime()
+	config.ResetServerRuntime()
+	defer config.ResetServerRuntime()
 
 	// Should panic if runtime is not initialized.
 	suite.PanicsWithValue("ThunderRuntime is not initialized", func() {
@@ -1286,7 +1286,7 @@ func (suite *SMTPClientTestSuite) TestSendLiveEmail() {
 	suite.T().Skip("Skipping live email test. To run, comment this line and use: " +
 		"go test ./internal/system/email -v -run TestSMTPClientTestSuite/TestSendLiveEmail")
 
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 
 	emailConfig, err := config.LoadConfig(
 		"../../../cmd/server/repository/conf/deployment.yaml",
@@ -1297,7 +1297,7 @@ func (suite *SMTPClientTestSuite) TestSendLiveEmail() {
 
 	err = config.InitializeThunderRuntime("", emailConfig)
 	suite.Require().NoError(err, "Failed to initialize thunder runtime")
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	client, err := NewSMTPClientFromConfig()
 	suite.Require().NoError(err)

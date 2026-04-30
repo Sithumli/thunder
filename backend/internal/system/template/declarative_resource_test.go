@@ -138,7 +138,7 @@ func (suite *TemplateDeclarativeResourceTestSuite) TestValidateTemplateDTO_SMSWi
 func (suite *TemplateDeclarativeResourceTestSuite) TestLoadDeclarativeResources_WithSMSTemplateFile() {
 	tempDir := suite.T().TempDir()
 	testConfig := &config.Config{}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err := config.InitializeThunderRuntime(tempDir, testConfig)
 	suite.NoError(err)
 
@@ -195,7 +195,7 @@ func (suite *TemplateDeclarativeResourceTestSuite) TestValidateTemplateDTO_Unsup
 func (suite *TemplateDeclarativeResourceTestSuite) TestLoadDeclarativeResources_Integration() {
 	tempDir := suite.T().TempDir()
 	testConfig := &config.Config{}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err := config.InitializeThunderRuntime(tempDir, testConfig)
 	suite.NoError(err)
 
@@ -211,7 +211,7 @@ func (suite *TemplateDeclarativeResourceTestSuite) TestLoadDeclarativeResources_
 func (suite *TemplateDeclarativeResourceTestSuite) TestLoadDeclarativeResources_WithTemplateFiles() {
 	tempDir := suite.T().TempDir()
 	testConfig := &config.Config{}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err := config.InitializeThunderRuntime(tempDir, testConfig)
 	suite.NoError(err)
 
@@ -247,7 +247,7 @@ body: "Hello {{ctx(inviteLink)}}"
 func (suite *TemplateDeclarativeResourceTestSuite) TestLoadDeclarativeResources_WithEmptyDirectoryPath() {
 	tempDir := suite.T().TempDir()
 	testConfig := &config.Config{}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err := config.InitializeThunderRuntime(tempDir, testConfig)
 	suite.NoError(err)
 

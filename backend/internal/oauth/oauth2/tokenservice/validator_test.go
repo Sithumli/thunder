@@ -54,7 +54,7 @@ func TestTokenValidatorTestSuite(t *testing.T) {
 }
 
 func (suite *TokenValidatorTestSuite) SetupTest() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 
 	testConfig := &config.Config{
 		JWT: config.JWTConfig{
@@ -1629,7 +1629,7 @@ func (suite *TokenValidatorTestSuite) TestValidateSubjectToken_Leeway_Expiration
 
 	for _, tc := range testCases {
 		suite.Run(tc.name, func() {
-			config.ResetThunderRuntime()
+			config.ResetServerRuntime()
 			testConfig := &config.Config{
 				JWT: config.JWTConfig{
 					Issuer:         "https://thunder.io",
@@ -1662,7 +1662,7 @@ func (suite *TokenValidatorTestSuite) TestValidateSubjectToken_Leeway_Expiration
 
 func (suite *TokenValidatorTestSuite) TestValidateSubjectToken_Leeway_ExpJustInsideBoundary_ShouldPass() {
 	// Reset and test with 30 second leeway
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	testConfig := &config.Config{
 		JWT: config.JWTConfig{
 			Issuer:         "https://thunder.io",

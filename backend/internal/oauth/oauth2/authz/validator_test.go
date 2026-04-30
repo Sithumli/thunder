@@ -41,7 +41,7 @@ func TestAuthorizationValidatorTestSuite(t *testing.T) {
 }
 
 func (suite *AuthorizationValidatorTestSuite) SetupTest() {
-	sysconfig.ResetThunderRuntime()
+	sysconfig.ResetServerRuntime()
 	err := sysconfig.InitializeThunderRuntime("/tmp/test", &sysconfig.Config{
 		OAuth: sysconfig.OAuthConfig{AllowWildcardRedirectURI: true},
 	})
@@ -59,7 +59,7 @@ func (suite *AuthorizationValidatorTestSuite) SetupTest() {
 }
 
 func (suite *AuthorizationValidatorTestSuite) TearDownTest() {
-	sysconfig.ResetThunderRuntime()
+	sysconfig.ResetServerRuntime()
 }
 
 func (suite *AuthorizationValidatorTestSuite) TestnewAuthorizationValidator() {

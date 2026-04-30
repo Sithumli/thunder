@@ -695,7 +695,7 @@ func BenchmarkOTelSubscriber_convertDataToAttributes(b *testing.B) {
 
 func setupTestConfig(t *testing.T) {
 	// Reset any existing runtime first
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 
 	// Create a test config
 	testConfig := &config.Config{
@@ -731,5 +731,5 @@ func setupTestConfig(t *testing.T) {
 
 func resetTestConfig() {
 	// Reset to default disabled state
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }

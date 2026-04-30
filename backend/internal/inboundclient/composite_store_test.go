@@ -41,7 +41,7 @@ func TestCompositeStoreTestSuite(t *testing.T) {
 }
 
 func (suite *CompositeStoreTestSuite) SetupTest() {
-	sysconfig.ResetThunderRuntime()
+	sysconfig.ResetServerRuntime()
 	suite.Require().NoError(sysconfig.InitializeThunderRuntime("/tmp/test", &sysconfig.Config{}))
 	suite.fileStore = newFileBasedStoreForTest()
 	suite.dbMock = newInboundClientStoreInterfaceMock(suite.T())

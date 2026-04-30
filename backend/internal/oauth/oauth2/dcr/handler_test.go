@@ -57,7 +57,7 @@ func (s *DCRHandlerTestSuite) SetupTest() {
 }
 
 func (s *DCRHandlerTestSuite) TearDownTest() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 // TestHandleDCRRegistration_InvalidRequestFormat tests handling of invalid JSON in request body
@@ -299,7 +299,7 @@ func TestWriteServiceErrorResponse_DirectCall(t *testing.T) {
 // Uses the default config where Insecure defaults to false (secure by default).
 func TestHandleDCRRegistration_ClosedDCR_NoToken(t *testing.T) {
 	_ = config.InitializeThunderRuntime("test", &config.Config{})
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	mockService := NewDCRServiceInterfaceMock(t)
 	handler := newDCRHandler(mockService)
@@ -322,7 +322,7 @@ func TestHandleDCRRegistration_ClosedDCR_NoToken(t *testing.T) {
 // Uses the default config where Insecure defaults to false (secure by default).
 func TestHandleDCRRegistration_ClosedDCR_InsufficientPermissions(t *testing.T) {
 	_ = config.InitializeThunderRuntime("test", &config.Config{})
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	mockService := NewDCRServiceInterfaceMock(t)
 	handler := newDCRHandler(mockService)
@@ -349,7 +349,7 @@ func TestHandleDCRRegistration_ClosedDCR_InsufficientPermissions(t *testing.T) {
 // Uses the default config where Insecure defaults to false (secure by default).
 func TestHandleDCRRegistration_ClosedDCR_WithSystemPermission(t *testing.T) {
 	_ = config.InitializeThunderRuntime("test", &config.Config{})
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	mockService := NewDCRServiceInterfaceMock(t)
 	handler := newDCRHandler(mockService)

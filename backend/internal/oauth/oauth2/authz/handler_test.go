@@ -50,7 +50,7 @@ func TestAuthorizeHandlerTestSuite(t *testing.T) {
 }
 
 func (suite *AuthorizeHandlerTestSuite) BeforeTest(suiteName, testName string) {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 
 	testConfig := &config.Config{
 		GateClient: config.GateClientConfig{
@@ -88,7 +88,7 @@ func (suite *AuthorizeHandlerTestSuite) SetupTest() {
 }
 
 func (suite *AuthorizeHandlerTestSuite) TearDownTest() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 func (suite *AuthorizeHandlerTestSuite) TestnewAuthorizeHandler() {

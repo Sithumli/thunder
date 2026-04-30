@@ -473,10 +473,10 @@ func (s *UserSchemaServiceConsentTestSuite) TestCreateUserSchema_ConsentSyncFail
 	testConfig := &config.Config{
 		DeclarativeResources: config.DeclarativeResources{Enabled: false},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err := config.InitializeThunderRuntime("/tmp/test", testConfig)
 	require.NoError(s.T(), err)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	storeMock := newUserSchemaStoreInterfaceMock(s.T())
 	ouMock := oumock.NewOrganizationUnitServiceInterfaceMock(s.T())
@@ -520,10 +520,10 @@ func (s *UserSchemaServiceConsentTestSuite) TestUpdateUserSchema_ConsentSyncFail
 	testConfig := &config.Config{
 		DeclarativeResources: config.DeclarativeResources{Enabled: false},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err := config.InitializeThunderRuntime("/tmp/test", testConfig)
 	require.NoError(s.T(), err)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	storeMock := newUserSchemaStoreInterfaceMock(s.T())
 	ouMock := oumock.NewOrganizationUnitServiceInterfaceMock(s.T())
@@ -575,10 +575,10 @@ func (s *UserSchemaServiceConsentTestSuite) TestDeleteUserSchema_ConsentEnabled_
 	testConfig := &config.Config{
 		DeclarativeResources: config.DeclarativeResources{Enabled: false},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err := config.InitializeThunderRuntime("/tmp/test", testConfig)
 	require.NoError(s.T(), err)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	storeMock := newUserSchemaStoreInterfaceMock(s.T())
 	cMock := consentmock.NewConsentServiceInterfaceMock(s.T())

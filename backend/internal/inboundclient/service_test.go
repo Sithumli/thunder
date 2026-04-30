@@ -55,7 +55,7 @@ func TestInboundClientServiceTestSuite(t *testing.T) {
 }
 
 func (suite *InboundClientServiceTestSuite) SetupTest() {
-	sysconfig.ResetThunderRuntime()
+	sysconfig.ResetServerRuntime()
 	suite.Require().NoError(sysconfig.InitializeThunderRuntime("/tmp/test", &sysconfig.Config{}))
 }
 

@@ -59,7 +59,7 @@ func (s *ServiceTestSuite) SetupTest() {
 }
 
 func (s *ServiceTestSuite) TearDownTest() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 func (s *ServiceTestSuite) newTestApp() *inboundmodel.OAuthClient {

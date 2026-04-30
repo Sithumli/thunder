@@ -92,7 +92,7 @@ func (suite *DiscoveryTestSuite) SetupTest() {
 }
 
 func (suite *DiscoveryTestSuite) TearDownTest() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 func (suite *DiscoveryTestSuite) TestOAuth2AuthorizationServerMetadata() {
@@ -303,7 +303,7 @@ func (suite *DiscoveryTestSuite) TestInitialize() {
 }
 
 func (suite *DiscoveryTestSuite) TestGetBaseURL_WithPublicHostname() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	testConfig := &config.Config{
 		Server: config.ServerConfig{
 			PublicURL: "https://public.thunder.io",
@@ -319,11 +319,11 @@ func (suite *DiscoveryTestSuite) TestGetBaseURL_WithPublicHostname() {
 	service := newDiscoveryService(suite.pkiService)
 	metadata := service.GetOAuth2AuthorizationServerMetadata(context.Background())
 	assert.Contains(suite.T(), metadata.AuthorizationEndpoint, "public.thunder.io")
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 func (suite *DiscoveryTestSuite) TestGetBaseURL_WithHTTPOnly() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	testConfig := &config.Config{
 		Server: config.ServerConfig{
 			Hostname: "localhost",
@@ -339,7 +339,7 @@ func (suite *DiscoveryTestSuite) TestGetBaseURL_WithHTTPOnly() {
 	service := newDiscoveryService(suite.pkiService)
 	metadata := service.GetOAuth2AuthorizationServerMetadata(context.Background())
 	assert.Contains(suite.T(), metadata.AuthorizationEndpoint, "http://")
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 func (suite *DiscoveryTestSuite) TestOIDCDiscovery_MultipleKeyAlgorithms() {

@@ -51,14 +51,14 @@ func (suite *LayoutFileBasedStoreTestSuite) SetupSuite() {
 			Enabled: false,
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err := config.InitializeThunderRuntime(tempDir, testConfig)
 	suite.Require().NoError(err, "Failed to initialize ThunderRuntime")
 }
 
 func (suite *LayoutFileBasedStoreTestSuite) TearDownSuite() {
 	// Clean up ThunderRuntime after all tests
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 func (suite *LayoutFileBasedStoreTestSuite) SetupTest() {

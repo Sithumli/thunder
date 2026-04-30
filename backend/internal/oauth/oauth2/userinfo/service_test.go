@@ -84,7 +84,7 @@ func (s *UserInfoServiceTestSuite) SetupTest() {
 		s.mockAttributeCacheService, s.mockTransactioner)
 
 	// Initialize server runtime for tests
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime(
 		"test-home",
 		&config.Config{

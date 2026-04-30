@@ -48,7 +48,7 @@ func TestJWKSServiceSuite(t *testing.T) {
 
 func (suite *JWKSServiceTestSuite) SetupTest() {
 	// Reset runtime
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	testConfig := &config.Config{}
 	_ = config.InitializeThunderRuntime("", testConfig)
 

@@ -52,7 +52,7 @@ func (suite *EncryptionTestSuite) TestEncryptionService() {
 			},
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("/test/thunder/home", testConfig)
 
 	service := GetEncryptionService()
@@ -83,7 +83,7 @@ func (suite *EncryptionTestSuite) TestGetEncryptionService_Singleton() {
 			},
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("/test/thunder/home", testConfig)
 
 	service1 := GetEncryptionService()
@@ -100,7 +100,7 @@ func (suite *EncryptionTestSuite) TestGetEncryptionService_PanicOnInvalidConfig(
 			},
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("/test/thunder/home", testConfig)
 
 	assert.Panics(suite.T(), func() {
@@ -116,7 +116,7 @@ func (suite *EncryptionTestSuite) TestGetEncryptionService_PanicOnEmptyConfig() 
 			},
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("/test/thunder/home", testConfig)
 
 	assert.Panics(suite.T(), func() {

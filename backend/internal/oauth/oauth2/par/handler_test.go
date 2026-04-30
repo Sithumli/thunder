@@ -50,7 +50,7 @@ func (s *HandlerTestSuite) SetupTest() {
 }
 
 func (s *HandlerTestSuite) TearDownTest() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 func (s *HandlerTestSuite) TestHandlePAR_Success() {

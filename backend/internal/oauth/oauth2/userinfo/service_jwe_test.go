@@ -61,14 +61,14 @@ func TestJWEUserInfoSuite(t *testing.T) {
 }
 
 func (s *JWEUserInfoTestSuite) SetupTest() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("test-home", &config.Config{
 		JWT: config.JWTConfig{Issuer: "test-issuer", ValidityPeriod: 600},
 	})
 }
 
 func (s *JWEUserInfoTestSuite) TearDownTest() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 // TestGenerateJWEUserInfo_Success verifies a JWE response from an inline JWKS.

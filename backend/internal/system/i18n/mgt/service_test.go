@@ -47,7 +47,7 @@ func TestI18nMgtServiceTestSuite(t *testing.T) {
 }
 
 func (suite *I18nMgtServiceTestSuite) SetupTest() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	testConfig := &config.Config{
 		DeclarativeResources: config.DeclarativeResources{
 			Enabled: false,
@@ -59,7 +59,7 @@ func (suite *I18nMgtServiceTestSuite) SetupTest() {
 }
 
 func (suite *I18nMgtServiceTestSuite) TearDownTest() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 // ListLanguages Tests

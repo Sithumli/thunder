@@ -275,14 +275,14 @@ func (s *DeclarativeResourceTestSuite) TestLoadDeclarativeResources_Success() {
 	}()
 
 	// Setup Runtime with temp dir
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	testConfig := &config.Config{
 		DeclarativeResources: config.DeclarativeResources{
 			Enabled: true,
 		},
 	}
 	_ = config.InitializeThunderRuntime(tempDir, testConfig)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	// Create translations directory
 	translationsDir := filepath.Join(tempDir, "repository", "resources", "translations")

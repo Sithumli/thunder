@@ -145,7 +145,7 @@ func (suite *PKIServiceTestSuite) TearDownSuite() {
 }
 
 func (suite *PKIServiceTestSuite) SetupTest() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 func (suite *PKIServiceTestSuite) TestGetX509Certificate_Success() {

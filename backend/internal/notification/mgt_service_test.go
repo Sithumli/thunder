@@ -50,7 +50,7 @@ func TestNotificationSenderMgtServiceTestSuite(t *testing.T) {
 }
 
 func (suite *NotificationSenderMgtServiceTestSuite) SetupSuite() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	testConfig := &config.Config{
 		Crypto: config.CryptoConfig{
 			Encryption: config.EncryptionConfig{
@@ -65,7 +65,7 @@ func (suite *NotificationSenderMgtServiceTestSuite) SetupSuite() {
 }
 
 func (suite *NotificationSenderMgtServiceTestSuite) TearDownSuite() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 func (suite *NotificationSenderMgtServiceTestSuite) SetupTest() {

@@ -56,7 +56,7 @@ func (suite *PKIInitTestSuite) TearDownSuite() {
 }
 
 func (suite *PKIInitTestSuite) SetupTest() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 func (suite *PKIInitTestSuite) TestInitialize_Success() {

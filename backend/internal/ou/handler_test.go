@@ -76,11 +76,11 @@ func (suite *OrganizationUnitHandlerTestSuite) SetupTest() {
 }
 
 func (suite *OrganizationUnitHandlerTestSuite) TearDownTest() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 func (suite *OrganizationUnitHandlerTestSuite) ensureRuntime() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err := config.InitializeThunderRuntime("", &config.Config{})
 	suite.Require().NoError(err)
 }

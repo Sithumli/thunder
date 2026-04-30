@@ -95,7 +95,7 @@ func (suite *HashServiceTestSuite) SetupSuite() {
 }
 
 func (suite *HashServiceTestSuite) TearDownSuite() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 func (suite *HashServiceTestSuite) TestGenerateSha256() {
@@ -110,7 +110,7 @@ func (suite *HashServiceTestSuite) TestGenerateSha256() {
 			},
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("/test/thunder/home", testConfig)
 
 	hashService, err := newHashService()
@@ -137,7 +137,7 @@ func (suite *HashServiceTestSuite) TestSHA256HashWithCustomSaltSize() {
 			},
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("/test/thunder/home", testConfig)
 
 	hashService, err := newHashService()
@@ -188,7 +188,7 @@ func (suite *HashServiceTestSuite) TestVerifySha256() {
 			},
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("/test/thunder/home", testConfig)
 
 	hashService, err := newHashService()
@@ -265,7 +265,7 @@ func (suite *HashServiceTestSuite) TestVerifySha256_Failure() {
 			},
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("/test/thunder/home", testConfig)
 
 	hashService, err := newHashService()
@@ -296,7 +296,7 @@ func (suite *HashServiceTestSuite) TestSha256HashAndVerify() {
 			},
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("/test/thunder/home", testConfig)
 
 	hashService, err := newHashService()
@@ -324,7 +324,7 @@ func (suite *HashServiceTestSuite) TestGeneratePBKDF2() {
 			},
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("/test/thunder/home", testConfig)
 
 	hashService, err := newHashService()
@@ -354,7 +354,7 @@ func (suite *HashServiceTestSuite) TestPBKDF2HashWithCustomParameters() {
 			},
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("/test/thunder/home", testConfig)
 
 	hashService, err := newHashService()
@@ -400,7 +400,7 @@ func (suite *HashServiceTestSuite) TestGeneratePBKDF2_Failure() {
 			},
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("/test/thunder/home", testConfig)
 
 	_, err := newHashService()
@@ -443,7 +443,7 @@ func (suite *HashServiceTestSuite) TestVerifyBKDF2() {
 			},
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("/test/thunder/home", testConfig)
 
 	hashService, err := newHashService()
@@ -559,7 +559,7 @@ func (suite *HashServiceTestSuite) TestVerifyPBKDF2_Failure() {
 			},
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("/test/thunder/home", testConfig)
 
 	hashService, err := newHashService()
@@ -592,7 +592,7 @@ func (suite *HashServiceTestSuite) TestPBKDF2HashWithAndVerify() {
 			},
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("/test/thunder/home", testConfig)
 
 	hashService, err := newHashService()
@@ -728,7 +728,7 @@ func (suite *HashServiceTestSuite) TestGenerateArgon2id() {
 			},
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("/test/thunder/home", testConfig)
 
 	hashService, err := newHashService()
@@ -755,7 +755,7 @@ func (suite *HashServiceTestSuite) TestVerifyArgon2id() {
 			},
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("/test/thunder/home", testConfig)
 
 	hashService, err := newHashService()
@@ -800,7 +800,7 @@ func (suite *HashServiceTestSuite) TestVerifyArgon2id_Failure() {
 			},
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("/test/thunder/home", testConfig)
 
 	hashService, err := newHashService()
@@ -927,7 +927,7 @@ func (suite *HashServiceTestSuite) TestGenerateArgon2id_Failure() {
 			},
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("/test/thunder/home", testConfig)
 
 	_, err := newHashService()
@@ -943,7 +943,7 @@ func (suite *HashServiceTestSuite) TestUnsupportedAlgorithm_Failure() {
 			},
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("/test/thunder/home", testConfig)
 
 	_, err := newHashService()
@@ -961,7 +961,7 @@ func (suite *HashServiceTestSuite) TestUnsupportedAlgorithmVerify_Failure() {
 			},
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("/test/thunder/home", testConfig)
 
 	hashService, err := newHashService()
@@ -1007,7 +1007,7 @@ func (suite *HashServiceTestSuite) TestInitialize() {
 			},
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("/test/thunder/home", testConfig)
 
 	hashService, err := Initialize()
@@ -1023,7 +1023,7 @@ func (suite *HashServiceTestSuite) TestInitialize_Failure() {
 			},
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("/test/thunder/home", testConfig)
 
 	_, err := Initialize()
@@ -1043,7 +1043,7 @@ func (suite *HashServiceTestSuite) TestVerifyPBKDF2_InvalidKeySize() {
 			},
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("/test/thunder/home", testConfig)
 
 	hashService, err := newHashService()
@@ -1083,7 +1083,7 @@ func (suite *HashServiceTestSuite) TestVerifyArgon2id_InvalidMemory() {
 			},
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("/test/thunder/home", testConfig)
 
 	hashService, err := newHashService()
@@ -1294,7 +1294,7 @@ func (suite *HashServiceTestSuite) TestNewHashService_InvalidConfigs() {
 
 	for _, tc := range testCases {
 		suite.T().Run(tc.name, func(t *testing.T) {
-			config.ResetThunderRuntime()
+			config.ResetServerRuntime()
 			_ = config.InitializeThunderRuntime("/test/thunder/home", tc.config)
 
 			_, err := newHashService()

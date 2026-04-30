@@ -1228,8 +1228,8 @@ func TestOrderDocumentsByDependencies(t *testing.T) {
 func TestImportResources_FileTargetReturnsError(t *testing.T) {
 	tempHome := t.TempDir()
 
-	config.ResetThunderRuntime()
-	t.Cleanup(config.ResetThunderRuntime)
+	config.ResetServerRuntime()
+	t.Cleanup(config.ResetServerRuntime)
 	require.NoError(t, config.InitializeThunderRuntime(tempHome, &config.Config{
 		DeclarativeResources: config.DeclarativeResources{Enabled: true},
 	}))
@@ -1250,8 +1250,8 @@ func TestImportResources_FileTargetReturnsError(t *testing.T) {
 func TestDeleteResource_RemovesDeclarativeFile(t *testing.T) {
 	tempHome := t.TempDir()
 
-	config.ResetThunderRuntime()
-	t.Cleanup(config.ResetThunderRuntime)
+	config.ResetServerRuntime()
+	t.Cleanup(config.ResetServerRuntime)
 	require.NoError(t, config.InitializeThunderRuntime(tempHome, &config.Config{
 		DeclarativeResources: config.DeclarativeResources{Enabled: true},
 	}))

@@ -73,7 +73,7 @@ func (suite *ThemeInitTestSuite) TestRegisterRoutes() {
 func (suite *ThemeInitTestSuite) TestInitializeStore_CompositeMode() {
 	// Initialize runtime with temp home
 	tempDir := suite.T().TempDir()
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err := config.InitializeThunderRuntime(tempDir, &config.Config{})
 	suite.Require().NoError(err)
 
@@ -90,7 +90,7 @@ func (suite *ThemeInitTestSuite) TestInitializeStore_CompositeMode() {
 func (suite *ThemeInitTestSuite) TestInitializeStore_DeclarativeMode() {
 	// Initialize runtime with temp home
 	tempDir := suite.T().TempDir()
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err := config.InitializeThunderRuntime(tempDir, &config.Config{})
 	suite.Require().NoError(err)
 

@@ -39,7 +39,7 @@ func TestInitTestSuite(t *testing.T) {
 
 func (suite *InitTestSuite) SetupTest() {
 	// Initialize ThunderRuntime for each test
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	tmpDir := suite.T().TempDir()
 	testConfig := &config.Config{
 		DeclarativeResources: config.DeclarativeResources{
@@ -58,7 +58,7 @@ func (suite *InitTestSuite) SetupTest() {
 
 func (suite *InitTestSuite) TearDownTest() {
 	// Clean up after each test
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 func (suite *InitTestSuite) TestInitialize_WithDeclarativeResourcesDisabled() {

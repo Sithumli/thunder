@@ -71,7 +71,7 @@ func TestRefreshTokenGrantHandlerSuite(t *testing.T) {
 
 func (suite *RefreshTokenGrantHandlerTestSuite) SetupTest() {
 	// Reset ThunderRuntime before initializing with test config
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 
 	// Initialize Runtime config with basic test config
 	testConfig := &config.Config{
@@ -142,7 +142,7 @@ func (suite *RefreshTokenGrantHandlerTestSuite) SetupTest() {
 }
 
 func (suite *RefreshTokenGrantHandlerTestSuite) TearDownTest() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 func (suite *RefreshTokenGrantHandlerTestSuite) TestNewRefreshTokenGrantHandler() {

@@ -65,7 +65,7 @@ type HandlerTestSuite struct {
 
 func (suite *HandlerTestSuite) SetupTest() {
 	// Initialize config for tests
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	var allowedOrigins cors.OriginEntries
 	suite.Require().NoError(yaml.Unmarshal([]byte(`
 - https://localhost:3000
@@ -94,7 +94,7 @@ func (suite *HandlerTestSuite) SetupTest() {
 }
 
 func (suite *HandlerTestSuite) TearDownTest() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 func TestHandlerTestSuite(t *testing.T) {
@@ -376,7 +376,7 @@ func (suite *HandlerTestSuite) TestGenerateAndSendZipResponse_DeepFolderStructur
 func TestGenerateAndSendZipResponse_Standalone(t *testing.T) {
 	logger := log.GetLogger()
 	// Setup config
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	var allowedOrigins cors.OriginEntries
 	assert.NoError(t, yaml.Unmarshal([]byte(`
 - https://localhost:3000
@@ -387,7 +387,7 @@ func TestGenerateAndSendZipResponse_Standalone(t *testing.T) {
 	require.NoError(t, cors.InitializeMatcher(testConfig.CORS.AllowedOrigins))
 	err := config.InitializeThunderRuntime("/tmp/test", testConfig)
 	assert.NoError(t, err)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	// Setup handler
 	mockAppService := applicationmock.NewApplicationServiceInterfaceMock(t)
@@ -853,10 +853,10 @@ func (suite *HandlerTestSuite) TestHandleExportJSONRequest_EmptyFiles() {
 func BenchmarkGenerateAndSendZipResponse(b *testing.B) {
 	logger := log.GetLogger()
 	// Setup
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	testConfig := &config.Config{}
 	_ = config.InitializeThunderRuntime("/tmp/test", testConfig)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	mockAppService := applicationmock.NewApplicationServiceInterfaceMock(b)
 	mockIDPService := idpmock.NewIDPServiceInterfaceMock(b)
@@ -893,10 +893,10 @@ func BenchmarkGenerateAndSendZipResponse(b *testing.B) {
 // Helper function for benchmark tests
 func setupBenchmarkTest(b *testing.B) (*exportHandler, []byte) {
 	// Setup
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	testConfig := &config.Config{}
 	_ = config.InitializeThunderRuntime("/tmp/test", testConfig)
-	b.Cleanup(func() { config.ResetThunderRuntime() })
+	b.Cleanup(func() { config.ResetServerRuntime() })
 
 	mockAppService := applicationmock.NewApplicationServiceInterfaceMock(b)
 	mockIDPService := idpmock.NewIDPServiceInterfaceMock(b)

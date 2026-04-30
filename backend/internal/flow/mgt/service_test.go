@@ -68,12 +68,12 @@ func (s *FlowMgtServiceTestSuite) SetupTest() {
 			AutoInferRegistration: false,
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("test", testConfig)
 }
 
 func (s *FlowMgtServiceTestSuite) TearDownTest() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 // ListFlows tests
@@ -434,13 +434,13 @@ func (s *FlowMgtServiceTestSuite) TestCreateFlow_StoreError() {
 
 func (s *FlowMgtServiceTestSuite) TestCreateFlow_WithAutoInference() {
 	// Enable auto-inference for this test
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	testConfig := &config.Config{
 		Flow: config.FlowConfig{
 			AutoInferRegistration: true,
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("test", testConfig)
 
 	flowDef := &FlowDefinition{
@@ -476,13 +476,13 @@ func (s *FlowMgtServiceTestSuite) TestCreateFlow_WithAutoInference() {
 
 func (s *FlowMgtServiceTestSuite) TestCreateFlow_AutoInferenceFailure() {
 	// Enable auto-inference for this test
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	testConfig := &config.Config{
 		Flow: config.FlowConfig{
 			AutoInferRegistration: true,
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("test", testConfig)
 
 	flowDef := &FlowDefinition{
@@ -1086,7 +1086,7 @@ func (s *FlowMgtServiceTestSuite) TestTryInferRegistrationFlow_Success() {
 			AutoInferRegistration: true,
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("test", testConfig)
 
 	mockExecutorRegistry := executormock.NewExecutorRegistryInterfaceMock(s.T())
@@ -1146,7 +1146,7 @@ func (s *FlowMgtServiceTestSuite) TestTryInferRegistrationFlow_SkipsNonAuthFlow(
 			AutoInferRegistration: true,
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("test", testConfig)
 
 	mockExecutorRegistry := executormock.NewExecutorRegistryInterfaceMock(s.T())
@@ -1174,7 +1174,7 @@ func (s *FlowMgtServiceTestSuite) TestTryInferRegistrationFlow_HandlesInferenceE
 			AutoInferRegistration: true,
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("test", testConfig)
 
 	mockExecutorRegistry := executormock.NewExecutorRegistryInterfaceMock(s.T())
@@ -1204,7 +1204,7 @@ func (s *FlowMgtServiceTestSuite) TestTryInferRegistrationFlow_HandlesStoreError
 			AutoInferRegistration: true,
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("test", testConfig)
 
 	mockExecutorRegistry := executormock.NewExecutorRegistryInterfaceMock(s.T())
@@ -1272,7 +1272,7 @@ func (s *FlowMgtServiceTestSuite) TestTryInferRegistrationFlow_SkipsPasskeyRegis
 			AutoInferRegistration: true,
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime("test", testConfig)
 
 	mockExecutorRegistry := executormock.NewExecutorRegistryInterfaceMock(s.T())

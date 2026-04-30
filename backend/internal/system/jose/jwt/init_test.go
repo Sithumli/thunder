@@ -90,7 +90,7 @@ func (suite *InitTestSuite) TearDownSuite() {
 
 func (suite *InitTestSuite) SetupTest() {
 	// Reset ThunderRuntime before each test
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 func (suite *InitTestSuite) TestInitialize_Success() {

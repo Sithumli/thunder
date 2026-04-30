@@ -87,7 +87,7 @@ func (suite *AuthorizationRequestStoreTestSuite) SetupTest() {
 }
 
 func (suite *AuthorizationRequestStoreTestSuite) TearDownTest() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 func (suite *AuthorizationRequestStoreTestSuite) TestNewAuthorizationRequestStore() {

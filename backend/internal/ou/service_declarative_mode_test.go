@@ -38,7 +38,7 @@ type DeclarativeModeServiceTestSuite struct {
 
 func (suite *DeclarativeModeServiceTestSuite) SetupTest() {
 	// Initialize runtime with declarative mode enabled
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	testConfig := &config.Config{
 		DeclarativeResources: config.DeclarativeResources{
 			Enabled: true,
@@ -59,7 +59,7 @@ func (suite *DeclarativeModeServiceTestSuite) SetupTest() {
 }
 
 func (suite *DeclarativeModeServiceTestSuite) TearDownTest() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 func (suite *DeclarativeModeServiceTestSuite) TestCreateOrganizationUnit_FailsInDeclarativeMode() {

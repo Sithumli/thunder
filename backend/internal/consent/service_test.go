@@ -48,9 +48,9 @@ func initConsentRuntime(t *testing.T, enabled bool, baseURL string) {
 			BaseURL: baseURL,
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	require.NoError(t, config.InitializeThunderRuntime("/tmp/test", cfg))
-	t.Cleanup(config.ResetThunderRuntime)
+	t.Cleanup(config.ResetServerRuntime)
 }
 
 // newServiceWithMockClient creates a consentService with the provided mock client and config.

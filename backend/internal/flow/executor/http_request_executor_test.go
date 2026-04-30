@@ -54,7 +54,7 @@ func (suite *HTTPRequestExecutorTestSuite) SetupSuite() {
 }
 
 func (suite *HTTPRequestExecutorTestSuite) TearDownSuite() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 func (suite *HTTPRequestExecutorTestSuite) SetupTest() {

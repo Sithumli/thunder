@@ -43,7 +43,7 @@ func (suite *DBProviderTestSuite) SetupTest() {
 	suite.mockDB = mock
 
 	// Reset global config before each test
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 
 	// Initialize a dummy config
 	dummyConfig := &config.Config{
@@ -58,7 +58,7 @@ func (suite *DBProviderTestSuite) SetupTest() {
 }
 
 func (suite *DBProviderTestSuite) TearDownTest() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 func (suite *DBProviderTestSuite) TestGetUserDBTransactioner_Success() {

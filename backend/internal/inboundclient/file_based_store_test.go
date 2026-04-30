@@ -39,7 +39,7 @@ func TestFileBasedStoreTestSuite(t *testing.T) {
 }
 
 func (suite *FileBasedStoreTestSuite) SetupTest() {
-	sysconfig.ResetThunderRuntime()
+	sysconfig.ResetServerRuntime()
 	suite.Require().NoError(sysconfig.InitializeThunderRuntime("/tmp/test", &sysconfig.Config{}))
 }
 

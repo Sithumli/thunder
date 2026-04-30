@@ -124,7 +124,7 @@ func (suite *InitTestSuite) SetupTest() {
 
 func (suite *InitTestSuite) TearDownTest() {
 	// Reset config to clear singleton state for next test
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 func TestInitTestSuite(t *testing.T) {
@@ -134,7 +134,7 @@ func TestInitTestSuite(t *testing.T) {
 // TestInitialize_WithDeclarativeResourcesDisabled tests the Initialize function when declarative resources are disabled
 func (suite *InitTestSuite) TestInitialize_WithDeclarativeResourcesDisabled() {
 	// Setup - ensure config is reset and initialized for this test
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	testConfig := &config.Config{
 		DeclarativeResources: config.DeclarativeResources{
 			Enabled: false,
@@ -170,7 +170,7 @@ func (suite *InitTestSuite) TestInitialize_WithDeclarativeResourcesDisabled() {
 // TestInitialize_WithMCPServer tests the Initialize function with an MCP server
 func (suite *InitTestSuite) TestInitialize_WithMCPServer() {
 	// Setup - ensure config is reset and initialized for this test
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	testConfig := &config.Config{
 		DeclarativeResources: config.DeclarativeResources{
 			Enabled: false,
@@ -577,12 +577,12 @@ func TestInitialize_Standalone(t *testing.T) {
 	}
 
 	// Reset and initialize with test config
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err := config.InitializeThunderRuntime("", testConfig)
 	assert.NoError(t, err)
 	createTestApplicationTables(t)
 
-	defer config.ResetThunderRuntime() // Clean up after test
+	defer config.ResetServerRuntime() // Clean up after test
 
 	mux := http.NewServeMux()
 	mockEntityService := entitymock.NewEntityServiceInterfaceMock(t)
@@ -625,11 +625,11 @@ func TestInitialize_WithDeclarativeResources_Standalone(t *testing.T) {
 	assert.NoError(t, err)
 
 	// Reset and initialize with test config
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err = config.InitializeThunderRuntime(tmpDir, testConfig)
 	assert.NoError(t, err)
 
-	defer config.ResetThunderRuntime() // Clean up after test
+	defer config.ResetServerRuntime() // Clean up after test
 
 	mux := http.NewServeMux()
 	mockEntityService := entitymock.NewEntityServiceInterfaceMock(t)

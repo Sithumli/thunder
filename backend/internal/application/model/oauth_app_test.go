@@ -43,7 +43,7 @@ func TestOAuthAppConfigDTOTestSuite(t *testing.T) {
 }
 
 func (suite *OAuthAppConfigDTOTestSuite) SetupTest() {
-	sysconfig.ResetThunderRuntime()
+	sysconfig.ResetServerRuntime()
 	err := sysconfig.InitializeThunderRuntime("/tmp/test", &sysconfig.Config{
 		OAuth: sysconfig.OAuthConfig{AllowWildcardRedirectURI: true},
 	})
@@ -51,7 +51,7 @@ func (suite *OAuthAppConfigDTOTestSuite) SetupTest() {
 }
 
 func (suite *OAuthAppConfigDTOTestSuite) TearDownTest() {
-	sysconfig.ResetThunderRuntime()
+	sysconfig.ResetServerRuntime()
 }
 
 func (suite *OAuthAppConfigDTOTestSuite) TestIsAllowedGrantType_AuthorizationCode() {

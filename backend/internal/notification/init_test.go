@@ -49,7 +49,7 @@ func TestInitTestSuite(t *testing.T) {
 }
 
 func (suite *InitTestSuite) SetupSuite() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	testConfig := &config.Config{
 		JWT: config.JWTConfig{
 			Issuer:         "test-issuer",
@@ -80,7 +80,7 @@ func (suite *InitTestSuite) SetupTest() {
 }
 
 func (suite *InitTestSuite) TearDownSuite() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 func (suite *InitTestSuite) TestInitialize() {
@@ -149,7 +149,7 @@ properties:
 	suite.NoError(err)
 
 	// Reset and initialize config with declarative resources enabled
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	testConfig := &config.Config{
 		JWT: config.JWTConfig{
 			Issuer:         "test-issuer",
@@ -195,7 +195,7 @@ properties:
 	suite.True(hasNonSecretProp, "Expected at least one non-secret property")
 
 	// Clean up - reset config and reinitialize with suite's test config
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	suiteConfig := &config.Config{
 		JWT: config.JWTConfig{
 			Issuer:         "test-issuer",
@@ -488,7 +488,7 @@ func (suite *InitTestSuite) TestInitialize_WithDeclarativeResourcesEnabled_Inval
 	err = os.WriteFile(filepath.Join(senderDir, "invalid-sender.yaml"), []byte(invalidYAML), 0600)
 	suite.NoError(err)
 
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	testConfig := &config.Config{
 		JWT: config.JWTConfig{
 			Issuer:         "test-issuer",
@@ -520,7 +520,7 @@ func (suite *InitTestSuite) TestInitialize_WithDeclarativeResourcesEnabled_Inval
 	suite.Contains(err.Error(), "failed to load notification sender resources")
 
 	// Clean up
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	suiteConfig := &config.Config{
 		JWT: config.JWTConfig{
 			Issuer:         "test-issuer",
@@ -566,7 +566,7 @@ properties:
 	err = os.WriteFile(filepath.Join(senderDir, "invalid-sender.yaml"), []byte(invalidSenderYAML), 0600)
 	suite.NoError(err)
 
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	testConfig := &config.Config{
 		JWT: config.JWTConfig{
 			Issuer:         "test-issuer",
@@ -598,7 +598,7 @@ properties:
 	suite.Contains(err.Error(), "failed to load notification sender resources")
 
 	// Clean up
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	suiteConfig := &config.Config{
 		JWT: config.JWTConfig{
 			Issuer:         "test-issuer",

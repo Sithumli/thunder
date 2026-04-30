@@ -80,7 +80,7 @@ func (suite *ExportServiceTestSuite) SetupTest() {
 
 	// Initialize ThunderRuntime with declarative mode disabled
 	// Use just the filename since InitializeThunderRuntime will prepend the base path
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	testConfig := &config.Config{
 		Crypto: config.CryptoConfig{
 			Encryption: config.EncryptionConfig{
@@ -115,7 +115,7 @@ func (suite *ExportServiceTestSuite) SetupTest() {
 }
 
 func (suite *ExportServiceTestSuite) TearDownTest() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 // TestExportServiceTestSuite runs the test suite.

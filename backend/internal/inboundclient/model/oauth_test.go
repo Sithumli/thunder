@@ -45,7 +45,7 @@ func TestOAuthClientTestSuite(t *testing.T) {
 }
 
 func (suite *OAuthClientTestSuite) SetupTest() {
-	sysconfig.ResetThunderRuntime()
+	sysconfig.ResetServerRuntime()
 	suite.Require().NoError(sysconfig.InitializeThunderRuntime("/tmp/test", &sysconfig.Config{}))
 }
 
@@ -385,7 +385,7 @@ func TestOAuthHelperTestSuite(t *testing.T) {
 }
 
 func (suite *OAuthHelperTestSuite) SetupTest() {
-	sysconfig.ResetThunderRuntime()
+	sysconfig.ResetServerRuntime()
 	suite.Require().NoError(sysconfig.InitializeThunderRuntime("/tmp/test", &sysconfig.Config{}))
 }
 
@@ -554,7 +554,7 @@ func (suite *OAuthHelperTestSuite) TestValidateRedirectURI_InvalidURLFormat() {
 }
 
 func (suite *OAuthClientTestSuite) TestRequiresPAR_GlobalConfigEnabled() {
-	sysconfig.ResetThunderRuntime()
+	sysconfig.ResetServerRuntime()
 	cfg := &sysconfig.Config{}
 	cfg.OAuth.PAR.RequirePAR = true
 	suite.Require().NoError(sysconfig.InitializeThunderRuntime("/tmp/test", cfg))
@@ -574,7 +574,7 @@ func (suite *OAuthClientTestSuite) TestRequiresPAR_BothFalse() {
 }
 
 func (suite *OAuthHelperTestSuite) TestMatchAnyRedirectURIPattern_WildcardEnabled_Matches() {
-	sysconfig.ResetThunderRuntime()
+	sysconfig.ResetServerRuntime()
 	cfg := &sysconfig.Config{}
 	cfg.OAuth.AllowWildcardRedirectURI = true
 	suite.Require().NoError(sysconfig.InitializeThunderRuntime("/tmp/test", cfg))

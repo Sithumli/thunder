@@ -928,7 +928,7 @@ func (suite *GoogleOIDCAuthnServiceTestSuite) TestValidateIDToken_Leeway_IssuedI
 
 func (suite *GoogleOIDCAuthnServiceTestSuite) TestValidateIDToken_Leeway_ZeroLeeway_ExpiredShouldFail() {
 	// Reset and reinitialize with zero leeway
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	testConfig := &config.Config{
 		JWT: config.JWTConfig{
 			Leeway: 0, // No leeway
@@ -963,7 +963,7 @@ func (suite *GoogleOIDCAuthnServiceTestSuite) TestValidateIDToken_Leeway_ZeroLee
 
 func (suite *GoogleOIDCAuthnServiceTestSuite) TestValidateIDToken_Leeway_IatExactlyAtBoundary_ShouldPass() {
 	// Reset and reinitialize with 30 second leeway
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	testConfig := &config.Config{
 		JWT: config.JWTConfig{
 			Leeway: 30, // 30 seconds leeway
@@ -998,7 +998,7 @@ func (suite *GoogleOIDCAuthnServiceTestSuite) TestValidateIDToken_Leeway_IatExac
 
 func (suite *GoogleOIDCAuthnServiceTestSuite) TestValidateIDToken_Leeway_IatJustBeyondBoundary_ShouldFail() {
 	// Reset and reinitialize with 30 second leeway
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	testConfig := &config.Config{
 		JWT: config.JWTConfig{
 			Leeway: 30, // 30 seconds leeway

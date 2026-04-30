@@ -68,7 +68,7 @@ func (suite *InitTestSuite) SetupTest() {
 }
 
 func (suite *InitTestSuite) TearDownTest() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 // TestInitialize tests the Initialize function
@@ -502,7 +502,7 @@ func TestInitialize_Standalone(t *testing.T) {
 		},
 	}
 
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err := config.InitializeThunderRuntime("", testConfig)
 	assert.NoError(t, err)
 
@@ -534,7 +534,7 @@ func TestInitializeStore_MutableMode(t *testing.T) {
 		},
 	}
 
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err := config.InitializeThunderRuntime("", testConfig)
 	assert.NoError(t, err)
 
@@ -567,7 +567,7 @@ func TestInitializeStore_DeclarativeMode(t *testing.T) {
 		},
 	}
 
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err := config.InitializeThunderRuntime("", testConfig)
 	assert.NoError(t, err)
 
@@ -598,7 +598,7 @@ func TestInitializeStore_CompositeMode(t *testing.T) {
 		},
 	}
 
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err := config.InitializeThunderRuntime("", testConfig)
 	assert.NoError(t, err)
 
@@ -631,7 +631,7 @@ func TestInitializeStore_DefaultFallbackToMutable(t *testing.T) {
 		},
 	}
 
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err := config.InitializeThunderRuntime("", testConfig)
 	assert.NoError(t, err)
 
@@ -664,7 +664,7 @@ func TestInitializeStore_GlobalDeclarativeEnabled(t *testing.T) {
 		},
 	}
 
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err := config.InitializeThunderRuntime("", testConfig)
 	assert.NoError(t, err)
 
@@ -695,7 +695,7 @@ func TestInitialize_MutableMode(t *testing.T) {
 		},
 	}
 
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err := config.InitializeThunderRuntime("", testConfig)
 	assert.NoError(t, err)
 
@@ -734,7 +734,7 @@ func TestInitialize_StoreModes(t *testing.T) {
 				},
 			}
 
-			config.ResetThunderRuntime()
+			config.ResetServerRuntime()
 			err := config.InitializeThunderRuntime("", testConfig)
 			assert.NoError(t, err)
 
@@ -1127,10 +1127,10 @@ func TestInitialize_WithDeclarativeResourcesEnabled_InvalidYAML(t *testing.T) {
 		},
 	}
 
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err = config.InitializeThunderRuntime(tmpDir, testConfig)
 	assert.NoError(t, err)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	mux := http.NewServeMux()
 	mockOUService := oumock.NewOrganizationUnitServiceInterfaceMock(t)
@@ -1187,10 +1187,10 @@ schema: |
 		},
 	}
 
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err = config.InitializeThunderRuntime(tmpDir, testConfig)
 	assert.NoError(t, err)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	mux := http.NewServeMux()
 	mockOUService := oumock.NewOrganizationUnitServiceInterfaceMock(t)
@@ -1246,10 +1246,10 @@ schema: |
 		},
 	}
 
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err = config.InitializeThunderRuntime(tmpDir, testConfig)
 	assert.NoError(t, err)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	mux := http.NewServeMux()
 	mockOUService := oumock.NewOrganizationUnitServiceInterfaceMock(t)
@@ -1321,10 +1321,10 @@ schema: |
 		},
 	}
 
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err = config.InitializeThunderRuntime(tmpDir, testConfig)
 	assert.NoError(t, err)
-	defer config.ResetThunderRuntime()
+	defer config.ResetServerRuntime()
 
 	mux := http.NewServeMux()
 	mockOUService := oumock.NewOrganizationUnitServiceInterfaceMock(t)

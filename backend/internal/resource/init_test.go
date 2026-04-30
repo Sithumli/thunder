@@ -47,7 +47,7 @@ func (suite *InitTestSuite) SetupTest() {
 	suite.mockOUService = oumock.NewOrganizationUnitServiceInterfaceMock(suite.T())
 
 	// Reset config to clear singleton state
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 
 	// Initialize runtime config for the test
 	testConfig := &config.Config{
@@ -77,7 +77,7 @@ func (suite *InitTestSuite) SetupTest() {
 
 func (suite *InitTestSuite) TearDownTest() {
 	// Reset config to clear singleton state for next test
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 func TestInitTestSuite(t *testing.T) {

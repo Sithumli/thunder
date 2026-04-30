@@ -57,13 +57,13 @@ func (suite *FileBasedStoreTestSuite) SetupSuite() {
 			Enabled: false,
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	_ = config.InitializeThunderRuntime(tempDir, testConfig)
 }
 
 func (suite *FileBasedStoreTestSuite) TearDownSuite() {
 	// Clean up ThunderRuntime after all tests
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 func (suite *FileBasedStoreTestSuite) SetupTest() {

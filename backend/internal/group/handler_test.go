@@ -139,18 +139,18 @@ func runHandlerTestCases(
 }
 
 func (suite *GroupHandlerTestSuite) SetupTest() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 
 	err := config.InitializeThunderRuntime("", &config.Config{})
 	suite.Require().NoError(err)
 }
 
 func (suite *GroupHandlerTestSuite) TearDownTest() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 func (suite *GroupHandlerTestSuite) ensureRuntime() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 
 	err := config.InitializeThunderRuntime("", &config.Config{})
 	suite.Require().NoError(err)

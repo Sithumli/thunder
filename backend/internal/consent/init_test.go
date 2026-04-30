@@ -42,9 +42,9 @@ func (s *InitTestSuite) TestInitialize_ReturnsNonNilService() {
 			BaseURL: "http://consent.example.com",
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	require.NoError(s.T(), config.InitializeThunderRuntime("/tmp/test", cfg))
-	s.T().Cleanup(config.ResetThunderRuntime)
+	s.T().Cleanup(config.ResetServerRuntime)
 
 	svc := Initialize()
 
@@ -58,9 +58,9 @@ func (s *InitTestSuite) TestInitialize_DisabledConsent() {
 			BaseURL: "",
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	require.NoError(s.T(), config.InitializeThunderRuntime("/tmp/test", cfg))
-	s.T().Cleanup(config.ResetThunderRuntime)
+	s.T().Cleanup(config.ResetServerRuntime)
 
 	svc := Initialize()
 

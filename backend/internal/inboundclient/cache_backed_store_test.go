@@ -45,7 +45,7 @@ func TestCacheBackedStoreTestSuite(t *testing.T) {
 }
 
 func (suite *CacheBackedStoreTestSuite) SetupTest() {
-	sysconfig.ResetThunderRuntime()
+	sysconfig.ResetServerRuntime()
 	suite.Require().NoError(sysconfig.InitializeThunderRuntime("/tmp/test", &sysconfig.Config{}))
 
 	suite.mockStore = newInboundClientStoreInterfaceMock(suite.T())

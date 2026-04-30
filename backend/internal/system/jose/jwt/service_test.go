@@ -119,7 +119,7 @@ func (suite *JWTServiceTestSuite) AfterTest(_, _ string) {
 
 func (suite *JWTServiceTestSuite) SetupTest() {
 	// Reset ThunderRuntime before each test
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 
 	// Create PKI mock
 	suite.pkiMock = pkimock.NewPKIServiceInterfaceMock(suite.T())
@@ -1509,8 +1509,8 @@ func (suite *JWTServiceTestSuite) TestVerifyJWTSignatureWithJWKSUsesCache() {
 	// The default SetupTest config has SecurityConfig.JWKSCacheTTL == 0, which would
 	// cause the cache to expire instantly (Now().Before(Now()) == false). Re-initialize
 	// the runtime here with a positive TTL so the cache actually retains entries.
-	config.ResetThunderRuntime()
-	defer config.ResetThunderRuntime()
+	config.ResetServerRuntime()
+	defer config.ResetServerRuntime()
 	testConfig := &config.Config{
 		JWT: config.JWTConfig{
 			Issuer:         testIssuer,
@@ -2456,7 +2456,7 @@ func (suite *JWTServiceTestSuite) TestVerifyJWTWithLeeway() {
 
 func (suite *JWTServiceTestSuite) TestVerifyJWTWithZeroLeeway() {
 	// Test behavior when leeway is set to 0
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	testConfig := &config.Config{
 		TLS: config.TLSConfig{
 			KeyFile: suite.testKeyPath,

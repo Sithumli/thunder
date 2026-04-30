@@ -43,11 +43,11 @@ func TestDeclarativeResourceTestSuite(t *testing.T) {
 }
 
 func (s *DeclarativeResourceTestSuite) SetupTest() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 func (s *DeclarativeResourceTestSuite) TearDownTest() {
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 func (s *DeclarativeResourceTestSuite) TestLoadDeclarativeResources_MutableStore_Skipped() {

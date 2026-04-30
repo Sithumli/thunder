@@ -29,8 +29,8 @@ import (
 
 func TestIsDeclarativeModeEnabled(t *testing.T) {
 	t.Run("Returns true when declarative resources are enabled", func(t *testing.T) {
-		config.ResetThunderRuntime()
-		defer config.ResetThunderRuntime() // Clean up after test
+		config.ResetServerRuntime()
+		defer config.ResetServerRuntime() // Clean up after test
 		testConfig := &config.Config{
 			DeclarativeResources: config.DeclarativeResources{
 				Enabled: true,
@@ -44,8 +44,8 @@ func TestIsDeclarativeModeEnabled(t *testing.T) {
 	})
 
 	t.Run("Returns false when declarative resources are disabled", func(t *testing.T) {
-		config.ResetThunderRuntime()
-		defer config.ResetThunderRuntime() // Clean up after test
+		config.ResetServerRuntime()
+		defer config.ResetServerRuntime() // Clean up after test
 		testConfig := &config.Config{
 			DeclarativeResources: config.DeclarativeResources{
 				Enabled: false,
@@ -89,8 +89,8 @@ func TestCheckDeclarativeOperations(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
 			t.Run("Returns error when declarative mode is enabled", func(t *testing.T) {
-				config.ResetThunderRuntime()
-				defer config.ResetThunderRuntime() // Clean up after test
+				config.ResetServerRuntime()
+				defer config.ResetServerRuntime() // Clean up after test
 				testConfig := &config.Config{
 					DeclarativeResources: config.DeclarativeResources{
 						Enabled: true,
@@ -105,8 +105,8 @@ func TestCheckDeclarativeOperations(t *testing.T) {
 			})
 
 			t.Run("Returns nil when declarative mode is disabled", func(t *testing.T) {
-				config.ResetThunderRuntime()
-				defer config.ResetThunderRuntime() // Clean up after test
+				config.ResetServerRuntime()
+				defer config.ResetServerRuntime() // Clean up after test
 				testConfig := &config.Config{
 					DeclarativeResources: config.DeclarativeResources{
 						Enabled: false,

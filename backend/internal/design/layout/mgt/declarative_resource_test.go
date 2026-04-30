@@ -54,14 +54,14 @@ func (s *DeclarativeResourceTestSuite) SetupSuite() {
 			Enabled: false,
 		},
 	}
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 	err := config.InitializeThunderRuntime(tempDir, testConfig)
 	s.Require().NoError(err, "Failed to initialize ThunderRuntime")
 }
 
 func (s *DeclarativeResourceTestSuite) TearDownSuite() {
 	// Clean up ThunderRuntime after all tests
-	config.ResetThunderRuntime()
+	config.ResetServerRuntime()
 }
 
 func (s *DeclarativeResourceTestSuite) TestLayoutExporter_GetResourceType() {
