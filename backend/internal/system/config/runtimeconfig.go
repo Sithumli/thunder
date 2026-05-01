@@ -22,7 +22,7 @@ import (
 	"sync"
 )
 
-// Server runtime holds the runtime configuration for the server.
+// ServerRuntime holds the runtime configuration for the server.
 type ServerRuntime struct {
 	ServerHome string `yaml:"server_home"`
 	Config     Config `yaml:"config"`
