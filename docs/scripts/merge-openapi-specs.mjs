@@ -33,7 +33,7 @@ const logger = createLogger('merge-openapi-specs');
 
 const API_DIR = join(__dirname, '..', '..', 'api');
 const STATIC_DIR = join(__dirname, '..', 'static', 'api');
-const THUNDER_CONFIG_PATH = join(__dirname, '..', 'docusaurus.thunder.config.ts');
+const THUNDER_CONFIG_PATH = join(__dirname, '..', 'docusaurus.product.config.ts');
 
 function readThunderConfig(configPath) {
   const content = readFileSync(configPath, 'utf8');

@@ -18,13 +18,13 @@
 
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import type {DocusaurusThunderConfig} from '@site/docusaurus.thunder.config';
+import type {DocusaurusProductConfig} from '@site/docusaurus.product.config';
 import {Box, Container, Typography, Button} from '@wso2/oxygen-ui';
 import React, {JSX} from 'react';
 
 export default function CTASection(): JSX.Element {
   const {siteConfig} = useDocusaurusContext();
-  const {project} = siteConfig.customFields?.thunder as DocusaurusThunderConfig;
+  const {project} = siteConfig.customFields?.product as DocusaurusProductConfig;
   const productName = project.name;
 
   return (

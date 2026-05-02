@@ -93,7 +93,7 @@ export default function ApiVersionReference() {
   }, []);
 
   const versionPath = version === 'current' ? 'next' : version;
-  const thunderConfig = siteConfig.customFields?.thunder as {postman: {collection: {output: string}}};
+  const thunderConfig = siteConfig.customFields?.product as {postman: {collection: {output: string}}};
   const specUrl = `${siteConfig.baseUrl}api/${versionPath}/combined.yaml`;
   const postmanCollectionUrl = `${siteConfig.baseUrl}api/${versionPath}/postman/collections/${thunderConfig.postman.collection.output}`;
 

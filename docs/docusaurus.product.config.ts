@@ -16,7 +16,7 @@
  * under the License.
  */
 
-export interface DocusaurusThunderConfig {
+export interface DocusaurusProductConfig {
   project: {
     emoji: string;
     name: string;
@@ -57,7 +57,7 @@ export interface DocusaurusThunderConfig {
   };
 }
 
-const docusaurusThunderConfig = {
+const DocusaurusProductConfig = {
   project: {
     emoji: '⚡',
     name: 'Thunder',
@@ -101,4 +101,4 @@ const docusaurusThunderConfig = {
   },
 };
 
-export default docusaurusThunderConfig;
+export default DocusaurusProductConfig;

@@ -19,17 +19,17 @@
 import type * as Preset from '@docusaurus/preset-classic';
 import type {Config} from '@docusaurus/types';
 import {themes as prismThemes} from 'prism-react-renderer';
+import productConfig from './docusaurus.product.config';
 import personaPlugin from './plugins/personaPlugin';
-import thunderConfig from './docusaurus.thunder.config';
 import webpackPlugin from './plugins/webpackPlugin';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
-const baseUrl = `/${thunderConfig.documentation.deployment.production.baseUrl}/`;
+const baseUrl = `/${productConfig.documentation.deployment.production.baseUrl}/`;
 
 const config: Config = {
-  title: thunderConfig.project.name,
-  tagline: thunderConfig.project.description,
+  title: productConfig.project.name,
+  tagline: productConfig.project.description,
   favicon: 'assets/images/favicon.ico',
 
   // Prevent search engine indexing
@@ -42,13 +42,13 @@ const config: Config = {
     v4: true, // Improve compatibility with the upcoming Docusaurus v4
   },
 
-  url: thunderConfig.documentation.deployment.production.url,
+  url: productConfig.documentation.deployment.production.url,
   // Since we use GitHub pages, the base URL is the repository name.
   baseUrl,
 
   // GitHub pages deployment config.
-  organizationName: thunderConfig.project.source.github.owner.name, // Usually your GitHub org/user name.
-  projectName: thunderConfig.project.source.github.name, // Usually your repo name.
+  organizationName: productConfig.project.source.github.owner.name, // Usually your GitHub org/user name.
+  projectName: productConfig.project.source.github.name, // Usually your repo name.
 
   onBrokenLinks: 'throw',
 
@@ -77,7 +77,7 @@ const config: Config = {
           path: 'content',
           sidebarPath: './sidebars.ts',
           // Edit URL for the "edit this page" feature.
-          editUrl: thunderConfig.project.source.github.editUrls.content,
+          editUrl: productConfig.project.source.github.editUrls.content,
           // Versioning.
           lastVersion: 'current',
           versions: {
@@ -111,7 +111,7 @@ const config: Config = {
         href: '/',
         src: '/assets/images/logo.svg',
         srcDark: '/assets/images/logo-inverted.svg',
-        alt: `${thunderConfig.project.name} Logo`,
+        alt: `${productConfig.project.name} Logo`,
         height: '40px',
         width: '101px',
       },
@@ -159,12 +159,12 @@ const config: Config = {
             },
             {
               label: 'Discussions',
-              href: thunderConfig.project.source.github.discussionsUrl,
+              href: productConfig.project.source.github.discussionsUrl,
               className: 'navbar-resources__discussions',
             },
             {
               label: 'Report an Issue',
-              href: thunderConfig.project.source.github.issuesUrl,
+              href: productConfig.project.source.github.issuesUrl,
               className: 'navbar-resources__issues',
             },
           ],
@@ -176,7 +176,7 @@ const config: Config = {
           label: 'Community',
         },
         {
-          href: `https://github.com/${thunderConfig.project.source.github.fullName}`,
+          href: `https://github.com/${productConfig.project.source.github.fullName}`,
           position: 'right',
           className: 'navbar__github--link',
           'aria-label': 'GitHub repository',
@@ -197,7 +197,7 @@ const config: Config = {
             },
           ],
         },
-        ...(thunderConfig.documentation.versioning.enabled
+        ...(productConfig.documentation.versioning.enabled
           ? [
               {
                 type: 'docsVersionDropdown',
@@ -210,7 +210,7 @@ const config: Config = {
     footer: {
       style: 'dark',
       links: [],
-      copyright: `Copyright © ${new Date().getFullYear()} ${thunderConfig.project.name}.`,
+      copyright: `Copyright © ${new Date().getFullYear()} ${productConfig.project.name}.`,
     },
     prism: {
       theme: prismThemes.nightOwlLight,
@@ -218,9 +218,9 @@ const config: Config = {
     },
   } satisfies Preset.ThemeConfig,
 
-  /* -------------------------------- Thunder Config ------------------------------- */
+  /* -------------------------------- Product Config ------------------------------- */
   customFields: {
-    thunder: thunderConfig,
+    product: productConfig,
   },
 };
 

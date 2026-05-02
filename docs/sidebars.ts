@@ -20,7 +20,7 @@
 
 import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
 import reactSdkSidebar from './content/sdks/react/sidebar';
-import thunderConfig from './docusaurus.thunder.config';
+import thunderConfig from './docusaurus.product.config';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 

@@ -25,7 +25,7 @@ import {createLogger} from '@thunder/logger';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const THUNDER_CONFIG_PATH = join(__dirname, '..', 'docusaurus.thunder.config.ts');
+const THUNDER_CONFIG_PATH = join(__dirname, '..', 'docusaurus.product.config.ts');
 
 function readThunderConfig(configPath) {
   const content = readFileSync(configPath, 'utf8');

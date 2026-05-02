@@ -19,7 +19,7 @@
 import Link from '@docusaurus/Link';
 import {useBaseUrlUtils} from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import type {DocusaurusThunderConfig} from '@site/docusaurus.thunder.config';
+import type {DocusaurusProductConfig} from '@site/docusaurus.product.config';
 import ThemedImage from '@theme/ThemedImage';
 import {Box, Container, Typography} from '@wso2/oxygen-ui';
 import React, {JSX} from 'react';
@@ -75,7 +75,7 @@ export default function Footer(): JSX.Element {
   const {withBaseUrl} = useBaseUrlUtils();
   const {siteConfig} = useDocusaurusContext();
   const isDark = useIsDarkMode();
-  const thunderConfig = siteConfig.customFields?.thunder as DocusaurusThunderConfig;
+  const thunderConfig = siteConfig.customFields?.product as DocusaurusProductConfig;
 
   return (
     <Box
