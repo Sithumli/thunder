@@ -32,7 +32,7 @@ describe('CLI Integration', () => {
 
   beforeEach(async () => {
     // Create a temporary workspace
-    testWorkspaceDir = join(tmpdir(), `thunder-test-workspace-${Date.now()}`);
+    testWorkspaceDir = join(tmpdir(), `configure-test-workspace-${Date.now()}`);
     await mkdir(testWorkspaceDir, {recursive: true});
 
     // Create a basic package.json to simulate a frontend workspace

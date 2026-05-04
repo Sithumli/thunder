@@ -68,7 +68,7 @@ async function createPackage(): Promise<void> {
   }
 
   const packageName = kebabCase(name);
-  const fullPackageName = `@thunder/${packageName}`;
+  const fullPackageName = `@thunderid/${packageName}`;
   const packageDir = join(workspaceInfo.packagePath!, `thunder-${packageName}`);
 
   // Check if package already exists

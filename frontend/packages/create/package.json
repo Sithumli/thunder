@@ -29,7 +29,7 @@
   },
   "types": "./dist/index.d.ts",
   "bin": {
-    "create": "./bin/create.js"
+    "create-thunderid": "./bin/create.js"
   },
   "sideEffects": false,
   "files": [
@@ -64,7 +64,7 @@
     "picocolors": "^1.0.0"
   },
   "devDependencies": {
-    "@thunderid/eslint-plugin-thunder": "workspace:^",
+    "@thunderid/eslint-plugin": "workspace:^",
     "@thunderid/prettier-config": "workspace:^",
     "@thunderid/test-utils": "workspace:^",
     "@types/lodash-es": "catalog:",

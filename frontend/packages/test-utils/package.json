@@ -68,7 +68,7 @@
   "devDependencies": {
     "@tanstack/react-query": "catalog:",
     "@thunderid/contexts": "workspace:^",
-    "@thunderid/eslint-plugin-thunder": "workspace:^",
+    "@thunderid/eslint-plugin": "workspace:^",
     "@thunderid/i18n": "workspace:^",
     "@thunderid/logger": "workspace:^",
     "@thunderid/prettier-config": "workspace:^",

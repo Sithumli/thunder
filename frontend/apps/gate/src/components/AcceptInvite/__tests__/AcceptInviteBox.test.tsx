@@ -71,17 +71,6 @@ const render = (ui: React.ReactElement) => {
   return testRender(<DesignContext.Provider value={designValue}>{ui}</DesignContext.Provider>);
 };
 
-// Mock useBranding
-const mockUseBranding = vi.fn().mockReturnValue({
-  images: {logo: {primary: {url: ''}}},
-  theme: null,
-  isBrandingEnabled: false,
-});
-vi.mock('@thunder/shared-branding', () => ({
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  useBranding: () => mockUseBranding(),
-}));
-
 // Mock useTemplateLiteralResolver
 vi.mock('@thunderid/hooks', () => ({
   useTemplateLiteralResolver: () => ({
@@ -1391,17 +1380,6 @@ describe('AcceptInviteBox', () => {
   });
 
   it('renders with branding enabled and centered text alignment', () => {
-    mockUseBranding.mockReturnValue({
-      images: {
-        logo: {
-          primary: {
-            url: 'https://example.com/logo.png',
-          },
-        },
-      },
-      theme: {palette: {primary: {main: '#ff0000'}}},
-      isBrandingEnabled: true,
-    });
     mockAcceptInviteRenderProps = createMockAcceptInviteRenderProps({
       components: [
         {
@@ -1417,36 +1395,11 @@ describe('AcceptInviteBox', () => {
   });
 
   it('renders branded logo with alt fallback', () => {
-    mockUseBranding.mockReturnValue({
-      images: {
-        logo: {
-          primary: {
-            url: 'https://example.com/logo.png',
-          },
-        },
-      },
-      theme: null,
-      isBrandingEnabled: true,
-    });
     render(<AcceptInviteBox />);
     expect(screen.getByTestId('asgardeo-accept-invite')).toBeInTheDocument();
   });
 
   it('renders branded logo with custom alt, height, and width', () => {
-    mockUseBranding.mockReturnValue({
-      images: {
-        logo: {
-          primary: {
-            url: 'https://example.com/logo.png',
-            alt: 'Custom Alt',
-            height: 50,
-            width: 120,
-          },
-        },
-      },
-      theme: {palette: {primary: {main: '#0000ff'}}},
-      isBrandingEnabled: true,
-    });
     render(<AcceptInviteBox />);
     expect(screen.getByTestId('asgardeo-accept-invite')).toBeInTheDocument();
   });

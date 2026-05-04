@@ -44,8 +44,8 @@ async function createFeature(): Promise<void> {
   const featureType = await select({
     message: 'Feature type:',
     options: [
-      {value: 'admin', label: 'Admin feature (thunder-admin-xxx)'},
-      {value: 'gate', label: 'Gate feature (gate-xxx)'},
+      {value: 'configure', label: 'Configuration feature (configure-xxx)'},
+      {value: 'gateway', label: 'Gateway feature (gateway-xxx)'},
     ],
   });
 
@@ -74,7 +74,7 @@ async function createFeature(): Promise<void> {
   }
 
   const featureName = kebabCase(name);
-  const packageName = `thunder-${featureType}-${featureName}`;
+  const packageName = `${featureType}-${featureName}`;
   const featureDir = join(workspaceInfo.packagePath, packageName);
 
   // Check if feature already exists

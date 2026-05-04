@@ -140,7 +140,7 @@ const config: Config = {
       content: '🚧 WIP: Docs are under active development and may change frequently.',
       isCloseable: false,
     },
-    image: 'assets/images/thunder-social-card.png',
+    image: 'assets/images/social-card.png',
     colorMode: {
       respectPrefersColorScheme: true,
     },

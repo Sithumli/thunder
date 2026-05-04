@@ -54,7 +54,7 @@
     "typecheck": "tsc -p tsconfig.lib.json"
   },
   "devDependencies": {
-    "@thunderid/eslint-plugin-thunder": "workspace:^",
+    "@thunderid/eslint-plugin": "workspace:^",
     "@thunderid/prettier-config": "workspace:^",
     "@types/node": "catalog:",
     "@types/react": "catalog:",

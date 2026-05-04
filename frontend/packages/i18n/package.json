@@ -25,19 +25,17 @@
     "lint": "eslint src",
     "typecheck": "tsc --noEmit"
   },
-  "dependencies": {
-    "@thunderid/contexts": "workspace:^"
-  },
   "peerDependencies": {
     "@asgardeo/react": "catalog:",
     "@tanstack/react-query": "catalog:",
+    "@thunderid/contexts": "workspace:^",
     "i18next": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
     "react-i18next": "catalog:"
   },
   "devDependencies": {
-    "@thunderid/eslint-plugin-thunder": "workspace:^",
+    "@thunderid/eslint-plugin": "workspace:^",
     "@thunderid/prettier-config": "workspace:^",
     "@types/node": "catalog:",
     "@types/react": "catalog:",

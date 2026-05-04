@@ -36,7 +36,7 @@
     "typecheck": "nx run-many --target=typecheck --all --parallel"
   },
   "devDependencies": {
-    "@thunderid/eslint-plugin-thunder": "workspace:^",
+    "@thunderid/eslint-plugin": "workspace:^",
     "@thunderid/logger": "workspace:^",
     "@thunderid/prettier-config": "workspace:^",
     "eslint": "catalog:",
