@@ -18,7 +18,7 @@
 
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import type {DocusaurusThunderConfig} from '@site/docusaurus.thunder.config';
+import type {DocusaurusProductConfig} from '@site/docusaurus.product.config';
 import {Box, Card, Typography, Container, Stack} from '@wso2/oxygen-ui';
 import React, {JSX} from 'react';
 import useIsDarkMode from '../../hooks/useIsDarkMode';
@@ -27,7 +27,7 @@ import useScrollAnimation from '../../hooks/useScrollAnimation';
 export default function APIReferenceSection(): JSX.Element {
   const isDark = useIsDarkMode();
   const {siteConfig} = useDocusaurusContext();
-  const {project} = siteConfig.customFields?.thunder as DocusaurusThunderConfig;
+  const {project} = siteConfig.customFields?.product as DocusaurusProductConfig;
   const productName = project.name;
   const {ref: textRef, isVisible: textVisible} = useScrollAnimation({threshold: 0.2});
   const {ref: cardRef, isVisible: cardVisible} = useScrollAnimation({threshold: 0.1});

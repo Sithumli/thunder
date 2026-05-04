@@ -18,7 +18,7 @@
 
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import type {DocusaurusThunderConfig} from '@site/docusaurus.thunder.config';
+import type {DocusaurusProductConfig} from '@site/docusaurus.product.config';
 import {Box, Container, Typography, Stack, Button} from '@wso2/oxygen-ui';
 import React, {JSX} from 'react';
 import useIsDarkMode from '../../hooks/useIsDarkMode';
@@ -210,7 +210,7 @@ function TechIconBox({
 export default function GetStartedSection(): JSX.Element {
   const isDark = useIsDarkMode();
   const {siteConfig} = useDocusaurusContext();
-  const {project} = siteConfig.customFields?.thunder as DocusaurusThunderConfig;
+  const {project} = siteConfig.customFields?.product as DocusaurusProductConfig;
   const productName = project.name;
   const {ref: titleRef, isVisible: titleVisible} = useScrollAnimation({threshold: 0.2});
   const {ref: stepsRef, isVisible: stepsVisible} = useScrollAnimation({threshold: 0.1});

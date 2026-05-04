@@ -18,7 +18,7 @@
 
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import type {DocusaurusThunderConfig} from '@site/docusaurus.thunder.config';
+import type {DocusaurusProductConfig} from '@site/docusaurus.product.config';
 import {Box, Container, Typography, Stack, Button} from '@wso2/oxygen-ui';
 import React, {JSX, useEffect, useState} from 'react';
 import ConstellationBackground from './ConstellationBackground';
@@ -28,7 +28,7 @@ import LoginBox from '../LoginBox';
 export default function HeroSection(): JSX.Element {
   const isDark = useIsDarkMode();
   const {siteConfig} = useDocusaurusContext();
-  const {project} = siteConfig.customFields?.thunder as DocusaurusThunderConfig;
+  const {project} = siteConfig.customFields?.product as DocusaurusProductConfig;
   const productName = project.name;
 
   // After entry animations finish, clear them so CSS transitions can take over.
@@ -159,7 +159,7 @@ export default function HeroSection(): JSX.Element {
             INTRODUCING
           </Typography>
 
-          {/* [ THUNDER ] title */}
+          {/* title */}
           <Typography
             variant="h2"
             sx={{
