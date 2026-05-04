@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "@thunderid/eslint-plugin-thunder": "workspace:^",
-    "@thunder/prettier-config": "workspace:^",
+    "@thunderid/prettier-config": "workspace:^",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",

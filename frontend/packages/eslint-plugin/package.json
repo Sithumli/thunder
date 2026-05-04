@@ -58,7 +58,7 @@
     "typecheck": "tsc -p tsconfig.lib.json"
   },
   "devDependencies": {
-    "@thunder/prettier-config": "workspace:^",
+    "@thunderid/prettier-config": "workspace:^",
     "@types/eslint": "9.6.1",
     "@types/eslint-plugin-jsx-a11y": "^6.10.1",
     "@types/estree": "1.0.8",

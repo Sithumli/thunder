@@ -165,7 +165,7 @@ importers:
       '@thunderid/logger':
         specifier: workspace:^
         version: link:packages/logger
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:packages/prettier-config
       eslint:
@@ -213,7 +213,7 @@ importers:
       '@thunderid/logger':
         specifier: workspace:^
         version: link:../frontend/packages/logger
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:../frontend/packages/prettier-config
       '@wso2/oxygen-ui':
@@ -431,7 +431,7 @@ importers:
       '@thunderid/eslint-plugin-thunder':
         specifier: workspace:^
         version: link:../../packages/eslint-plugin
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:../../packages/prettier-config
       '@thunderid/test-utils':
@@ -570,7 +570,7 @@ importers:
       '@thunderid/eslint-plugin-thunder':
         specifier: workspace:^
         version: link:../../packages/eslint-plugin
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:../../packages/prettier-config
       '@thunderid/test-utils':
@@ -658,7 +658,7 @@ importers:
       '@thunderid/eslint-plugin-thunder':
         specifier: workspace:^
         version: link:../eslint-plugin
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:../prettier-config
       '@thunderid/test-utils':
@@ -761,7 +761,7 @@ importers:
       '@thunderid/eslint-plugin-thunder':
         specifier: workspace:^
         version: link:../eslint-plugin
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:../prettier-config
       '@thunderid/test-utils':
@@ -855,7 +855,7 @@ importers:
       '@thunderid/eslint-plugin-thunder':
         specifier: workspace:^
         version: link:../eslint-plugin
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:../prettier-config
       '@thunderid/test-utils':
@@ -958,7 +958,7 @@ importers:
       '@thunderid/eslint-plugin-thunder':
         specifier: workspace:^
         version: link:../eslint-plugin
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:../prettier-config
       '@thunderid/test-utils':
@@ -1013,7 +1013,7 @@ importers:
       '@thunderid/eslint-plugin-thunder':
         specifier: workspace:^
         version: link:../eslint-plugin
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:../prettier-config
       '@types/node':
@@ -1083,7 +1083,7 @@ importers:
       '@thunderid/eslint-plugin-thunder':
         specifier: workspace:^
         version: link:../eslint-plugin
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:../prettier-config
       '@thunderid/test-utils':
@@ -1162,7 +1162,7 @@ importers:
       '@thunderid/eslint-plugin-thunder':
         specifier: workspace:^
         version: link:../eslint-plugin
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:../prettier-config
       '@thunderid/test-utils':
@@ -1262,7 +1262,7 @@ importers:
         specifier: 8.57.2
         version: 8.57.2(eslint@9.39.4(jiti@2.6.1))(typescript@5.9.3)
     devDependencies:
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:../prettier-config
       '@types/eslint':
@@ -1314,7 +1314,7 @@ importers:
       '@thunderid/eslint-plugin-thunder':
         specifier: workspace:^
         version: link:../eslint-plugin
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:../prettier-config
       '@thunderid/test-utils':
@@ -1387,7 +1387,7 @@ importers:
       '@thunderid/eslint-plugin-thunder':
         specifier: workspace:^
         version: link:../eslint-plugin
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:../prettier-config
       '@types/node':
@@ -1421,7 +1421,7 @@ importers:
       '@thunderid/eslint-plugin-thunder':
         specifier: workspace:^
         version: link:../eslint-plugin
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:../prettier-config
       '@types/node':
@@ -1513,7 +1513,7 @@ importers:
       '@thunderid/logger':
         specifier: workspace:^
         version: link:../logger
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:../prettier-config
       '@types/node':
@@ -1567,7 +1567,7 @@ importers:
       '@thunderid/eslint-plugin-thunder':
         specifier: workspace:^
         version: link:../eslint-plugin
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:../prettier-config
       '@thunderid/test-utils':
@@ -1604,7 +1604,7 @@ importers:
       '@thunderid/eslint-plugin-thunder':
         specifier: workspace:^
         version: link:../eslint-plugin
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:../prettier-config
       '@thunderid/test-utils':

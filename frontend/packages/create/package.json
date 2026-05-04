@@ -65,7 +65,7 @@
   },
   "devDependencies": {
     "@thunderid/eslint-plugin-thunder": "workspace:^",
-    "@thunder/prettier-config": "workspace:^",
+    "@thunderid/prettier-config": "workspace:^",
     "@thunderid/test-utils": "workspace:^",
     "@types/lodash-es": "catalog:",
     "@types/node": "catalog:",

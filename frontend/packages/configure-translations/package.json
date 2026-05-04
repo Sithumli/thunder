@@ -54,7 +54,7 @@
     "@testing-library/react": "catalog:",
     "@testing-library/user-event": "catalog:",
     "@thunderid/eslint-plugin-thunder": "workspace:^",
-    "@thunder/prettier-config": "workspace:^",
+    "@thunderid/prettier-config": "workspace:^",
     "@thunderid/test-utils": "workspace:^",
     "@types/node": "catalog:",
     "@types/react": "catalog:",

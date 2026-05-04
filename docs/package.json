@@ -45,7 +45,7 @@
     "@mdx-js/react": "3.0.0",
     "@thunderid/eslint-plugin-thunder": "workspace:^",
     "@thunderid/logger": "workspace:^",
-    "@thunder/prettier-config": "workspace:^",
+    "@thunderid/prettier-config": "workspace:^",
     "@wso2/oxygen-ui": "catalog:",
     "@wso2/oxygen-ui-icons-react": "catalog:",
     "@scalar/api-reference-react": "0.9.15",
