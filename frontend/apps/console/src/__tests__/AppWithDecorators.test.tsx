@@ -30,7 +30,7 @@ const mockIsTrustedIssuerGenericOidc = vi.fn().mockReturnValue(false);
 const mockConfig: Record<string, unknown> = {};
 
 // Mock the useConfig hook
-vi.mock('@thunder/contexts', () => ({
+vi.mock('@thunderid/contexts', () => ({
   useConfig: () => ({
     getTrustedIssuerUrl: mockGetTrustedIssuerUrl,
     getTrustedIssuerClientId: mockGetTrustedIssuerClientId,
@@ -89,7 +89,7 @@ vi.mock('react-i18next', () => ({
   initReactI18next: {},
 }));
 
-vi.mock('@thunder/i18n/locales/en-US', () => ({
+vi.mock('@thunderid/i18n/locales/en-US', () => ({
   default: {common: {}, navigation: {}},
 }));
 

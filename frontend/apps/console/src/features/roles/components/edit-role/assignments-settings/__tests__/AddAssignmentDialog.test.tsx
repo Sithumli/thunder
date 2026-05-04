@@ -17,15 +17,15 @@
  */
 
 import userEvent from '@testing-library/user-event';
-import {render, screen, waitFor} from '@thunder/test-utils';
+import {render, screen, waitFor} from '@thunderid/test-utils';
 import {describe, it, expect, vi, beforeEach, afterEach} from 'vitest';
 import AddAssignmentDialog from '../AddAssignmentDialog';
 
-vi.mock('@thunder/configure-users');
+vi.mock('@thunderid/configure-users');
 vi.mock('../../../../../groups/api/useGetGroups');
 vi.mock('../../../../../applications/api/useGetApplications');
 vi.mock('../../../../api/useGetRoleAssignments');
-vi.mock('@thunder/hooks', () => ({
+vi.mock('@thunderid/hooks', () => ({
   useDataGridLocaleText: vi.fn(),
 }));
 
@@ -104,11 +104,11 @@ vi.mock('@wso2/oxygen-ui', async (importOriginal) => {
   };
 });
 
-const {useGetUsers} = await import('@thunder/configure-users');
+const {useGetUsers} = await import('@thunderid/configure-users');
 const {default: useGetGroups} = await import('../../../../../groups/api/useGetGroups');
 const {default: useGetApplications} = await import('../../../../../applications/api/useGetApplications');
 const {default: useGetRoleAssignments} = await import('../../../../api/useGetRoleAssignments');
-const {useDataGridLocaleText} = await import('@thunder/hooks');
+const {useDataGridLocaleText} = await import('@thunderid/hooks');
 
 describe('AddAssignmentDialog', () => {
   const mockOnClose = vi.fn();

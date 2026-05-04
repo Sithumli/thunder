@@ -17,14 +17,14 @@
  */
 
 import userEvent from '@testing-library/user-event';
-import {generateIconSuggestions} from '@thunder/components';
-import {render, screen} from '@thunder/test-utils';
+import {generateIconSuggestions} from '@thunderid/components';
+import {render, screen} from '@thunderid/test-utils';
 import type {ReactNode} from 'react';
 import {describe, it, expect, beforeEach, vi} from 'vitest';
 import ConfigureDesign, {type ConfigureDesignProps} from '../ConfigureDesign';
 
 // Mock the Packages
-vi.mock('@thunder/components', () => ({
+vi.mock('@thunderid/components', () => ({
   generateIconSuggestions: vi.fn(() => null),
   ResourceAvatar: vi.fn(({value, fallback, onClick}: {value?: string; fallback?: ReactNode; onClick?: () => void}) => (
     <button
@@ -36,9 +36,9 @@ vi.mock('@thunder/components', () => ({
     </button>
   )),
 }));
-vi.mock('@thunder/design');
+vi.mock('@thunderid/design');
 
-const {useGetThemes, useGetTheme} = await import('@thunder/design');
+const {useGetThemes, useGetTheme} = await import('@thunderid/design');
 
 describe('ConfigureDesign', () => {
   const mockOnLogoSelect = vi.fn();

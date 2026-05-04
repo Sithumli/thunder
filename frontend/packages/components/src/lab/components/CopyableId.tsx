@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {useLogger} from '@thunder/logger/react';
+import {useLogger} from '@thunderid/logger/react';
 import {Stack, Typography, Tooltip} from '@wso2/oxygen-ui';
 import {Copy, Check} from '@wso2/oxygen-ui-icons-react';
 import {useState, useCallback, useRef, useEffect, type JSX} from 'react';

@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {render, screen} from '@thunder/test-utils';
+import {render, screen} from '@thunderid/test-utils';
 import {describe, it, expect, vi, beforeEach} from 'vitest';
 import SignIn from '../SignIn';
 
@@ -31,8 +31,8 @@ vi.mock('../SignInSlogan', () => ({
 
 // Mock useDesign hook
 const mockUseDesign = vi.fn();
-vi.mock('@thunder/design', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@thunder/design')>();
+vi.mock('@thunderid/design', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@thunderid/design')>();
   return {
     ...actual,
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return

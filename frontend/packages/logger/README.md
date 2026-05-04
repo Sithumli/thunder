@@ -1,6 +1,6 @@
-# @thunder/logger
+# @thunderid/logger
 
-Universal TypeScript logging library with pluggable transports for Thunder applications. Works seamlessly with vanilla
+Universal TypeScript logging library with pluggable transports for ThunderID applications. Works seamlessly with vanilla
 JavaScript, React, Vite, and Next.js applications.
 
 ## Features
@@ -20,7 +20,7 @@ JavaScript, React, Vite, and Next.js applications.
 Since this is a workspace package, install dependencies from the root:
 
 ```bash
-pnpm add -D @thunder/logger
+pnpm add -D @thunderid/logger
 ```
 
 ## Quick Start
@@ -28,7 +28,7 @@ pnpm add -D @thunder/logger
 ### Vanilla JavaScript / TypeScript
 
 ```typescript
-import {Logger, ConsoleTransport} from '@thunder/logger';
+import {Logger, ConsoleTransport} from '@thunderid/logger';
 
 // Create logger with console transport
 const logger = new Logger({
@@ -45,8 +45,8 @@ logger.error('Failed to fetch data', {error: err});
 ### React Application (Vite)
 
 ```tsx
-import {LoggerProvider, useLogger} from '@thunder/logger/react';
-import {ConsoleTransport} from '@thunder/logger';
+import {LoggerProvider, useLogger} from '@thunderid/logger/react';
+import {ConsoleTransport} from '@thunderid/logger';
 
 // 1. Wrap your app with LoggerProvider
 function App() {
@@ -77,7 +77,7 @@ function MyComponent() {
 ### Next.js Application (SSR-Safe)
 
 ```tsx
-import {Logger, ConsoleTransport, StdoutTransport} from '@thunder/logger';
+import {Logger, ConsoleTransport, StdoutTransport} from '@thunderid/logger';
 
 // Server-side (API routes, getServerSideProps)
 const serverLogger = new Logger({
@@ -91,7 +91,7 @@ export async function getServerSideProps() {
 }
 
 // Client-side (components)
-import {LoggerProvider, useLogger} from '@thunder/logger/react';
+import {LoggerProvider, useLogger} from '@thunderid/logger/react';
 
 export default function App({Component, pageProps}) {
   return (
@@ -112,7 +112,7 @@ export default function App({Component, pageProps}) {
 ### Logger Class
 
 ```typescript
-import {Logger, ConsoleTransport} from '@thunder/logger';
+import {Logger, ConsoleTransport} from '@thunderid/logger';
 
 const logger = new Logger({
   level: 'info', // 'debug' | 'info' | 'warn' | 'error'
@@ -196,7 +196,7 @@ logger.error('This WILL be logged');
 Logs to browser console with styled output:
 
 ```typescript
-import {ConsoleTransport} from '@thunder/logger';
+import {ConsoleTransport} from '@thunderid/logger';
 
 const transport = new ConsoleTransport({
   level: 'debug', // Optional: override logger level for this transport
@@ -215,7 +215,7 @@ const transport = new ConsoleTransport({
 Logs structured JSON to stdout (Node.js environments):
 
 ```typescript
-import {StdoutTransport} from '@thunder/logger';
+import {StdoutTransport} from '@thunderid/logger';
 
 const transport = new StdoutTransport({
   level: 'info',
@@ -240,7 +240,7 @@ const transport = new StdoutTransport({
 Sends logs to remote HTTP endpoints:
 
 ```typescript
-import {HttpTransport} from '@thunder/logger';
+import {HttpTransport} from '@thunderid/logger';
 
 const transport = new HttpTransport({
   level: 'error', // Only send errors to remote service
@@ -361,7 +361,7 @@ const transport = new HttpTransport({
 Send logs to multiple destinations simultaneously:
 
 ```typescript
-import {Logger, ConsoleTransport, StdoutTransport, HttpTransport} from '@thunder/logger';
+import {Logger, ConsoleTransport, StdoutTransport, HttpTransport} from '@thunderid/logger';
 
 const logger = new Logger({
   level: 'debug',
@@ -397,7 +397,7 @@ Create custom transports for services like Sentry, Datadog, LogRocket, etc.
 ### Step 1: Extend BaseTransport
 
 ```typescript
-import {BaseTransport, LogEntry, LogLevel} from '@thunder/logger';
+import {BaseTransport, LogEntry, LogLevel} from '@thunderid/logger';
 
 export class SentryTransport extends BaseTransport {
   private dsn: string;
@@ -442,7 +442,7 @@ export class SentryTransport extends BaseTransport {
 ### Step 2: Use Your Custom Transport
 
 ```typescript
-import {Logger} from '@thunder/logger';
+import {Logger} from '@thunderid/logger';
 import {SentryTransport} from './transports/sentry';
 
 const logger = new Logger({
@@ -462,7 +462,7 @@ const logger = new Logger({
 **Recommended: Extend BaseTransport**
 
 ```typescript
-import {BaseTransport, LogEntry, LogLevel} from '@thunder/logger';
+import {BaseTransport, LogEntry, LogLevel} from '@thunderid/logger';
 
 export class MyTransport extends BaseTransport {
   constructor(options?: {level?: LogLevel}) {
@@ -488,7 +488,7 @@ export class MyTransport extends BaseTransport {
 **Advanced: Implement Transport Interface Directly**
 
 ```typescript
-import {Transport, LogEntry, LogLevel} from '@thunder/logger';
+import {Transport, LogEntry, LogLevel} from '@thunderid/logger';
 
 export class MyTransport implements Transport {
   getName(): string {
@@ -555,7 +555,7 @@ pnpm add winston
 **Implementation:**
 
 ```typescript
-import {BaseTransport, LogEntry, LogLevel} from '@thunder/logger';
+import {BaseTransport, LogEntry, LogLevel} from '@thunderid/logger';
 import winston from 'winston';
 
 export class WinstonTransport extends BaseTransport {
@@ -629,7 +629,7 @@ export class WinstonTransport extends BaseTransport {
 **Usage:**
 
 ```typescript
-import {Logger} from '@thunder/logger';
+import {Logger} from '@thunderid/logger';
 import {WinstonTransport} from './transports/winston';
 
 // Next.js or Node.js application
@@ -686,7 +686,7 @@ pnpm add @sentry/node
 **Implementation:**
 
 ```typescript
-import {Transport, LogEntry, LogLevel} from '@thunder/logger';
+import {Transport, LogEntry, LogLevel} from '@thunderid/logger';
 import * as Sentry from '@sentry/browser';
 // Or for Next.js: import * as Sentry from '@sentry/nextjs';
 // Or for Node.js: import * as Sentry from '@sentry/node';
@@ -796,7 +796,7 @@ export class SentryTransport implements Transport {
 **Usage:**
 
 ```typescript
-import {Logger, ConsoleTransport} from '@thunder/logger';
+import {Logger, ConsoleTransport} from '@thunderid/logger';
 import {SentryTransport} from './transports/sentry';
 
 // Browser or Next.js application
@@ -836,7 +836,7 @@ try {
 
 ```tsx
 import {Component, ErrorInfo, ReactNode} from 'react';
-import {Logger} from '@thunder/logger';
+import {Logger} from '@thunderid/logger';
 
 interface Props {
   children: ReactNode;
@@ -872,7 +872,7 @@ export class ErrorBoundary extends Component<Props, State> {
 }
 
 // Usage
-import {useLogger} from '@thunder/logger/react';
+import {useLogger} from '@thunderid/logger/react';
 
 function App() {
   const logger = useLogger();
@@ -909,7 +909,7 @@ function App() {
 Use multiple external services together for comprehensive logging:
 
 ```typescript
-import {Logger, ConsoleTransport, StdoutTransport} from '@thunder/logger';
+import {Logger, ConsoleTransport, StdoutTransport} from '@thunderid/logger';
 import {WinstonTransport} from './transports/winston';
 import {SentryTransport} from './transports/sentry';
 
@@ -968,7 +968,7 @@ export default logger;
 #### Datadog
 
 ```typescript
-import {BaseTransport, LogEntry, LogLevel} from '@thunder/logger';
+import {BaseTransport, LogEntry, LogLevel} from '@thunderid/logger';
 import {datadogLogs} from '@datadog/browser-logs';
 
 export class DatadogTransport extends BaseTransport {
@@ -994,7 +994,7 @@ export class DatadogTransport extends BaseTransport {
 #### LogRocket
 
 ```typescript
-import {BaseTransport, LogEntry, LogLevel} from '@thunder/logger';
+import {BaseTransport, LogEntry, LogLevel} from '@thunderid/logger';
 import LogRocket from 'logrocket';
 
 export class LogRocketTransport extends BaseTransport {
@@ -1015,7 +1015,7 @@ export class LogRocketTransport extends BaseTransport {
 #### Elastic (ELK Stack)
 
 ```typescript
-import {BaseTransport, LogEntry, LogLevel} from '@thunder/logger';
+import {BaseTransport, LogEntry, LogLevel} from '@thunderid/logger';
 import {Client} from '@elastic/elasticsearch';
 
 export class ElasticTransport extends BaseTransport {
@@ -1054,8 +1054,8 @@ export class ElasticTransport extends BaseTransport {
 Wrap your application with `LoggerProvider` to provide logger access to all components:
 
 ```tsx
-import {LoggerProvider} from '@thunder/logger/react';
-import {Logger, ConsoleTransport, HttpTransport, LogLevel} from '@thunder/logger';
+import {LoggerProvider} from '@thunderid/logger/react';
+import {Logger, ConsoleTransport, HttpTransport, LogLevel} from '@thunderid/logger';
 
 function App() {
   return (
@@ -1099,7 +1099,7 @@ function App() {
 Access the logger in any component:
 
 ```tsx
-import {useLogger} from '@thunder/logger/react';
+import {useLogger} from '@thunderid/logger/react';
 
 function UserProfile({userId}) {
   const logger = useLogger();
@@ -1131,7 +1131,7 @@ function UserProfile({userId}) {
 Automatically scope loggers to specific components by passing the component name to `useLogger`:
 
 ```tsx
-import {useLogger} from '@thunder/logger/react';
+import {useLogger} from '@thunderid/logger/react';
 
 function UserList() {
   const logger = useLogger('UserList');
@@ -1235,7 +1235,7 @@ logger.error('Failed to save', {error, userId: user.id});
 
 ## Package Structure
 
-The `@thunder/logger` package follows standard coding practices with a clean, modular structure:
+The `@thunderid/logger` package follows standard coding practices with a clean, modular structure:
 
 ```
 src/
@@ -1268,8 +1268,8 @@ src/
 
 ### Entry Points
 
-- **`@thunder/logger`** - Main entry point with all exports
-- **`@thunder/logger/react`** - React-specific exports (Provider, hooks, Context)
+- **`@thunderid/logger`** - Main entry point with all exports
+- **`@thunderid/logger/react`** - React-specific exports (Provider, hooks, Context)
 
 ### Design Principles
 
@@ -1404,7 +1404,7 @@ const logger = new Logger({level: 'info', transports});
 Full TypeScript support with type inference:
 
 ```typescript
-import type {Logger, LogLevel, LogEntry, Transport} from '@thunder/logger';
+import type {Logger, LogLevel, LogEntry, Transport} from '@thunderid/logger';
 
 // Logger config is fully typed
 const config: LoggerConfig = {

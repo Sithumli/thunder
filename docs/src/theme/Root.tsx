@@ -16,8 +16,8 @@
  * under the License.
  */
 
-import { useLocation } from '@docusaurus/router';
-import {LoggerProvider, LogLevel} from '@thunder/logger/react';
+import {useLocation} from '@docusaurus/router';
+import {LoggerProvider, LogLevel} from '@thunderid/logger/react';
 import {OxygenUIThemeProvider, AcrylicOrangeTheme} from '@wso2/oxygen-ui';
 import React, {PropsWithChildren, useEffect} from 'react';
 import {applyPersona, PERSONAS, type Persona} from './NavbarItem/PersonaDropdown';
@@ -41,7 +41,7 @@ export default function Root({children = null}: PropsWithChildren<Record<string,
   // Restore persona selection from localStorage before first paint.
   useEffect(() => {
     const saved = localStorage.getItem(PERSONA_STORAGE_KEY) as Persona | null;
-    if (saved && PERSONAS.some(p => p.value === saved)) {
+    if (saved && PERSONAS.some((p) => p.value === saved)) {
       applyPersona(saved);
     }
   }, []);

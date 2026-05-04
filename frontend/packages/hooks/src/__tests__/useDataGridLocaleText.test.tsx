@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {render, renderHook, screen, userEvent} from '@thunder/test-utils';
+import {render, renderHook, screen, userEvent} from '@thunderid/test-utils';
 import {useState} from 'react';
 import {getI18n} from 'react-i18next';
 import {describe, it, expect, vi} from 'vitest';
@@ -31,8 +31,8 @@ const {mockLogger} = vi.hoisted(() => ({
   },
 }));
 
-vi.mock('@thunder/logger', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@thunder/logger')>();
+vi.mock('@thunderid/logger', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@thunderid/logger')>();
 
   return {
     ...actual,

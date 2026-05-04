@@ -1,4 +1,4 @@
-# Thunder API-Based Authentication Sample Application
+# ThunderID API-Based Authentication Sample Application
 
 This sample application demonstrates how to integrate authentication into a React application using direct API calls instead of SDK-based OAuth redirects. It showcases API-based user registration (sign-up) and authentication (sign-in) flows.
 

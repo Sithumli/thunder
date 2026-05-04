@@ -17,7 +17,7 @@
  */
 
 import type {EmbeddedFlowComponent} from '@asgardeo/react';
-import {render, screen, waitFor, userEvent} from '@thunder/test-utils';
+import {render, screen, waitFor, userEvent} from '@thunderid/test-utils';
 import type {JSX} from 'react';
 import {describe, it, expect, vi, beforeEach} from 'vitest';
 import UserInvitePage from '../UserInvitePage';
@@ -79,7 +79,7 @@ let mockInviteUserRenderProps: TestInviteUserRenderProps = {...defaultRenderProp
 /*  Mocks                                                             */
 /* ------------------------------------------------------------------ */
 
-vi.mock('@thunder/logger/react', () => ({
+vi.mock('@thunderid/logger/react', () => ({
   useLogger: () => ({
     info: mockLoggerInfo,
     error: mockLoggerError,
@@ -120,7 +120,7 @@ vi.mock('@asgardeo/react', async () => {
   };
 });
 
-vi.mock('@thunder/hooks', () => ({
+vi.mock('@thunderid/hooks', () => ({
   useTemplateLiteralResolver: () => ({
     resolve: (key: string) => key,
   }),

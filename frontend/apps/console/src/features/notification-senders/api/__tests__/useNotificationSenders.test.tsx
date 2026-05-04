@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {renderHook, waitFor} from '@thunder/test-utils';
+import {renderHook, waitFor} from '@thunderid/test-utils';
 import {describe, it, expect, vi, beforeEach} from 'vitest';
 import NotificationSenderQueryKeys from '../../constants/query-keys';
 import type {NotificationSenderListResponse} from '../../models/notification-sender';
@@ -25,8 +25,8 @@ import useNotificationSenders from '../useNotificationSenders';
 // Mock useConfig
 const mockGetServerUrl = vi.fn(() => 'https://api.example.com');
 
-vi.mock('@thunder/contexts', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@thunder/contexts')>();
+vi.mock('@thunderid/contexts', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@thunderid/contexts')>();
   return {
     ...actual,
     useConfig: () => ({

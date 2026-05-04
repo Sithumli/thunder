@@ -16,13 +16,13 @@
  * under the License.
  */
 
-import {render, screen, waitFor, fireEvent} from '@thunder/test-utils';
+import {render, screen, waitFor, fireEvent} from '@thunderid/test-utils';
 import {describe, it, expect, vi, beforeEach, afterEach} from 'vitest';
 import type {Role} from '../../../../models/role';
 import EditGeneralSettings from '../EditGeneralSettings';
 
 // Mock Components
-vi.mock('@thunder/components', () => ({
+vi.mock('@thunderid/components', () => ({
   SettingsCard: ({title, description, children}: {title: string; description: string; children: React.ReactNode}) => (
     <div data-testid="settings-card">
       <h3>{title}</h3>

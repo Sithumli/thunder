@@ -26,8 +26,8 @@ import {
   type RenderHookOptions,
   type RenderResult,
 } from '@testing-library/react';
-import {ConfigProvider, ToastProvider} from '@thunder/contexts';
-import {LoggerProvider, LogLevel} from '@thunder/logger';
+import {ConfigProvider, ToastProvider} from '@thunderid/contexts';
+import {LoggerProvider, LogLevel} from '@thunderid/logger';
 import {OxygenUIThemeProvider} from '@wso2/oxygen-ui';
 import {useMemo, type ReactElement, type ReactNode} from 'react';
 import {MemoryRouter} from 'react-router';
@@ -77,7 +77,7 @@ const defaultConfig: ThunderTestConfig = {
  * The CSS class name prefix used by cn() during tests.
  * Import this instead of hardcoding the product name in test assertions.
  */
-export const TEST_CN_PREFIX = 'Thunder';
+export const TEST_CN_PREFIX = 'ThunderID';
 
 // Store the current config
 let currentConfig: ThunderTestConfig = defaultConfig;
@@ -105,7 +105,7 @@ function Providers({children, queryClient = undefined, config = undefined}: Prov
     // eslint-disable-next-line react-hooks/immutability
     window.__THUNDER_RUNTIME_CONFIG__ = {
       brand: {
-        product_name: 'Thunder',
+        product_name: 'ThunderID',
       },
       client: {
         base: testConfig.base,

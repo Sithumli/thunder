@@ -29,7 +29,7 @@ vi.mock('react-i18next', () => ({
   Trans: ({children}: {children: ReactNode}) => children,
 }));
 
-vi.mock('@thunder/hooks', () => ({
+vi.mock('@thunderid/hooks', () => ({
   useTemplateLiteralResolver: () => ({
     resolve: (value: string | undefined) => value,
   }),

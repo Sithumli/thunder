@@ -25,7 +25,7 @@ import useConfig from '../useConfig';
 
 function buildConfig(overrides?: Partial<ProductConfig>): ProductConfig {
   return {
-    brand: {product_name: 'Thunder'},
+    brand: {product_name: 'ThunderID'},
     client: {base: '/console', client_id: 'CONSOLE'},
     server: {hostname: 'localhost', port: 8090, http_only: false},
     ...overrides,

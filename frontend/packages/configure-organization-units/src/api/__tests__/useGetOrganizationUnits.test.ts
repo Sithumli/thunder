@@ -17,7 +17,7 @@
  */
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import {waitFor, renderHook} from '@thunder/test-utils';
+import {waitFor, renderHook} from '@thunderid/test-utils';
 import {describe, it, expect, beforeEach, afterEach, vi} from 'vitest';
 import type {OrganizationUnitListResponse} from '../../models/responses';
 import useGetOrganizationUnits from '../useGetOrganizationUnits';
@@ -33,8 +33,8 @@ vi.mock('@asgardeo/react', () => ({
 }));
 
 // Mock useConfig
-vi.mock('@thunder/contexts', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@thunder/contexts')>();
+vi.mock('@thunderid/contexts', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@thunderid/contexts')>();
   return {
     ...actual,
     useConfig: () => ({

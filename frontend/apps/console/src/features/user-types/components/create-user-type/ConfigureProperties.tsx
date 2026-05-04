@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {useResolveDisplayName} from '@thunder/hooks';
+import {useResolveDisplayName} from '@thunderid/hooks';
 import {
   Alert,
   Box,

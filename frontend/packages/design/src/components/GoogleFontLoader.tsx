@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {useConfig} from '@thunder/contexts';
+import {useConfig} from '@thunderid/contexts';
 import {useEffect} from 'react';
 import {SYSTEM_FONTS} from '../constants/fonts';
 

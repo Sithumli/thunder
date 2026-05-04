@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {render, screen, waitFor, userEvent} from '@thunder/test-utils';
+import {render, screen, waitFor, userEvent} from '@thunderid/test-utils';
 import {describe, it, expect, vi, beforeEach} from 'vitest';
 import UserTypesListPage from '../UserTypesListPage';
 
@@ -34,7 +34,7 @@ vi.mock('react-router', async () => {
 });
 
 // Mock logger
-vi.mock('@thunder/logger/react', () => ({
+vi.mock('@thunderid/logger/react', () => ({
   useLogger: () => ({
     error: mockLoggerError,
     info: vi.fn(),

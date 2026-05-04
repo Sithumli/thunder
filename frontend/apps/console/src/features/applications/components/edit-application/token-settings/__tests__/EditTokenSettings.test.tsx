@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {render, screen, waitFor} from '@thunder/test-utils';
+import {render, screen, waitFor} from '@thunderid/test-utils';
 import {describe, it, expect, vi, beforeEach} from 'vitest';
 import type {Application} from '../../../../models/application';
 import type {OAuth2Config} from '../../../../models/oauth';
@@ -124,8 +124,8 @@ vi.mock('@asgardeo/react', () => ({
 }));
 
 // Mock useConfig — stable mockGetServerUrl reference (also in fetchSchemas deps).
-vi.mock('@thunder/contexts', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@thunder/contexts')>();
+vi.mock('@thunderid/contexts', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@thunderid/contexts')>();
   return {
     ...actual,
     useConfig: () => ({
@@ -135,8 +135,8 @@ vi.mock('@thunder/contexts', async (importOriginal) => {
 });
 
 // Mock useLogger — stable mockLogger reference (also in fetchSchemas deps).
-vi.mock('@thunder/logger', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@thunder/logger')>();
+vi.mock('@thunderid/logger', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@thunderid/logger')>();
   return {
     ...actual,
     useLogger: () => mockLogger,

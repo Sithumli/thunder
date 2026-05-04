@@ -1,9 +1,9 @@
 {
-  "name": "@thunder/hooks",
+  "name": "@thunderid/hooks",
   "version": "0.0.0",
-  "description": "Shared React hooks for ⚡️ Thunder applications",
+  "description": "Shared React hooks for ⚡️ ThunderID applications",
   "keywords": [
-    "thunder",
+    "thunderid",
     "hooks",
     "react",
     "shareable",
@@ -49,9 +49,9 @@
     "typecheck": "tsc -p tsconfig.lib.json"
   },
   "devDependencies": {
-    "@thunder/eslint-plugin-thunder": "workspace:^",
-    "@thunder/prettier-config": "workspace:^",
-    "@thunder/test-utils": "workspace:^",
+    "@thunderid/eslint-plugin": "workspace:^",
+    "@thunderid/prettier-config": "workspace:^",
+    "@thunderid/test-utils": "workspace:^",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@vitest/browser-playwright": "catalog:",
@@ -72,9 +72,9 @@
   "dependencies": {},
   "peerDependencies": {
     "@wso2/oxygen-ui": "catalog:",
-    "@thunder/logger": "workspace:^",
-    "@thunder/test-utils": "workspace:^",
-    "@thunder/utils": "workspace:^",
+    "@thunderid/logger": "workspace:^",
+    "@thunderid/test-utils": "workspace:^",
+    "@thunderid/utils": "workspace:^",
     "react": "catalog:",
     "react-dom": "catalog:",
     "react-i18next": "catalog:"

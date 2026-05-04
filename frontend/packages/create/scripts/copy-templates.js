@@ -18,12 +18,12 @@
  * under the License.
  */
 
-/* eslint-disable @thunder/copyright-header, no-undef */
+/* eslint-disable @thunderid/copyright-header, no-undef */
 
 import {cpSync} from 'node:fs';
 import {dirname, join} from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {createLogger} from '@thunder/logger';
+import {createLogger} from '@thunderid/logger';
 
 const logger = createLogger();
 

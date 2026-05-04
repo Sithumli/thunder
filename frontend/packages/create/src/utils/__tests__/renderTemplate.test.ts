@@ -34,9 +34,9 @@ describe('renderTemplate', () => {
 
   it('should render a template with single variable', () => {
     const template = 'Hello, {{name}}!';
-    const result = renderTemplate(template, {name: 'Thunder'});
+    const result = renderTemplate(template, {name: 'ThunderID'});
 
-    expect(result).toBe('Hello, Thunder!');
+    expect(result).toBe('Hello, ThunderID!');
   });
 
   it('should render a template with multiple variables', () => {
@@ -44,10 +44,10 @@ describe('renderTemplate', () => {
     const result = renderTemplate(template, {
       greeting: 'Hi',
       name: 'User',
-      app: 'Thunder',
+      app: 'ThunderID',
     });
 
-    expect(result).toBe('Hi, User! Welcome to Thunder.');
+    expect(result).toBe('Hi, User! Welcome to ThunderID.');
   });
 
   it('should handle nested object properties', () => {

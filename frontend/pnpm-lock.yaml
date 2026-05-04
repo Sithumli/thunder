@@ -159,13 +159,13 @@ importers:
 
   .:
     devDependencies:
-      '@thunder/eslint-plugin-thunder':
+      '@thunderid/eslint-plugin':
         specifier: workspace:^
         version: link:packages/eslint-plugin
-      '@thunder/logger':
+      '@thunderid/logger':
         specifier: workspace:^
         version: link:packages/logger
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:packages/prettier-config
       eslint:
@@ -207,13 +207,13 @@ importers:
       '@scalar/api-reference-react':
         specifier: 0.9.15
         version: 0.9.15(axios@1.15.0)(nprogress@0.2.0)(react@19.2.3)(tailwindcss@4.1.18)(typescript@5.9.3)
-      '@thunder/eslint-plugin-thunder':
+      '@thunderid/eslint-plugin':
         specifier: workspace:^
         version: link:../frontend/packages/eslint-plugin
-      '@thunder/logger':
+      '@thunderid/logger':
         specifier: workspace:^
         version: link:../frontend/packages/logger
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:../frontend/packages/prettier-config
       '@wso2/oxygen-ui':
@@ -319,34 +319,34 @@ importers:
       '@tanstack/react-query-devtools':
         specifier: 'catalog:'
         version: 5.90.2(@tanstack/react-query@5.90.5(react@19.2.3))(react@19.2.3)
-      '@thunder/components':
+      '@thunderid/components':
         specifier: workspace:^
         version: link:../../packages/components
-      '@thunder/configure-organization-units':
+      '@thunderid/configure-organization-units':
         specifier: workspace:^
         version: link:../../packages/configure-organization-units
-      '@thunder/configure-translations':
+      '@thunderid/configure-translations':
         specifier: workspace:^
         version: link:../../packages/configure-translations
-      '@thunder/configure-users':
+      '@thunderid/configure-users':
         specifier: workspace:^
         version: link:../../packages/configure-users
-      '@thunder/contexts':
+      '@thunderid/contexts':
         specifier: workspace:^
         version: link:../../packages/contexts
-      '@thunder/design':
+      '@thunderid/design':
         specifier: workspace:^
         version: link:../../packages/design
-      '@thunder/hooks':
+      '@thunderid/hooks':
         specifier: workspace:^
         version: link:../../packages/hooks
-      '@thunder/i18n':
+      '@thunderid/i18n':
         specifier: workspace:^
         version: link:../../packages/i18n
-      '@thunder/logger':
+      '@thunderid/logger':
         specifier: workspace:^
         version: link:../../packages/logger
-      '@thunder/utils':
+      '@thunderid/utils':
         specifier: workspace:^
         version: link:../../packages/utils
       '@wso2/oxygen-ui':
@@ -428,16 +428,16 @@ importers:
       '@testing-library/user-event':
         specifier: 'catalog:'
         version: 14.6.1(@testing-library/dom@10.4.1)
-      '@thunder/eslint-plugin-thunder':
+      '@thunderid/eslint-plugin':
         specifier: workspace:^
         version: link:../../packages/eslint-plugin
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:../../packages/prettier-config
-      '@thunder/test-utils':
+      '@thunderid/test-utils':
         specifier: workspace:^
         version: link:../../packages/test-utils
-      '@thunder/types':
+      '@thunderid/types':
         specifier: workspace:^
         version: link:../../packages/types
       '@types/lodash-es':
@@ -515,22 +515,22 @@ importers:
       '@tanstack/react-query-devtools':
         specifier: 'catalog:'
         version: 5.90.2(@tanstack/react-query@5.90.5(react@19.2.3))(react@19.2.3)
-      '@thunder/contexts':
+      '@thunderid/contexts':
         specifier: workspace:^
         version: link:../../packages/contexts
-      '@thunder/design':
+      '@thunderid/design':
         specifier: workspace:^
         version: link:../../packages/design
-      '@thunder/hooks':
+      '@thunderid/hooks':
         specifier: workspace:^
         version: link:../../packages/hooks
-      '@thunder/i18n':
+      '@thunderid/i18n':
         specifier: workspace:^
         version: link:../../packages/i18n
-      '@thunder/logger':
+      '@thunderid/logger':
         specifier: workspace:^
         version: link:../../packages/logger
-      '@thunder/utils':
+      '@thunderid/utils':
         specifier: workspace:^
         version: link:../../packages/utils
       '@wso2/oxygen-ui':
@@ -567,13 +567,13 @@ importers:
       '@testing-library/user-event':
         specifier: 'catalog:'
         version: 14.6.1(@testing-library/dom@10.4.1)
-      '@thunder/eslint-plugin-thunder':
+      '@thunderid/eslint-plugin':
         specifier: workspace:^
         version: link:../../packages/eslint-plugin
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:../../packages/prettier-config
-      '@thunder/test-utils':
+      '@thunderid/test-utils':
         specifier: workspace:^
         version: link:../../packages/test-utils
       '@types/node':
@@ -621,16 +621,16 @@ importers:
       '@tanstack/react-query':
         specifier: 'catalog:'
         version: 5.90.5(react@19.2.3)
-      '@thunder/contexts':
+      '@thunderid/contexts':
         specifier: workspace:^
         version: link:../contexts
-      '@thunder/design':
+      '@thunderid/design':
         specifier: workspace:^
         version: link:../design
-      '@thunder/hooks':
+      '@thunderid/hooks':
         specifier: workspace:^
         version: link:../hooks
-      '@thunder/logger':
+      '@thunderid/logger':
         specifier: workspace:^
         version: link:../logger
       '@wso2/oxygen-ui':
@@ -655,13 +655,13 @@ importers:
       '@testing-library/user-event':
         specifier: 'catalog:'
         version: 14.6.1(@testing-library/dom@10.4.1)
-      '@thunder/eslint-plugin-thunder':
+      '@thunderid/eslint-plugin':
         specifier: workspace:^
         version: link:../eslint-plugin
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:../prettier-config
-      '@thunder/test-utils':
+      '@thunderid/test-utils':
         specifier: workspace:^
         version: link:../test-utils
       '@types/node':
@@ -709,25 +709,25 @@ importers:
       '@tanstack/react-query':
         specifier: 'catalog:'
         version: 5.90.5(react@19.2.3)
-      '@thunder/components':
+      '@thunderid/components':
         specifier: workspace:^
         version: link:../components
-      '@thunder/contexts':
+      '@thunderid/contexts':
         specifier: workspace:^
         version: link:../contexts
-      '@thunder/design':
+      '@thunderid/design':
         specifier: workspace:^
         version: link:../design
-      '@thunder/hooks':
+      '@thunderid/hooks':
         specifier: workspace:^
         version: link:../hooks
-      '@thunder/i18n':
+      '@thunderid/i18n':
         specifier: workspace:^
         version: link:../i18n
-      '@thunder/logger':
+      '@thunderid/logger':
         specifier: workspace:^
         version: link:../logger
-      '@thunder/utils':
+      '@thunderid/utils':
         specifier: workspace:^
         version: link:../utils
       '@wso2/oxygen-ui':
@@ -758,16 +758,16 @@ importers:
       '@testing-library/user-event':
         specifier: 'catalog:'
         version: 14.6.1(@testing-library/dom@10.4.1)
-      '@thunder/eslint-plugin-thunder':
+      '@thunderid/eslint-plugin':
         specifier: workspace:^
         version: link:../eslint-plugin
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:../prettier-config
-      '@thunder/test-utils':
+      '@thunderid/test-utils':
         specifier: workspace:^
         version: link:../test-utils
-      '@thunder/types':
+      '@thunderid/types':
         specifier: workspace:^
         version: link:../types
       '@types/node':
@@ -815,19 +815,19 @@ importers:
       '@tanstack/react-query':
         specifier: 'catalog:'
         version: 5.90.5(react@19.2.3)
-      '@thunder/components':
+      '@thunderid/components':
         specifier: workspace:^
         version: link:../components
-      '@thunder/contexts':
+      '@thunderid/contexts':
         specifier: workspace:^
         version: link:../contexts
-      '@thunder/hooks':
+      '@thunderid/hooks':
         specifier: workspace:^
         version: link:../hooks
-      '@thunder/i18n':
+      '@thunderid/i18n':
         specifier: workspace:^
         version: link:../i18n
-      '@thunder/logger':
+      '@thunderid/logger':
         specifier: workspace:^
         version: link:../logger
       '@wso2/oxygen-ui':
@@ -852,13 +852,13 @@ importers:
       '@testing-library/user-event':
         specifier: 'catalog:'
         version: 14.6.1(@testing-library/dom@10.4.1)
-      '@thunder/eslint-plugin-thunder':
+      '@thunderid/eslint-plugin':
         specifier: workspace:^
         version: link:../eslint-plugin
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:../prettier-config
-      '@thunder/test-utils':
+      '@thunderid/test-utils':
         specifier: workspace:^
         version: link:../test-utils
       '@types/node':
@@ -906,22 +906,22 @@ importers:
       '@tanstack/react-query':
         specifier: 'catalog:'
         version: 5.90.5(react@19.2.3)
-      '@thunder/components':
+      '@thunderid/components':
         specifier: workspace:^
         version: link:../components
-      '@thunder/contexts':
+      '@thunderid/contexts':
         specifier: workspace:^
         version: link:../contexts
-      '@thunder/design':
+      '@thunderid/design':
         specifier: workspace:^
         version: link:../design
-      '@thunder/hooks':
+      '@thunderid/hooks':
         specifier: workspace:^
         version: link:../hooks
-      '@thunder/i18n':
+      '@thunderid/i18n':
         specifier: workspace:^
         version: link:../i18n
-      '@thunder/logger':
+      '@thunderid/logger':
         specifier: workspace:^
         version: link:../logger
       '@wso2/oxygen-ui':
@@ -952,19 +952,19 @@ importers:
       '@testing-library/user-event':
         specifier: 'catalog:'
         version: 14.6.1(@testing-library/dom@10.4.1)
-      '@thunder/configure-organization-units':
+      '@thunderid/configure-organization-units':
         specifier: workspace:^
         version: link:../configure-organization-units
-      '@thunder/eslint-plugin-thunder':
+      '@thunderid/eslint-plugin':
         specifier: workspace:^
         version: link:../eslint-plugin
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:../prettier-config
-      '@thunder/test-utils':
+      '@thunderid/test-utils':
         specifier: workspace:^
         version: link:../test-utils
-      '@thunder/types':
+      '@thunderid/types':
         specifier: workspace:^
         version: link:../types
       '@types/node':
@@ -1010,10 +1010,10 @@ importers:
         specifier: 'catalog:'
         version: 2.8.1
     devDependencies:
-      '@thunder/eslint-plugin-thunder':
+      '@thunderid/eslint-plugin':
         specifier: workspace:^
         version: link:../eslint-plugin
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:../prettier-config
       '@types/node':
@@ -1064,7 +1064,7 @@ importers:
       '@clack/prompts':
         specifier: ^0.7.0
         version: 0.7.0
-      '@thunder/logger':
+      '@thunderid/logger':
         specifier: workspace:^
         version: link:../logger
       commander:
@@ -1080,13 +1080,13 @@ importers:
         specifier: ^1.0.0
         version: 1.1.1
     devDependencies:
-      '@thunder/eslint-plugin-thunder':
+      '@thunderid/eslint-plugin':
         specifier: workspace:^
         version: link:../eslint-plugin
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:../prettier-config
-      '@thunder/test-utils':
+      '@thunderid/test-utils':
         specifier: workspace:^
         version: link:../test-utils
       '@types/lodash-es':
@@ -1119,13 +1119,13 @@ importers:
       '@tanstack/react-query':
         specifier: 'catalog:'
         version: 5.90.5(react@19.2.3)
-      '@thunder/contexts':
+      '@thunderid/contexts':
         specifier: workspace:^
         version: link:../contexts
-      '@thunder/logger':
+      '@thunderid/logger':
         specifier: workspace:^
         version: link:../logger
-      '@thunder/utils':
+      '@thunderid/utils':
         specifier: workspace:^
         version: link:../utils
       '@wso2/oxygen-ui':
@@ -1159,16 +1159,16 @@ importers:
       '@testing-library/user-event':
         specifier: 'catalog:'
         version: 14.6.1(@testing-library/dom@10.4.1)
-      '@thunder/eslint-plugin-thunder':
+      '@thunderid/eslint-plugin':
         specifier: workspace:^
         version: link:../eslint-plugin
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:../prettier-config
-      '@thunder/test-utils':
+      '@thunderid/test-utils':
         specifier: workspace:^
         version: link:../test-utils
-      '@thunder/types':
+      '@thunderid/types':
         specifier: workspace:^
         version: link:../types
       '@types/node':
@@ -1262,7 +1262,7 @@ importers:
         specifier: 8.57.2
         version: 8.57.2(eslint@9.39.4(jiti@2.6.1))(typescript@5.9.3)
     devDependencies:
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:../prettier-config
       '@types/eslint':
@@ -1298,10 +1298,10 @@ importers:
 
   packages/hooks:
     dependencies:
-      '@thunder/logger':
+      '@thunderid/logger':
         specifier: workspace:^
         version: link:../logger
-      '@thunder/utils':
+      '@thunderid/utils':
         specifier: workspace:^
         version: link:../utils
       '@wso2/oxygen-ui':
@@ -1311,13 +1311,13 @@ importers:
         specifier: 'catalog:'
         version: 16.0.1(i18next@25.6.0(typescript@5.9.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3)
     devDependencies:
-      '@thunder/eslint-plugin-thunder':
+      '@thunderid/eslint-plugin':
         specifier: workspace:^
         version: link:../eslint-plugin
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:../prettier-config
-      '@thunder/test-utils':
+      '@thunderid/test-utils':
         specifier: workspace:^
         version: link:../test-utils
       '@types/node':
@@ -1368,7 +1368,7 @@ importers:
       '@tanstack/react-query':
         specifier: 'catalog:'
         version: 5.90.5(react@19.2.3)
-      '@thunder/contexts':
+      '@thunderid/contexts':
         specifier: workspace:^
         version: link:../contexts
       i18next:
@@ -1384,10 +1384,10 @@ importers:
         specifier: 'catalog:'
         version: 16.0.1(i18next@25.6.0(typescript@5.9.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3)
     devDependencies:
-      '@thunder/eslint-plugin-thunder':
+      '@thunderid/eslint-plugin':
         specifier: workspace:^
         version: link:../eslint-plugin
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:../prettier-config
       '@types/node':
@@ -1418,10 +1418,10 @@ importers:
         specifier: 'catalog:'
         version: 2.8.1
     devDependencies:
-      '@thunder/eslint-plugin-thunder':
+      '@thunderid/eslint-plugin':
         specifier: workspace:^
         version: link:../eslint-plugin
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:../prettier-config
       '@types/node':
@@ -1458,7 +1458,7 @@ importers:
         specifier: 'catalog:'
         version: 2.8.1
     devDependencies:
-      '@thunder/eslint-plugin-thunder':
+      '@thunderid/eslint-plugin':
         specifier: workspace:^
         version: link:../eslint-plugin
       '@types/node':
@@ -1501,19 +1501,19 @@ importers:
       '@tanstack/react-query':
         specifier: 'catalog:'
         version: 5.90.5(react@19.2.3)
-      '@thunder/contexts':
+      '@thunderid/contexts':
         specifier: workspace:^
         version: link:../contexts
-      '@thunder/eslint-plugin-thunder':
+      '@thunderid/eslint-plugin':
         specifier: workspace:^
         version: link:../eslint-plugin
-      '@thunder/i18n':
+      '@thunderid/i18n':
         specifier: workspace:^
         version: link:../i18n
-      '@thunder/logger':
+      '@thunderid/logger':
         specifier: workspace:^
         version: link:../logger
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:../prettier-config
       '@types/node':
@@ -1564,13 +1564,13 @@ importers:
 
   packages/types:
     devDependencies:
-      '@thunder/eslint-plugin-thunder':
+      '@thunderid/eslint-plugin':
         specifier: workspace:^
         version: link:../eslint-plugin
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:../prettier-config
-      '@thunder/test-utils':
+      '@thunderid/test-utils':
         specifier: workspace:^
         version: link:../test-utils
       '@types/node':
@@ -1601,16 +1601,16 @@ importers:
         specifier: 4.1.2
         version: 4.1.2
     devDependencies:
-      '@thunder/eslint-plugin-thunder':
+      '@thunderid/eslint-plugin':
         specifier: workspace:^
         version: link:../eslint-plugin
-      '@thunder/prettier-config':
+      '@thunderid/prettier-config':
         specifier: workspace:^
         version: link:../prettier-config
-      '@thunder/test-utils':
+      '@thunderid/test-utils':
         specifier: workspace:^
         version: link:../test-utils
-      '@thunder/types':
+      '@thunderid/types':
         specifier: workspace:^
         version: link:../types
       '@types/node':

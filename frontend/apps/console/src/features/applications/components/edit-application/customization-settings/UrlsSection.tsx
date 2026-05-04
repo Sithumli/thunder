@@ -17,7 +17,7 @@
  */
 
 import {zodResolver} from '@hookform/resolvers/zod';
-import {SettingsCard} from '@thunder/components';
+import {SettingsCard} from '@thunderid/components';
 import {Box, Stack, Typography, TextField} from '@wso2/oxygen-ui';
 import {useForm, Controller} from 'react-hook-form';
 import {useTranslation} from 'react-i18next';

@@ -22,21 +22,21 @@ import {
   OrganizationUnitProvider,
   OrganizationUnitEditPage,
   OrganizationUnitsListPage,
-} from '@thunder/configure-organization-units';
+} from '@thunderid/configure-organization-units';
 import {
   TranslationCreateProvider,
   TranslationCreatePage,
   TranslationsEditPage,
   TranslationsListPage,
-} from '@thunder/configure-translations';
+} from '@thunderid/configure-translations';
 import {
   UserCreateProvider,
   UserCreatePage,
   UserEditPage,
   UserInvitePage,
   UsersListPage,
-} from '@thunder/configure-users';
-import {ToastProvider} from '@thunder/contexts';
+} from '@thunderid/configure-users';
+import {ToastProvider} from '@thunderid/contexts';
 import type {JSX} from 'react';
 import {BrowserRouter, Route, Routes} from 'react-router';
 import ApplicationCreateProvider from './features/applications/contexts/ApplicationCreate/ApplicationCreateProvider';

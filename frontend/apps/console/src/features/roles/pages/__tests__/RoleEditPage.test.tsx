@@ -17,7 +17,7 @@
  */
 
 import userEvent from '@testing-library/user-event';
-import {render, screen} from '@thunder/test-utils';
+import {render, screen} from '@thunderid/test-utils';
 import type {NavigateFunction} from 'react-router';
 import {describe, it, expect, vi, beforeEach, afterEach} from 'vitest';
 import type {Role} from '../../models/role';
@@ -45,7 +45,7 @@ vi.mock('../../components/edit-role/assignments-settings/EditAssignmentsSettings
   default: () => <div data-testid="edit-assignments-settings">Assignments Settings</div>,
 }));
 
-vi.mock('@thunder/components', () => ({
+vi.mock('@thunderid/components', () => ({
   CopyableId: vi.fn(() => null),
 }));
 
@@ -59,7 +59,7 @@ vi.mock('react-router', async () => {
   };
 });
 
-vi.mock('@thunder/logger/react', () => ({
+vi.mock('@thunderid/logger/react', () => ({
   useLogger: () => ({
     error: vi.fn(),
     info: vi.fn(),
@@ -68,8 +68,8 @@ vi.mock('@thunder/logger/react', () => ({
   }),
 }));
 
-vi.mock('@thunder/contexts', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@thunder/contexts')>();
+vi.mock('@thunderid/contexts', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@thunderid/contexts')>();
   return {
     ...actual,
     useToast: () => ({showToast: vi.fn()}),

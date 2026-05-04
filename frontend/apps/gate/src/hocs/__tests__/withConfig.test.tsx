@@ -38,7 +38,7 @@ vi.mock('@asgardeo/react', () => ({
 
 // Create mock for useConfig
 const mockGetServerUrl = vi.fn();
-vi.mock('@thunder/contexts', () => ({
+vi.mock('@thunderid/contexts', () => ({
   useConfig: () => ({
     getServerUrl: mockGetServerUrl,
   }),

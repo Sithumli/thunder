@@ -17,8 +17,8 @@
  */
 
 import {useAsgardeo} from '@asgardeo/react';
-import {useGetChildOrganizationUnits} from '@thunder/configure-organization-units';
-import {useLogger} from '@thunder/logger/react';
+import {useGetChildOrganizationUnits} from '@thunderid/configure-organization-units';
+import {useLogger} from '@thunderid/logger/react';
 import {
   Box,
   Stack,

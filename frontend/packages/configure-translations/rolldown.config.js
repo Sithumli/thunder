@@ -29,7 +29,7 @@ const external = [
   // Needed to avoid hook ordering issues.
   /^@mui\//,
   // Peer dep subpaths are not matched by exact string — add them explicitly.
-  '@thunder/logger/react',
+  '@thunderid/logger/react',
 ];
 
 const alias = {

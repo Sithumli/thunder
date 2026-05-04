@@ -1,9 +1,9 @@
 {
-  "name": "@thunder/eslint-plugin-thunder",
+  "name": "@thunderid/eslint-plugin",
   "version": "0.0.0",
-  "description": "ESLint plugin for ⚡️ Thunder UIs with custom rules and configurations",
+  "description": "ESLint plugin for ⚡️ ThunderID UIs with custom rules and configurations",
   "keywords": [
-    "thunder",
+    "thunderid",
     "eslint",
     "eslintplugin",
     "eslint-plugin",
@@ -58,7 +58,7 @@
     "typecheck": "tsc -p tsconfig.lib.json"
   },
   "devDependencies": {
-    "@thunder/prettier-config": "workspace:^",
+    "@thunderid/prettier-config": "workspace:^",
     "@types/eslint": "9.6.1",
     "@types/eslint-plugin-jsx-a11y": "^6.10.1",
     "@types/estree": "1.0.8",

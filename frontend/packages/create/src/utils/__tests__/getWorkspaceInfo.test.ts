@@ -40,7 +40,7 @@ describe('getWorkspaceInfo', () => {
   it('should detect workspace from root directory', () => {
     mkdirSync(join(testDir, 'frontend'), {recursive: true});
 
-    writeFileSync(join(testDir, 'frontend', 'package.json'), JSON.stringify({name: '@thunder/frontend'}));
+    writeFileSync(join(testDir, 'frontend', 'package.json'), JSON.stringify({name: '@thunderid/frontend'}));
     writeFileSync(join(testDir, 'frontend', 'nx.json'), JSON.stringify({}));
 
     process.chdir(testDir);
@@ -56,7 +56,7 @@ describe('getWorkspaceInfo', () => {
     const frontendDir = join(testDir, 'frontend');
     mkdirSync(frontendDir, {recursive: true});
 
-    writeFileSync(join(frontendDir, 'package.json'), JSON.stringify({name: '@thunder/frontend'}));
+    writeFileSync(join(frontendDir, 'package.json'), JSON.stringify({name: '@thunderid/frontend'}));
     writeFileSync(join(frontendDir, 'nx.json'), JSON.stringify({}));
 
     process.chdir(frontendDir);
@@ -75,7 +75,7 @@ describe('getWorkspaceInfo', () => {
 
     mkdirSync(packageDir, {recursive: true});
 
-    writeFileSync(join(frontendDir, 'package.json'), JSON.stringify({name: '@thunder/frontend'}));
+    writeFileSync(join(frontendDir, 'package.json'), JSON.stringify({name: '@thunderid/frontend'}));
     writeFileSync(join(frontendDir, 'nx.json'), JSON.stringify({}));
 
     process.chdir(packageDir);
@@ -106,7 +106,7 @@ describe('getWorkspaceInfo', () => {
 
     mkdirSync(packagesDir, {recursive: true});
 
-    writeFileSync(join(frontendDir, 'package.json'), JSON.stringify({name: '@thunder/frontend'}));
+    writeFileSync(join(frontendDir, 'package.json'), JSON.stringify({name: '@thunderid/frontend'}));
     writeFileSync(join(frontendDir, 'nx.json'), JSON.stringify({}));
 
     process.chdir(testDir);
@@ -123,7 +123,7 @@ describe('getWorkspaceInfo', () => {
 
     mkdirSync(appsDir, {recursive: true});
 
-    writeFileSync(join(frontendDir, 'package.json'), JSON.stringify({name: '@thunder/frontend'}));
+    writeFileSync(join(frontendDir, 'package.json'), JSON.stringify({name: '@thunderid/frontend'}));
     writeFileSync(join(frontendDir, 'nx.json'), JSON.stringify({}));
 
     process.chdir(testDir);
@@ -139,7 +139,7 @@ describe('getWorkspaceInfo', () => {
 
     mkdirSync(frontendDir, {recursive: true});
 
-    writeFileSync(join(frontendDir, 'package.json'), JSON.stringify({name: '@thunder/frontend'}));
+    writeFileSync(join(frontendDir, 'package.json'), JSON.stringify({name: '@thunderid/frontend'}));
     writeFileSync(join(frontendDir, 'nx.json'), JSON.stringify({}));
 
     process.chdir(testDir);
@@ -157,7 +157,7 @@ describe('getWorkspaceInfo', () => {
     mkdirSync(frontendDir, {recursive: true});
 
     // Missing nx.json
-    writeFileSync(join(frontendDir, 'package.json'), JSON.stringify({name: '@thunder/frontend'}));
+    writeFileSync(join(frontendDir, 'package.json'), JSON.stringify({name: '@thunderid/frontend'}));
 
     process.chdir(testDir);
 
@@ -186,7 +186,7 @@ describe('getWorkspaceInfo', () => {
 
     mkdirSync(frontendDir, {recursive: true});
 
-    writeFileSync(join(frontendDir, 'package.json'), JSON.stringify({name: '@company/thunder-app'}));
+    writeFileSync(join(frontendDir, 'package.json'), JSON.stringify({name: '@company/app'}));
     writeFileSync(join(frontendDir, 'nx.json'), JSON.stringify({}));
 
     process.chdir(testDir);

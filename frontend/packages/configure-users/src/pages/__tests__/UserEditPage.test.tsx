@@ -16,8 +16,8 @@
  * under the License.
  */
 
-import {render, screen, waitFor, within, userEvent} from '@thunder/test-utils';
-import type {User} from '@thunder/types';
+import {render, screen, waitFor, within, userEvent} from '@thunderid/test-utils';
+import type {User} from '@thunderid/types';
 import type {ReactNode} from 'react';
 import {describe, it, expect, vi, beforeEach} from 'vitest';
 import type {ApiUserSchema, UserSchemaListResponse} from '../../models/users';
@@ -27,8 +27,8 @@ const {mockLoggerError} = vi.hoisted(() => ({
   mockLoggerError: vi.fn(),
 }));
 
-vi.mock('@thunder/components', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@thunder/components')>();
+vi.mock('@thunderid/components', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@thunderid/components')>();
   return {
     ...actual,
     CopyableId: vi.fn(() => null),
@@ -42,7 +42,7 @@ const mockResetUpdateError = vi.fn();
 const mockResetDeleteError = vi.fn();
 
 // Mock logger
-vi.mock('@thunder/logger/react', () => ({
+vi.mock('@thunderid/logger/react', () => ({
   useLogger: () => ({
     info: vi.fn(),
     warn: vi.fn(),

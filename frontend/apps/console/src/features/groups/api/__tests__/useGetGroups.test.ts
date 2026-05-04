@@ -17,7 +17,7 @@
  */
 
 import {waitFor} from '@testing-library/react';
-import {renderHook} from '@thunder/test-utils';
+import {renderHook} from '@thunderid/test-utils';
 import {describe, it, expect, beforeEach, afterEach, vi} from 'vitest';
 import type {GroupListResponse} from '../../models/group';
 
@@ -29,8 +29,8 @@ vi.mock('@asgardeo/react', () => ({
 }));
 
 const mockGetServerUrl = vi.fn<() => string>(() => 'https://localhost:8090');
-vi.mock('@thunder/contexts', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@thunder/contexts')>();
+vi.mock('@thunderid/contexts', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@thunderid/contexts')>();
   return {
     ...actual,
     useConfig: () => ({getServerUrl: mockGetServerUrl}),

@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {render, screen, userEvent, waitFor} from '@thunder/test-utils';
+import {render, screen, userEvent, waitFor} from '@thunderid/test-utils';
 import {afterEach, describe, it, expect, vi, beforeEach} from 'vitest';
 import DashboardLayout from '../DashboardLayout';
 
@@ -58,12 +58,12 @@ vi.mock('@asgardeo/react', () => ({
 }));
 
 // Mock contexts
-vi.mock('@thunder/contexts', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@thunder/contexts')>();
+vi.mock('@thunderid/contexts', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@thunderid/contexts')>();
   return {
     ...actual,
     useConfig: () => ({
-      config: {brand: {product_name: 'Thunder'}, client: {client_id: 'CONSOLE'}},
+      config: {brand: {product_name: 'ThunderID'}, client: {client_id: 'CONSOLE'}},
       isTrustedIssuerGenericOidc: () => mockIsTrustedIssuerGenericOidc,
       getTrustedIssuerClientId: () => 'test-client-id',
       getClientUrl: () => 'https://localhost:5191/console',
@@ -79,7 +79,7 @@ vi.mock('react-i18next', () => ({
 }));
 
 // Mock logger
-vi.mock('@thunder/logger/react', () => ({
+vi.mock('@thunderid/logger/react', () => ({
   useLogger: () => ({
     error: mockLoggerError,
     warn: mockLoggerWarn,

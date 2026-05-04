@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {render, screen, userEvent, waitFor} from '@thunder/test-utils';
+import {render, screen, userEvent, waitFor} from '@thunderid/test-utils';
 import {describe, expect, it, vi, beforeEach} from 'vitest';
 import I18nTextInput from '../I18nTextInput';
 
@@ -48,13 +48,13 @@ vi.mock('react-i18next', () => ({
   }),
 }));
 
-vi.mock('@thunder/hooks', () => ({
+vi.mock('@thunderid/hooks', () => ({
   useTemplateLiteralResolver: () => ({
     resolve: mockResolve,
   }),
 }));
 
-vi.mock('@thunder/i18n', () => ({
+vi.mock('@thunderid/i18n', () => ({
   NamespaceConstants: {
     CUSTOM_NAMESPACE: 'custom',
   },

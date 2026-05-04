@@ -18,8 +18,8 @@
 
 import {useAsgardeo} from '@asgardeo/react';
 import {useMutation, useQueryClient, type UseMutationResult} from '@tanstack/react-query';
-import {useConfig, useToast} from '@thunder/contexts';
-import type {User} from '@thunder/types';
+import {useConfig, useToast} from '@thunderid/contexts';
+import type {User} from '@thunderid/types';
 import {useTranslation} from 'react-i18next';
 import UserQueryKeys from '../constants/user-query-keys';
 import type {CreateUserRequest} from '../models/users';

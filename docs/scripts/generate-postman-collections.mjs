@@ -18,7 +18,7 @@
  * under the License.
  */
 
-/* eslint-disable @thunder/copyright-header, no-undef */
+/* eslint-disable @thunderid/copyright-header, no-undef */
 
 /**
  * Generates Postman collections, environments, and globals from OpenAPI specifications.
@@ -46,7 +46,7 @@ import {readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync} from 'f
 import {join, dirname} from 'path';
 import {fileURLToPath} from 'url';
 import {promisify} from 'util';
-import {createLogger} from '@thunder/logger';
+import {createLogger} from '@thunderid/logger';
 import Converter from 'openapi-to-postmanv2';
 
 const convert = promisify(Converter.convert.bind(Converter));

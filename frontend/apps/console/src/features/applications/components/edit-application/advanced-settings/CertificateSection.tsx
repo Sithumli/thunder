@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {SettingsCard} from '@thunder/components';
+import {SettingsCard} from '@thunderid/components';
 import {Stack, TextField, FormControl, FormLabel, Autocomplete} from '@wso2/oxygen-ui';
 import {useTranslation} from 'react-i18next';
 import CertificateTypes from '../../../constants/certificate-types';

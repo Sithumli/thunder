@@ -18,7 +18,7 @@
 
 import {screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import {renderWithProviders} from '@thunder/test-utils';
+import {renderWithProviders} from '@thunderid/test-utils';
 import {describe, it, expect, beforeEach, afterEach, vi} from 'vitest';
 import GroupCreateProvider from '../../contexts/GroupCreate/GroupCreateProvider';
 import CreateGroupPage from '../CreateGroupPage';
@@ -43,7 +43,7 @@ vi.mock('../../api/useCreateGroup', () => ({
 }));
 
 const mockUseHasMultipleOUs = vi.fn();
-vi.mock('@thunder/configure-organization-units', () => ({
+vi.mock('@thunderid/configure-organization-units', () => ({
   OrganizationUnitTreePicker: ({value, onChange}: {value: string; onChange: (id: string) => void}) => (
     <div data-testid="ou-tree-picker">
       <span data-testid="ou-value">{value}</span>

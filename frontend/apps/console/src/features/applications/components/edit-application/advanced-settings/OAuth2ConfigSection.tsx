@@ -17,7 +17,7 @@
  */
 
 import {useAsgardeo} from '@asgardeo/react';
-import {SettingsCard} from '@thunder/components';
+import {SettingsCard} from '@thunderid/components';
 import {
   Box,
   Stack,

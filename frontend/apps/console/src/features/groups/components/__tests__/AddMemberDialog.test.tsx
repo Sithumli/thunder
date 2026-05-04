@@ -18,7 +18,7 @@
 
 import {screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import {renderWithProviders} from '@thunder/test-utils';
+import {renderWithProviders} from '@thunderid/test-utils';
 import type * as OxygenUI from '@wso2/oxygen-ui';
 import {describe, it, expect, beforeEach, afterEach, vi} from 'vitest';
 import AddMemberDialog from '../edit-group/members-settings/AddMemberDialog';
@@ -65,7 +65,7 @@ vi.mock('@wso2/oxygen-ui', async () => {
 
 const mockUseGetUsers = vi.fn();
 const mockUseGetApplications = vi.fn();
-vi.mock('@thunder/configure-users', () => ({
+vi.mock('@thunderid/configure-users', () => ({
   useGetUsers: (...args: unknown[]): unknown => mockUseGetUsers(...args),
 }));
 vi.mock('../../../applications/api/useGetApplications', () => ({

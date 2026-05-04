@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {useLogger} from '@thunder/logger/react';
+import {useLogger} from '@thunderid/logger/react';
 import {Box, Breadcrumbs, Button, IconButton, LinearProgress, Stack, Typography, Alert, Chip} from '@wso2/oxygen-ui';
 import {CheckCircle, ChevronRight, X, AlertCircle} from '@wso2/oxygen-ui-icons-react';
 import type {JSX} from 'react';

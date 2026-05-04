@@ -36,7 +36,7 @@ vi.mock('react-i18next', () => ({
 }));
 
 // Mock contexts
-vi.mock('@thunder/contexts', () => ({
+vi.mock('@thunderid/contexts', () => ({
   useConfig: () => ({
     getServerUrl: () => 'https://localhost:8090',
   }),
@@ -44,7 +44,7 @@ vi.mock('@thunder/contexts', () => ({
 
 // Mock the API hooks from i18n
 const mockMutate = vi.fn();
-vi.mock('@thunder/i18n', () => ({
+vi.mock('@thunderid/i18n', () => ({
   NamespaceConstants: {CUSTOM_NAMESPACE: 'custom'},
   I18nDefaultConstants: {FALLBACK_LANGUAGE: 'en-US'},
   useUpdateTranslation: () => ({

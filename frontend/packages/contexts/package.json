@@ -1,9 +1,9 @@
 {
-  "name": "@thunder/contexts",
+  "name": "@thunderid/contexts",
   "version": "0.0.0",
-  "description": "Shared React contexts for ⚡️ Thunder applications",
+  "description": "Shared React contexts for ⚡️ ThunderID applications",
   "keywords": [
-    "thunder",
+    "thunderid",
     "contexts",
     "react",
     "shareable",
@@ -49,8 +49,8 @@
     "typecheck": "tsc -p tsconfig.lib.json"
   },
   "devDependencies": {
-    "@thunder/eslint-plugin-thunder": "workspace:^",
-    "@thunder/prettier-config": "workspace:^",
+    "@thunderid/eslint-plugin": "workspace:^",
+    "@thunderid/prettier-config": "workspace:^",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",

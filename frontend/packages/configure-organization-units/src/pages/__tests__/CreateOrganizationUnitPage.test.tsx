@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {screen, fireEvent, waitFor, renderWithProviders} from '@thunder/test-utils';
+import {screen, fireEvent, waitFor, renderWithProviders} from '@thunderid/test-utils';
 import {describe, it, expect, vi, beforeEach} from 'vitest';
 import CreateOrganizationUnitPage from '../CreateOrganizationUnitPage';
 
@@ -39,7 +39,7 @@ vi.mock('react-router', async () => {
 });
 
 // Mock logger
-vi.mock('@thunder/logger/react', () => ({
+vi.mock('@thunderid/logger/react', () => ({
   useLogger: () => ({
     error: vi.fn(),
     info: vi.fn(),
@@ -64,7 +64,7 @@ vi.mock('../../contexts/useOrganizationUnit', () => ({
 }));
 
 // Mock name suggestions utility
-vi.mock('@thunder/utils', () => ({
+vi.mock('@thunderid/utils', () => ({
   generateRandomHumanReadableIdentifiers: () => ['Suggested Name One', 'Suggested Name Two', 'Suggested Name Three'],
 }));
 

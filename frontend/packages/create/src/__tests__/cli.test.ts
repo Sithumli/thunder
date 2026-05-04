@@ -32,7 +32,7 @@ describe('CLI Integration', () => {
 
   beforeEach(async () => {
     // Create a temporary workspace
-    testWorkspaceDir = join(tmpdir(), `thunder-test-workspace-${Date.now()}`);
+    testWorkspaceDir = join(tmpdir(), `configure-test-workspace-${Date.now()}`);
     await mkdir(testWorkspaceDir, {recursive: true});
 
     // Create a basic package.json to simulate a frontend workspace
@@ -40,7 +40,7 @@ describe('CLI Integration', () => {
       name: 'test-workspace',
       workspaces: ['packages/*'],
       devDependencies: {
-        '@thunder/create': 'workspace:^',
+        '@thunderid/create': 'workspace:^',
       },
     };
 
@@ -79,7 +79,7 @@ describe('CLI Integration', () => {
     // Skipped: Requires full workspace setup
     const {stdout} = await runCLI('--help');
 
-    expect(stdout).toContain('⚡ Thunder Create');
+    expect(stdout).toContain('⚡ ThunderID Create');
     expect(stdout).toContain('Commands:');
     expect(stdout).toContain('feature');
     expect(stdout).toContain('package');

@@ -17,14 +17,14 @@
  */
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-explicit-any */
-import {render, screen, waitFor, within, userEvent} from '@thunder/test-utils';
+import {render, screen, waitFor, within, userEvent} from '@thunderid/test-utils';
 import type {ReactNode} from 'react';
 import {describe, it, expect, vi, beforeEach} from 'vitest';
 import type {ApiUserSchema, ApiError} from '../../types/user-types';
 import ViewUserTypePage from '../ViewUserTypePage';
 
-vi.mock('@thunder/components', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@thunder/components')>();
+vi.mock('@thunderid/components', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@thunderid/components')>();
   return {
     ...actual,
     CopyableId: vi.fn(({value}: {value: string}) => <span data-testid="copyable-id">{value}</span>),
@@ -77,7 +77,7 @@ vi.mock('../../api/useDeleteUserType', () => ({
 }));
 
 // Mock OrganizationUnitTreePicker
-vi.mock('@thunder/configure-organization-units', () => ({
+vi.mock('@thunderid/configure-organization-units', () => ({
   OrganizationUnitTreePicker: ({value, onChange}: {value: string; onChange: (id: string) => void}) => (
     <div data-testid="ou-tree-picker">
       <span data-testid="ou-value">{value || ''}</span>
@@ -92,8 +92,8 @@ vi.mock('@thunder/configure-organization-units', () => ({
 }));
 
 // Mock shared-contexts (useToast)
-vi.mock('@thunder/contexts', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@thunder/contexts')>();
+vi.mock('@thunderid/contexts', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@thunderid/contexts')>();
   return {
     ...actual,
     useToast: () => ({showToast: mockShowToast}),

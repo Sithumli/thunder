@@ -74,7 +74,7 @@ describe('Template Validation', () => {
 
     const sampleData = {
       featureName: 'TestFeature',
-      packageName: 'thunder-admin-test-feature',
+      packageName: 'configure-test-feature',
       description: 'Test feature for validation',
     };
 
@@ -204,7 +204,7 @@ describe('Template Validation', () => {
 
     const sampleData = {
       featureName: 'TestFeature',
-      packageName: 'thunder-admin-test-feature',
+      packageName: 'configure-test-feature',
       description: 'Test feature for validation',
     };
 
@@ -248,13 +248,13 @@ describe('Template Validation', () => {
 
   it('should generate consistent package names', () => {
     const testCases = [
-      {input: 'testFeature', expected: 'thunder-admin-test-feature'},
-      {input: 'user-management', expected: 'thunder-admin-user-management'},
-      {input: 'MyFeature', expected: 'thunder-admin-my-feature'},
+      {input: 'testFeature', expected: 'configure-test-feature'},
+      {input: 'user-management', expected: 'configure-user-management'},
+      {input: 'MyFeature', expected: 'configure-my-feature'},
     ];
 
     testCases.forEach((testCase) => {
-      const template = Handlebars.compile('thunder-admin-{{kebabCase featureName}}');
+      const template = Handlebars.compile('configure-{{kebabCase featureName}}');
       const result = template({featureName: testCase.input});
 
       expect(result).toBe(testCase.expected);

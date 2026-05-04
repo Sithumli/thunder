@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {render, screen} from '@thunder/test-utils';
+import {render, screen} from '@thunderid/test-utils';
 import React from 'react';
 import {beforeEach, describe, expect, it, vi} from 'vitest';
 import ApplicationCreateProvider from '../ApplicationCreateProvider';
@@ -41,7 +41,7 @@ vi.mock('../../utils/generateAppPrimaryColorSuggestions', () => ({
 }));
 
 // Mock useConfig to avoid ConfigProvider requirement
-vi.mock('@thunder/contexts', async (importOriginal) => {
+vi.mock('@thunderid/contexts', async (importOriginal) => {
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
   const actual = (await importOriginal()) as Record<string, unknown>;
 

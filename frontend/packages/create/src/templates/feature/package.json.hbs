@@ -1,9 +1,9 @@
 {
-  "name": "@thunder/{{featureType}}-{{featureName}}",
+  "name": "@thunderid/{{featureType}}-{{featureName}}",
   "version": "0.0.0",
-  "description": "{{featureName}} feature for ⚡️ Thunder applications",
+  "description": "{{featureName}} feature for ⚡️ ThunderID applications",
   "keywords": [
-    "thunder",
+    "thunderid",
     "{{featureType}}",
     "{{featureName}}",
     "react",
@@ -36,7 +36,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/asgardeo/thunder",
-    "directory": "frontend/packages/thunder-{{featureType}}-{{featureName}}"
+    "directory": "frontend/packages/{{featureType}}-{{featureName}}"
   },
   "scripts": {
     "build": "pnpm clean:dist && rolldown -c rolldown.config.js && tsc -p tsconfig.lib.json --emitDeclarationOnly --outDir dist",
@@ -53,8 +53,8 @@
     "@testing-library/jest-dom": "catalog:",
     "@testing-library/react": "catalog:",
     "@testing-library/user-event": "catalog:",
-    "@thunder/eslint-plugin-thunder": "workspace:^",
-    "@thunder/prettier-config": "workspace:^",
+    "@thunderid/eslint-plugin": "workspace:^",
+    "@thunderid/prettier-config": "workspace:^",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "eslint": "catalog:",
@@ -74,9 +74,9 @@
     "@wso2/oxygen-ui": "catalog:",
     "@wso2/oxygen-ui-icons-react": "catalog:",
     "@tanstack/react-query": "catalog:",
-    "@thunder/contexts": "workspace:^",
-    "@thunder/test-utils": "workspace:^",
-    "@thunder/logger": "workspace:^",
+    "@thunderid/contexts": "workspace:^",
+    "@thunderid/test-utils": "workspace:^",
+    "@thunderid/logger": "workspace:^",
     "react-i18next": "catalog:",
     "react-router": "catalog:",
     "tslib": "catalog:"

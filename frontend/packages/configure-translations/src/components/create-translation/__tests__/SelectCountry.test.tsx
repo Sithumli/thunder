@@ -17,7 +17,7 @@
  */
 
 import userEvent from '@testing-library/user-event';
-import {render, screen} from '@thunder/test-utils';
+import {render, screen} from '@thunderid/test-utils';
 import {describe, expect, it, vi, beforeEach} from 'vitest';
 import SelectCountry from '@/components/create-translation/SelectCountry';
 
@@ -35,7 +35,7 @@ const mockCountries = [
   {name: 'Japan', regionCode: 'JP', flag: '🇯🇵'},
 ];
 
-vi.mock('@thunder/i18n', () => ({
+vi.mock('@thunderid/i18n', () => ({
   buildCountryOptions: () => mockCountries,
 }));
 

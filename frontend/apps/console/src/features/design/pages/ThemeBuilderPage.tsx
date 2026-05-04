@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {BuilderLayout, BuilderStaticPanel} from '@thunder/components';
+import {BuilderLayout, BuilderStaticPanel} from '@thunderid/components';
 import {Box, Button, useColorScheme} from '@wso2/oxygen-ui';
 import {ArrowLeft, Save, Trash, Undo2} from '@wso2/oxygen-ui-icons-react';
 import {useCallback, useRef, useState, type JSX} from 'react';

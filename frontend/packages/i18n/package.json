@@ -1,7 +1,7 @@
 {
-  "name": "@thunder/i18n",
+  "name": "@thunderid/i18n",
   "version": "0.0.0",
-  "description": "Translation resources for Thunder applications",
+  "description": "Translation resources for ThunderID applications",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -25,20 +25,18 @@
     "lint": "eslint src",
     "typecheck": "tsc --noEmit"
   },
-  "dependencies": {
-    "@thunder/contexts": "workspace:^"
-  },
   "peerDependencies": {
     "@asgardeo/react": "catalog:",
     "@tanstack/react-query": "catalog:",
+    "@thunderid/contexts": "workspace:^",
     "i18next": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
     "react-i18next": "catalog:"
   },
   "devDependencies": {
-    "@thunder/eslint-plugin-thunder": "workspace:^",
-    "@thunder/prettier-config": "workspace:^",
+    "@thunderid/eslint-plugin": "workspace:^",
+    "@thunderid/prettier-config": "workspace:^",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "eslint": "catalog:",
@@ -54,7 +52,7 @@
     "i18n",
     "internationalization",
     "react-i18next",
-    "thunder",
+    "thunderid",
     "translations"
   ],
   "author": "WSO2",

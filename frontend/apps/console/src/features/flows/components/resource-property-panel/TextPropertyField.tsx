@@ -16,8 +16,8 @@
  * under the License.
  */
 
-import {useTemplateLiteralResolver} from '@thunder/hooks';
-import {isI18nTemplatePattern, isMetaTemplatePattern} from '@thunder/utils';
+import {useTemplateLiteralResolver} from '@thunderid/hooks';
+import {isI18nTemplatePattern, isMetaTemplatePattern} from '@thunderid/utils';
 import {
   Box,
   FormControl,

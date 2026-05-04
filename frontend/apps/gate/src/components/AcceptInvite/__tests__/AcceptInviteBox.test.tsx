@@ -17,8 +17,8 @@
  */
 
 import userEvent from '@testing-library/user-event';
-import {DesignContext, type DesignContextType} from '@thunder/design';
-import {render as testRender, screen, fireEvent, waitFor} from '@thunder/test-utils';
+import {DesignContext, type DesignContextType} from '@thunderid/design';
+import {render as testRender, screen, fireEvent, waitFor} from '@thunderid/test-utils';
 import {describe, it, expect, vi, beforeEach} from 'vitest';
 import AcceptInviteBox from '../AcceptInviteBox';
 
@@ -31,8 +31,8 @@ const {mockLogger} = vi.hoisted(() => ({
   },
 }));
 
-vi.mock('@thunder/logger/react', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@thunder/logger/react')>();
+vi.mock('@thunderid/logger/react', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@thunderid/logger/react')>();
 
   return {
     ...actual,
@@ -42,8 +42,8 @@ vi.mock('@thunder/logger/react', async (importOriginal) => {
 
 // Mock useDesign
 const mockUseDesign = vi.fn();
-vi.mock('@thunder/design', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@thunder/design')>();
+vi.mock('@thunderid/design', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@thunderid/design')>();
   return {
     ...actual,
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -71,26 +71,15 @@ const render = (ui: React.ReactElement) => {
   return testRender(<DesignContext.Provider value={designValue}>{ui}</DesignContext.Provider>);
 };
 
-// Mock useBranding
-const mockUseBranding = vi.fn().mockReturnValue({
-  images: {logo: {primary: {url: ''}}},
-  theme: null,
-  isBrandingEnabled: false,
-});
-vi.mock('@thunder/shared-branding', () => ({
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  useBranding: () => mockUseBranding(),
-}));
-
 // Mock useTemplateLiteralResolver
-vi.mock('@thunder/hooks', () => ({
+vi.mock('@thunderid/hooks', () => ({
   useTemplateLiteralResolver: () => ({
     resolve: (key: string) => key,
   }),
 }));
 
 // Mock useConfig
-vi.mock('@thunder/contexts', () => ({
+vi.mock('@thunderid/contexts', () => ({
   useConfig: () => ({
     getServerUrl: () => 'https://api.example.com',
   }),
@@ -1391,17 +1380,6 @@ describe('AcceptInviteBox', () => {
   });
 
   it('renders with branding enabled and centered text alignment', () => {
-    mockUseBranding.mockReturnValue({
-      images: {
-        logo: {
-          primary: {
-            url: 'https://example.com/logo.png',
-          },
-        },
-      },
-      theme: {palette: {primary: {main: '#ff0000'}}},
-      isBrandingEnabled: true,
-    });
     mockAcceptInviteRenderProps = createMockAcceptInviteRenderProps({
       components: [
         {
@@ -1417,36 +1395,11 @@ describe('AcceptInviteBox', () => {
   });
 
   it('renders branded logo with alt fallback', () => {
-    mockUseBranding.mockReturnValue({
-      images: {
-        logo: {
-          primary: {
-            url: 'https://example.com/logo.png',
-          },
-        },
-      },
-      theme: null,
-      isBrandingEnabled: true,
-    });
     render(<AcceptInviteBox />);
     expect(screen.getByTestId('asgardeo-accept-invite')).toBeInTheDocument();
   });
 
   it('renders branded logo with custom alt, height, and width', () => {
-    mockUseBranding.mockReturnValue({
-      images: {
-        logo: {
-          primary: {
-            url: 'https://example.com/logo.png',
-            alt: 'Custom Alt',
-            height: 50,
-            width: 120,
-          },
-        },
-      },
-      theme: {palette: {primary: {main: '#0000ff'}}},
-      isBrandingEnabled: true,
-    });
     render(<AcceptInviteBox />);
     expect(screen.getByTestId('asgardeo-accept-invite')).toBeInTheDocument();
   });

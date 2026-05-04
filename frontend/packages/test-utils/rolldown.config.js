@@ -28,7 +28,7 @@ const external = [
   'react/jsx-runtime',
   // Needed to avoid hook ordering issues.
   /^@mui\//,
-  /^@thunder\//,
+  /^@thunderid\//,
   /^@wso2\//,
   /^@tanstack\//,
   /^@testing-library\//,

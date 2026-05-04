@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {waitFor, renderHook} from '@thunder/test-utils';
+import {waitFor, renderHook} from '@thunderid/test-utils';
 import {describe, it, expect, beforeEach, afterEach, vi} from 'vitest';
 import UserQueryKeys from '../../constants/user-query-keys';
 import type {UserSchemaListResponse} from '../../models/users';
@@ -34,8 +34,8 @@ vi.mock('@asgardeo/react', () => ({
   }),
 }));
 
-vi.mock('@thunder/contexts', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@thunder/contexts')>();
+vi.mock('@thunderid/contexts', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@thunderid/contexts')>();
   return {
     ...actual,
     useConfig: () => ({

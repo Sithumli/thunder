@@ -18,7 +18,7 @@
 
 import {statSync, chmodSync, existsSync, mkdirSync, writeFileSync} from 'fs';
 import {dirname} from 'path';
-import {createLogger} from '@thunder/logger';
+import {createLogger} from '@thunderid/logger';
 import renderTemplateFile from './renderTemplateFile';
 import type {TemplateContext} from '../models/templates';
 

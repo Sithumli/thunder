@@ -17,14 +17,14 @@
  */
 
 import userEvent from '@testing-library/user-event';
-import {DesignContext, type DesignContextType} from '@thunder/design';
-import {render as testRender, screen, fireEvent, waitFor} from '@thunder/test-utils';
+import {DesignContext, type DesignContextType} from '@thunderid/design';
+import {render as testRender, screen, fireEvent, waitFor} from '@thunderid/test-utils';
 import {describe, it, expect, vi, beforeEach} from 'vitest';
 import SignInBox from '../SignInBox';
 // Mock useDesign
 const mockUseDesign = vi.fn();
-vi.mock('@thunder/design', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@thunder/design')>();
+vi.mock('@thunderid/design', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@thunderid/design')>();
   return {
     ...actual,
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -53,20 +53,9 @@ const render = (ui: React.ReactElement) => {
   return testRender(<DesignContext.Provider value={designValue}>{ui}</DesignContext.Provider>);
 };
 
-// Mock useBranding
-const mockUseBranding = vi.fn().mockReturnValue({
-  images: {logo: {primary: {url: ''}}},
-  theme: null,
-  isBrandingEnabled: false,
-});
-vi.mock('@thunder/shared-branding', () => ({
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  useBranding: () => mockUseBranding(),
-}));
-
 // Mock useTemplateLiteralResolver
 const mockResolveAll = vi.fn().mockImplementation((template: string) => template);
-vi.mock('@thunder/hooks', () => ({
+vi.mock('@thunderid/hooks', () => ({
   useTemplateLiteralResolver: () => ({
     resolve: (key: string) => key,
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -1714,17 +1703,6 @@ describe('SignInBox', () => {
   });
 
   it('renders with branding enabled and centered text alignment', () => {
-    mockUseBranding.mockReturnValue({
-      images: {
-        logo: {
-          primary: {
-            url: 'https://example.com/logo.png',
-          },
-        },
-      },
-      theme: {palette: {primary: {main: '#ff0000'}}},
-      isBrandingEnabled: true,
-    });
     mockSignInRenderProps = createMockSignInRenderProps({
       components: [
         {
@@ -1740,53 +1718,16 @@ describe('SignInBox', () => {
   });
 
   it('renders branded logo with alt fallback when alt is not provided', () => {
-    mockUseBranding.mockReturnValue({
-      images: {
-        logo: {
-          primary: {
-            url: 'https://example.com/logo.png',
-            // no alt, no height, no width provided
-          },
-        },
-      },
-      theme: null,
-      isBrandingEnabled: true,
-    });
     render(<SignInBox />);
     expect(screen.getByTestId('asgardeo-signin')).toBeInTheDocument();
   });
 
   it('renders branded logo with custom alt, height, and width', () => {
-    mockUseBranding.mockReturnValue({
-      images: {
-        logo: {
-          primary: {
-            url: 'https://example.com/logo.png',
-            alt: 'Custom Alt',
-            height: 50,
-            width: 120,
-          },
-        },
-      },
-      theme: {palette: {primary: {main: '#0000ff'}}},
-      isBrandingEnabled: true,
-    });
     render(<SignInBox />);
     expect(screen.getByTestId('asgardeo-signin')).toBeInTheDocument();
   });
 
   it('renders without brandingTheme palette (uses theme fallback)', () => {
-    mockUseBranding.mockReturnValue({
-      images: {
-        logo: {
-          primary: {
-            url: 'https://example.com/logo.png',
-          },
-        },
-      },
-      theme: null,
-      isBrandingEnabled: false,
-    });
     render(<SignInBox />);
     expect(screen.getByTestId('asgardeo-signin')).toBeInTheDocument();
   });

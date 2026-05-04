@@ -18,8 +18,8 @@
 
 import {useAsgardeo} from '@asgardeo/react';
 import {useQuery, type UseQueryResult} from '@tanstack/react-query';
-import {useConfig} from '@thunder/contexts';
-import type {User} from '@thunder/types';
+import {useConfig} from '@thunderid/contexts';
+import type {User} from '@thunderid/types';
 import UserQueryKeys from '../constants/user-query-keys';
 
 /**

@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {BuilderStaticPanel} from '@thunder/components';
+import {BuilderStaticPanel} from '@thunderid/components';
 import {Box, Button, IconButton} from '@wso2/oxygen-ui';
 import {X, TrashIcon} from '@wso2/oxygen-ui-icons-react';
 import {useReactFlow} from '@xyflow/react';

@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {render, screen, fireEvent} from '@thunder/test-utils';
+import {render, screen, fireEvent} from '@thunderid/test-utils';
 import {describe, it, expect, vi, beforeEach} from 'vitest';
 import InviteMembersCard from '../InviteMembersCard';
 
@@ -47,7 +47,7 @@ vi.mock('framer-motion', async () => {
 });
 
 const mockUseGetUsers = vi.fn();
-vi.mock('@thunder/configure-users', () => ({
+vi.mock('@thunderid/configure-users', () => ({
   useGetUsers: (args: unknown) => mockUseGetUsers(args) as unknown,
 }));
 

@@ -83,7 +83,7 @@ describe('AuthPageLayout', () => {
         </AuthPageLayout>,
       );
       const main = screen.getByRole('main');
-      const thunderClasses = Array.from(main.classList).filter((c) => c.startsWith('Thunder'));
+      const thunderClasses = Array.from(main.classList).filter((c) => c.startsWith('ThunderID'));
       expect(thunderClasses).toHaveLength(0);
     });
   });

@@ -16,8 +16,8 @@
  * under the License.
  */
 
-import {useConfig} from '@thunder/contexts';
-import {useLogger} from '@thunder/logger/react';
+import {useConfig} from '@thunderid/contexts';
+import {useLogger} from '@thunderid/logger/react';
 import {Box, Button, Chip, ColorSchemeSVG, IconButton, Paper, Stack, Typography} from '@wso2/oxygen-ui';
 import {
   Bell,

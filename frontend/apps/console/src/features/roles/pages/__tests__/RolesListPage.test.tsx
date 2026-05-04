@@ -17,7 +17,7 @@
  */
 
 import userEvent from '@testing-library/user-event';
-import {render, screen, waitFor} from '@thunder/test-utils';
+import {render, screen, waitFor} from '@thunderid/test-utils';
 import type {NavigateFunction} from 'react-router';
 import {describe, it, expect, vi, beforeEach, afterEach} from 'vitest';
 import RolesListPage from '../RolesListPage';
@@ -35,7 +35,7 @@ vi.mock('react-router', async () => {
   };
 });
 
-vi.mock('@thunder/logger/react', () => ({
+vi.mock('@thunderid/logger/react', () => ({
   useLogger: () => ({
     error: vi.fn(),
     info: vi.fn(),

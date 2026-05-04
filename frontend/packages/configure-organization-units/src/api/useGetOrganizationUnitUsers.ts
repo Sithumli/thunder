@@ -18,8 +18,8 @@
 
 import {useAsgardeo} from '@asgardeo/react';
 import {useQuery, type UseQueryResult} from '@tanstack/react-query';
-import {useConfig} from '@thunder/contexts';
-import type {ApiFilteringParams} from '@thunder/types';
+import {useConfig} from '@thunderid/contexts';
+import type {ApiFilteringParams} from '@thunderid/types';
 import OrganizationUnitQueryKeys from '../constants/organization-unit-query-keys';
 import {OrganizationUnitUserListResponse} from '../models/responses';
 

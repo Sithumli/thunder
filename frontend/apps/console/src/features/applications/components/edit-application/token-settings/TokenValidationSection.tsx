@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {SettingsCard} from '@thunder/components';
+import {SettingsCard} from '@thunderid/components';
 import {Box, FormControl, FormLabel, Stack, Tab, Tabs, TextField} from '@wso2/oxygen-ui';
 import {useState} from 'react';
 import {Controller} from 'react-hook-form';

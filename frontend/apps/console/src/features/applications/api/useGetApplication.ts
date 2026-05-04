@@ -18,7 +18,7 @@
 
 import {useAsgardeo} from '@asgardeo/react';
 import {useQuery, type UseQueryResult} from '@tanstack/react-query';
-import {useConfig} from '@thunder/contexts';
+import {useConfig} from '@thunderid/contexts';
 import ApplicationQueryKeys from '../constants/application-query-keys';
 import type {Application} from '../models/application';
 

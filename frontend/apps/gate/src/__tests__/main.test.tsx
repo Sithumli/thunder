@@ -55,7 +55,7 @@ vi.mock('react-i18next', () => ({
 }));
 
 // Mock i18n
-vi.mock('@thunder/i18n/locales/en-US', () => ({
+vi.mock('@thunderid/i18n/locales/en-US', () => ({
   default: {
     common: {},
     navigation: {},
@@ -73,12 +73,12 @@ vi.mock('@thunder/i18n/locales/en-US', () => ({
 }));
 
 // Mock contexts
-vi.mock('@thunder/contexts', () => ({
+vi.mock('@thunderid/contexts', () => ({
   ConfigProvider: ({children}: {children: React.ReactNode}) => children,
 }));
 
 // Mock logger
-vi.mock('@thunder/logger/react', () => ({
+vi.mock('@thunderid/logger/react', () => ({
   LoggerProvider: ({children}: {children: React.ReactNode}) => children,
   LogLevel: {DEBUG: 0, INFO: 1, WARN: 2, ERROR: 3},
 }));

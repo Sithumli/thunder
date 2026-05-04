@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {useTemplateLiteralResolver} from '@thunder/hooks';
+import {useTemplateLiteralResolver} from '@thunderid/hooks';
 import {Checkbox, FormControlLabel, FormHelperText} from '@wso2/oxygen-ui';
 import {type CSSProperties, type ReactElement} from 'react';
 import {useTranslation} from 'react-i18next';

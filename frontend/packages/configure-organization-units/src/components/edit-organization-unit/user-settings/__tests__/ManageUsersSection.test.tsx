@@ -16,8 +16,8 @@
  * under the License.
  */
 
-import {screen, renderWithProviders} from '@thunder/test-utils';
-import type {User} from '@thunder/types';
+import {screen, renderWithProviders} from '@thunderid/test-utils';
+import type {User} from '@thunderid/types';
 import {describe, it, expect, vi, beforeEach} from 'vitest';
 import ManageUsersSection from '../ManageUsersSection';
 
@@ -28,7 +28,7 @@ vi.mock('../../../../api/useGetOrganizationUnitUsers', () => ({
 }));
 
 // Mock useDataGridLocaleText hook
-vi.mock('@thunder/hooks', () => ({
+vi.mock('@thunderid/hooks', () => ({
   useDataGridLocaleText: () => ({}),
 }));
 

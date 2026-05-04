@@ -16,9 +16,9 @@
  * under the License.
  */
 
-import {SettingsCard, getInitials} from '@thunder/components';
-import {useDataGridLocaleText} from '@thunder/hooks';
-import type {User} from '@thunder/types';
+import {SettingsCard, getInitials} from '@thunderid/components';
+import {useDataGridLocaleText} from '@thunderid/hooks';
+import type {User} from '@thunderid/types';
 import {Box, DataGrid, Avatar} from '@wso2/oxygen-ui';
 import {useMemo, type JSX} from 'react';
 import {useTranslation} from 'react-i18next';

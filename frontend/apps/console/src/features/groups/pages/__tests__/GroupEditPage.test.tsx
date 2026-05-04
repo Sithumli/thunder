@@ -18,13 +18,13 @@
 
 import {screen, waitFor, fireEvent} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import {renderWithProviders} from '@thunder/test-utils';
+import {renderWithProviders} from '@thunderid/test-utils';
 import type {ReactNode} from 'react';
 import {describe, it, expect, beforeEach, afterEach, vi} from 'vitest';
 import GroupEditPage from '../GroupEditPage';
 
-vi.mock('@thunder/components', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@thunder/components')>();
+vi.mock('@thunderid/components', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@thunderid/components')>();
   return {
     ...actual,
     CopyableId: vi.fn(({value}: {value: string}) => (

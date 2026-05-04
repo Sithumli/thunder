@@ -17,8 +17,8 @@
  */
 
 import userEvent from '@testing-library/user-event';
-import type {Theme} from '@thunder/design';
-import {render, screen, waitFor} from '@thunder/test-utils';
+import type {Theme} from '@thunderid/design';
+import {render, screen, waitFor} from '@thunderid/test-utils';
 import {describe, it, expect, vi, beforeEach} from 'vitest';
 import ApplicationCreateProvider from '../../contexts/ApplicationCreate/ApplicationCreateProvider';
 import type {Application} from '../../models/application';
@@ -29,7 +29,7 @@ const mockCreateApplication = vi.fn();
 const mockNavigate = vi.fn();
 
 // Mock logger
-vi.mock('@thunder/logger/react', () => ({
+vi.mock('@thunderid/logger/react', () => ({
   useLogger: () => ({
     info: vi.fn(),
     warn: vi.fn(),
@@ -49,7 +49,7 @@ vi.mock('react-router', async () => {
 });
 
 // Mock design hooks
-vi.mock('@thunder/design', () => ({
+vi.mock('@thunderid/design', () => ({
   useGetThemes: () => ({
     data: {themes: [{id: 'theme-1', displayName: 'Default Theme', theme: {}}]},
     isLoading: false,
@@ -129,7 +129,7 @@ vi.mock('../../utils/getConfigurationTypeFromTemplate', () => ({
   default: vi.fn(() => 'URL'),
 }));
 
-vi.mock('@thunder/configure-organization-units', () => ({
+vi.mock('@thunderid/configure-organization-units', () => ({
   useHasMultipleOUs: () => ({
     hasMultipleOUs: false,
     isLoading: false,

@@ -103,7 +103,7 @@ export interface ClientConfig {
 }
 
 /**
- * Theme configuration interface that defines theming options for Thunder applications.
+ * Theme configuration interface that defines theming options for applications.
  */
 export interface ThemeConfig {
   /** Unique key for the theme */
@@ -198,7 +198,7 @@ export interface TrustedIssuerConfig {
    * Defaults to self for backward compatibility with existing
    * federation deployments.
    */
-  type?: 'thunder' | 'generic';
+  type?: 'thunderid' | 'generic';
 }
 
 /**

@@ -17,7 +17,7 @@
  */
 
 import userEvent from '@testing-library/user-event';
-import {render, screen} from '@thunder/test-utils';
+import {render, screen} from '@thunderid/test-utils';
 import {describe, expect, it, vi, beforeEach} from 'vitest';
 import type {TranslationCreateContextType} from '@/contexts/TranslationCreate/TranslationCreateContext';
 import {TranslationCreateFlowStep} from '@/models/translation-create-flow';
@@ -45,7 +45,7 @@ const {mockRefetch, mockCreateTranslationsMutateAsync} = vi.hoisted(() => ({
   mockCreateTranslationsMutateAsync: vi.fn().mockResolvedValue({}),
 }));
 
-vi.mock('@thunder/i18n', () => ({
+vi.mock('@thunderid/i18n', () => ({
   useGetTranslations: vi.fn().mockReturnValue({data: undefined, isLoading: false, refetch: mockRefetch}),
   useCreateTranslations: vi.fn().mockReturnValue({mutateAsync: mockCreateTranslationsMutateAsync}),
   I18nDefaultConstants: {
@@ -54,7 +54,7 @@ vi.mock('@thunder/i18n', () => ({
   enUS: {},
 }));
 
-vi.mock('@thunder/logger/react', () => ({
+vi.mock('@thunderid/logger/react', () => ({
   useLogger: () => ({error: vi.fn(), info: vi.fn(), warn: vi.fn(), debug: vi.fn()}),
 }));
 

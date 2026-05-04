@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {SettingsCard} from '@thunder/components';
+import {SettingsCard} from '@thunderid/components';
 import {
   Box,
   Stack,

@@ -16,18 +16,18 @@
  * under the License.
  */
 
-import {render, screen, userEvent} from '@thunder/test-utils';
+import {render, screen, userEvent} from '@thunderid/test-utils';
 import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
 
 const mockNavigate = vi.fn();
 const mockSessionStorageSetItem = vi.fn();
 
-vi.mock('@thunder/contexts', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@thunder/contexts')>();
+vi.mock('@thunderid/contexts', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@thunderid/contexts')>();
   return {
     ...actual,
     useConfig: () => ({
-      config: {brand: {product_name: 'Thunder'}},
+      config: {brand: {product_name: 'ThunderID'}},
     }),
   };
 });
@@ -110,7 +110,7 @@ describe('WelcomePage', () => {
 
     await user.click(screen.getByRole('button', {name: /common:actions\.close/i}));
 
-    expect(mockSessionStorageSetItem).toHaveBeenCalledWith('thunder:welcome:dismissed', 'true');
+    expect(mockSessionStorageSetItem).toHaveBeenCalledWith('thunderid:welcome:dismissed', 'true');
     expect(mockNavigate).toHaveBeenCalledWith('/home');
   });
 
@@ -121,7 +121,7 @@ describe('WelcomePage', () => {
     const newProjectButton = screen.getByText('common:welcome.start.newProject');
     await user.click(newProjectButton.closest('[role="button"]') ?? newProjectButton);
 
-    expect(mockSessionStorageSetItem).toHaveBeenCalledWith('thunder:welcome:dismissed', 'true');
+    expect(mockSessionStorageSetItem).toHaveBeenCalledWith('thunderid:welcome:dismissed', 'true');
     expect(mockNavigate).toHaveBeenCalledWith('/welcome/create-project');
   });
 
@@ -152,6 +152,6 @@ describe('WelcomePage', () => {
   it('uses product name from config', () => {
     render(<WelcomePage />);
     // The openImportDesc key is interpolated with productName
-    expect(screen.getByText(/openImportDesc.*Thunder/i)).toBeInTheDocument();
+    expect(screen.getByText(/openImportDesc.*ThunderID/i)).toBeInTheDocument();
   });
 });

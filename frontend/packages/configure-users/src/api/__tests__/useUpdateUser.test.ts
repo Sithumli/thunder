@@ -16,8 +16,8 @@
  * under the License.
  */
 
-import {waitFor, act, renderHook} from '@thunder/test-utils';
-import type {User} from '@thunder/types';
+import {waitFor, act, renderHook} from '@thunderid/test-utils';
+import type {User} from '@thunderid/types';
 import {describe, it, expect, beforeEach, afterEach, vi} from 'vitest';
 import UserQueryKeys from '../../constants/user-query-keys';
 import useUpdateUser, {type UpdateUserVariables} from '../useUpdateUser';
@@ -34,8 +34,8 @@ vi.mock('@asgardeo/react', () => ({
   }),
 }));
 
-vi.mock('@thunder/contexts', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@thunder/contexts')>();
+vi.mock('@thunderid/contexts', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@thunderid/contexts')>();
   return {
     ...actual,
     useConfig: () => ({

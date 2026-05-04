@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {createLogger} from '@thunder/logger';
+import {createLogger} from '@thunderid/logger';
 import type {DataGrid} from '@wso2/oxygen-ui';
 import {useMemo} from 'react';
 import {useTranslation} from 'react-i18next';

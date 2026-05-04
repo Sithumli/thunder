@@ -16,14 +16,14 @@
  * under the License.
  */
 
-import thunderPlugin from '@thunder/eslint-plugin-thunder';
+import thunderIdPlugin from '@thunderid/eslint-plugin';
 
 export default [
   {
     ignores: ['dist/**', 'build/**', 'node_modules/**', 'coverage/**'],
   },
-  ...thunderPlugin.configs.react,
-  ...thunderPlugin.configs.vitest,
+  ...thunderIdPlugin.configs.react,
+  ...thunderIdPlugin.configs.vitest,
   {
     rules: {
       /* --- TEMPORARILY TURNED OFF RULES --- */

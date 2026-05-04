@@ -58,7 +58,7 @@ export interface LoggerProviderProps extends PropsWithChildren {
  * Using with configuration:
  * ```tsx
  * import LoggerProvider from './LoggerProvider';
- * import { LogLevel } from '@thunder/logger';
+ * import { LogLevel } from '@thunderid/logger';
  * import App from './App';
  *
  * function Root() {
@@ -74,7 +74,7 @@ export interface LoggerProviderProps extends PropsWithChildren {
  * Using with Logger instance (recommended for better performance):
  * ```tsx
  * import LoggerProvider from './LoggerProvider';
- * import { Logger } from '@thunder/logger';
+ * import { Logger } from '@thunderid/logger';
  *
  * // Create logger outside component to maintain stable reference
  * const logger = new Logger({ level: LogLevel.DEBUG });

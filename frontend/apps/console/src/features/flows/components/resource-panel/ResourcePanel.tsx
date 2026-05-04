@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {BuilderLayout, BuilderPanelHeader} from '@thunder/components';
+import {BuilderLayout, BuilderPanelHeader} from '@thunderid/components';
 import {Accordion, AccordionDetails, AccordionSummary, Box, Stack, Typography} from '@wso2/oxygen-ui';
 import {BoxesIcon, BoxIcon, ChevronDownIcon, CogIcon, ZapIcon} from '@wso2/oxygen-ui-icons-react';
 import kebabCase from 'lodash-es/kebabCase';

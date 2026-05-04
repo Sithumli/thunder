@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {OrganizationUnitTreePicker} from '@thunder/configure-organization-units';
+import {OrganizationUnitTreePicker} from '@thunderid/configure-organization-units';
 import {Stack, Typography, FormControl, FormLabel} from '@wso2/oxygen-ui';
 import {useEffect} from 'react';
 import type {JSX} from 'react';

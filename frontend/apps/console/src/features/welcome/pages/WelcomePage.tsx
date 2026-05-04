@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {useConfig} from '@thunder/contexts';
+import {useConfig} from '@thunderid/contexts';
 import {Box, Card, IconButton, Stack, Typography, useTheme} from '@wso2/oxygen-ui';
 import {FolderOpen, X, ChevronRight, BookOpen, Lightbulb, PackagePlus} from '@wso2/oxygen-ui-icons-react';
 import {motion} from 'framer-motion';

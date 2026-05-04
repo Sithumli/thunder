@@ -17,8 +17,8 @@
  */
 
 import {useAsgardeo} from '@asgardeo/react';
-import {useConfig} from '@thunder/contexts';
-import {renderHook, waitFor, act} from '@thunder/test-utils';
+import {useConfig} from '@thunderid/contexts';
+import {renderHook, waitFor, act} from '@thunderid/test-utils';
 import {describe, it, expect, beforeEach, afterEach, vi} from 'vitest';
 import FlowQueryKeys from '../../constants/flow-query-keys';
 import useDeleteFlow from '../useDeleteFlow';
@@ -27,8 +27,8 @@ vi.mock('@asgardeo/react', () => ({
   useAsgardeo: vi.fn(),
 }));
 
-vi.mock('@thunder/contexts', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@thunder/contexts')>();
+vi.mock('@thunderid/contexts', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@thunderid/contexts')>();
   return {
     ...actual,
     useConfig: vi.fn(),

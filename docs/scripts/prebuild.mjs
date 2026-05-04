@@ -20,7 +20,7 @@ import {execSync} from 'child_process';
 import {readFileSync} from 'fs';
 import {dirname, join} from 'path';
 import {fileURLToPath} from 'url';
-import {createLogger} from '@thunder/logger';
+import {createLogger} from '@thunderid/logger';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

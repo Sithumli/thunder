@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {useLogger} from '@thunder/logger';
+import {useLogger} from '@thunderid/logger';
 import {Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, Alert} from '@wso2/oxygen-ui';
 import {useState, type JSX} from 'react';
 import {useTranslation} from 'react-i18next';

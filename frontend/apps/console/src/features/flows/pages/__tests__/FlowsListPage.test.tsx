@@ -24,7 +24,7 @@ import FlowsListPage from '../FlowsListPage';
 // Mock logger
 const mockLoggerError = vi.fn();
 
-vi.mock('@thunder/logger/react', () => ({
+vi.mock('@thunderid/logger/react', () => ({
   useLogger: () => ({
     debug: vi.fn(),
     info: vi.fn(),

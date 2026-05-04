@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {render, screen, waitFor, userEvent} from '@thunder/test-utils';
+import {render, screen, waitFor, userEvent} from '@thunderid/test-utils';
 import type * as OxygenUI from '@wso2/oxygen-ui';
 import {DataGrid} from '@wso2/oxygen-ui';
 import React from 'react';
@@ -151,7 +151,7 @@ vi.mock('react-router', async () => {
   };
 });
 
-vi.mock('@thunder/logger/react', () => ({
+vi.mock('@thunderid/logger/react', () => ({
   useLogger: () => ({
     error: mockLoggerError,
     info: vi.fn(),

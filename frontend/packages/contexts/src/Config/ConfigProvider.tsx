@@ -43,7 +43,7 @@ function loadConfig(): ProductConfig {
     return window.__THUNDER_RUNTIME_CONFIG__;
   }
 
-  throw new Error('Thunder runtime configuration is not available on window.__THUNDER_RUNTIME_CONFIG__');
+  throw new Error('ThunderID runtime configuration is not available on window.__THUNDER_RUNTIME_CONFIG__');
 }
 
 /**

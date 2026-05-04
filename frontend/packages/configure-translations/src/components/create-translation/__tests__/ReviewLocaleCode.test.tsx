@@ -17,7 +17,7 @@
  */
 
 import userEvent from '@testing-library/user-event';
-import {render, screen} from '@thunder/test-utils';
+import {render, screen} from '@thunderid/test-utils';
 import {describe, expect, it, vi, beforeEach} from 'vitest';
 import ReviewLocaleCode from '@/components/create-translation/ReviewLocaleCode';
 
@@ -29,7 +29,7 @@ vi.mock('react-i18next', async () => {
   };
 });
 
-vi.mock('@thunder/i18n', () => ({
+vi.mock('@thunderid/i18n', () => ({
   getDisplayNameForCode: (code: string) => (code ? `Name(${code})` : null),
   toFlagEmoji: (code: string) => (code ? `Flag(${code})` : ''),
 }));

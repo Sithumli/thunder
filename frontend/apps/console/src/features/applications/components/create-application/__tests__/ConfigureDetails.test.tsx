@@ -18,7 +18,7 @@
 
 import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import {LoggerProvider, LogLevel} from '@thunder/logger';
+import {LoggerProvider, LogLevel} from '@thunderid/logger';
 import {beforeEach, describe, expect, it, vi} from 'vitest';
 import {AuthenticatorTypes} from '../../../../integrations/models/authenticators';
 import ApplicationCreateContext, {

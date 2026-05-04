@@ -18,15 +18,15 @@
 
 import type {MutateOptions, MutationFunctionContext} from '@tanstack/react-query';
 import userEvent from '@testing-library/user-event';
-import {render, screen, waitFor} from '@thunder/test-utils';
+import {render, screen, waitFor} from '@thunderid/test-utils';
 import {describe, it, expect, vi, beforeEach, afterEach} from 'vitest';
 import type {RegenerateSecretVariables, RegenerateSecretResult} from '../../api/useRegenerateClientSecret';
 import RegenerateSecretDialog from '../RegenerateSecretDialog';
 import type {RegenerateSecretDialogProps} from '../RegenerateSecretDialog';
 
 // Mock the logger
-vi.mock('@thunder/logger', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@thunder/logger')>();
+vi.mock('@thunderid/logger', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@thunderid/logger')>();
   return {
     ...actual,
     useLogger: () => ({

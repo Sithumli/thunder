@@ -1,4 +1,4 @@
-# Thunder Console E2E Tests
+# ThunderID Console E2E Tests
 
 End-to-end automation test suite for the Console, built with [Playwright](https://playwright.dev/).
 

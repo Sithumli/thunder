@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {screen, waitFor, renderWithProviders} from '@thunder/test-utils';
+import {screen, waitFor, renderWithProviders} from '@thunderid/test-utils';
 import {describe, it, expect, vi, beforeEach} from 'vitest';
 import type {OrganizationUnitListResponse} from '../../models/responses';
 import OrganizationUnitsListPage from '../OrganizationUnitsListPage';
@@ -33,7 +33,7 @@ vi.mock('react-router', async () => {
 
 // Mock logger — stable reference to avoid useCallback churn
 const stableLogger = {error: vi.fn(), info: vi.fn(), debug: vi.fn()};
-vi.mock('@thunder/logger/react', () => ({
+vi.mock('@thunderid/logger/react', () => ({
   useLogger: () => stableLogger,
 }));
 
@@ -89,8 +89,8 @@ vi.mock('../../contexts/useOrganizationUnit', async () => {
 
 // Mock config (for tree view)
 const stableConfig = {getServerUrl: () => 'http://localhost:8080'};
-vi.mock('@thunder/contexts', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@thunder/contexts')>();
+vi.mock('@thunderid/contexts', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@thunderid/contexts')>();
   return {
     ...actual,
     useConfig: () => stableConfig,

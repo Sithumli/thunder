@@ -29,7 +29,7 @@ vi.mock('react-i18next', () => ({
   }),
 }));
 
-vi.mock('@thunder/contexts', () => ({
+vi.mock('@thunderid/contexts', () => ({
   useConfig: () => ({
     getFeatureConfig: () => ({}),
     config: {brand: {}},

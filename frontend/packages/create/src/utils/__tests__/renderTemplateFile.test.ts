@@ -41,9 +41,9 @@ describe('renderTemplateFile', () => {
     const templatePath = join(testDir, 'template.hbs');
     writeFileSync(templatePath, 'Hello, {{name}}!');
 
-    const result = renderTemplateFile(templatePath, {name: 'Thunder'});
+    const result = renderTemplateFile(templatePath, {name: 'ThunderID'});
 
-    expect(result).toBe('Hello, Thunder!');
+    expect(result).toBe('Hello, ThunderID!');
   });
 
   it('should throw error if template file does not exist', () => {

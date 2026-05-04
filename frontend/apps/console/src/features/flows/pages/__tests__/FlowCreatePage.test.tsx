@@ -20,8 +20,8 @@ import {render, screen, fireEvent, waitFor, act} from '@testing-library/react';
 import {describe, it, expect, vi, beforeEach} from 'vitest';
 import FlowCreatePage from '../FlowCreatePage';
 
-// Mock @thunder/logger/react
-vi.mock('@thunder/logger/react', () => ({
+// Mock @thunderid/logger/react
+vi.mock('@thunderid/logger/react', () => ({
   useLogger: () => ({
     debug: vi.fn(),
     info: vi.fn(),

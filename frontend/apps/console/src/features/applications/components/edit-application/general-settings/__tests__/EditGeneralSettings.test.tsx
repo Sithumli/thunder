@@ -22,7 +22,7 @@ import type {Application} from '../../../../models/application';
 import type {OAuth2Config} from '../../../../models/oauth';
 import EditGeneralSettings from '../EditGeneralSettings';
 
-vi.mock('@thunder/contexts', () => ({
+vi.mock('@thunderid/contexts', () => ({
   useConfig: () => ({
     config: {
       client: {

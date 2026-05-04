@@ -18,7 +18,7 @@
  * under the License.
  */
 
-/* eslint-disable @thunder/copyright-header */
+/* eslint-disable @thunderid/copyright-header */
 
 /**
  * Fetches the Unicode emoji test file and regenerates
@@ -37,7 +37,7 @@
 import {writeFileSync} from 'node:fs';
 import {dirname, resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {createLogger} from '@thunder/logger';
+import {createLogger} from '@thunderid/logger';
 
 const logger = createLogger({level: 'info'});
 

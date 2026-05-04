@@ -16,9 +16,9 @@
  * under the License.
  */
 
-import {useGetUsers} from '@thunder/configure-users';
-import {useDataGridLocaleText} from '@thunder/hooks';
-import type {User} from '@thunder/types';
+import {useGetUsers} from '@thunderid/configure-users';
+import {useDataGridLocaleText} from '@thunderid/hooks';
+import type {User} from '@thunderid/types';
 import {
   Dialog,
   DialogTitle,

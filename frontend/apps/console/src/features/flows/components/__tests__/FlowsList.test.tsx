@@ -27,7 +27,7 @@ import FlowsList from '../FlowsList';
 
 // Mock logger with accessible mock functions
 const mockLoggerError = vi.fn();
-vi.mock('@thunder/logger/react', () => ({
+vi.mock('@thunderid/logger/react', () => ({
   useLogger: () => ({
     debug: vi.fn(),
     info: vi.fn(),
@@ -73,7 +73,7 @@ vi.mock('react-router', async () => {
 });
 
 // Mock useDataGridLocaleText
-vi.mock('@thunder/hooks', () => ({
+vi.mock('@thunderid/hooks', () => ({
   useDataGridLocaleText: () => ({}),
 }));
 

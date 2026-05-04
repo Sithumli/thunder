@@ -20,7 +20,7 @@ import {existsSync} from 'fs';
 import {mkdir, rm, readFile, stat, writeFile} from 'fs/promises';
 import {tmpdir} from 'os';
 import {join} from 'path';
-import {createLogger} from '@thunder/logger';
+import {createLogger} from '@thunderid/logger';
 import {describe, it, expect, beforeEach, afterEach} from 'vitest';
 import createFileFromTemplate from '../utils/createFileFromTemplate';
 import ensureDir from '../utils/ensureDir';

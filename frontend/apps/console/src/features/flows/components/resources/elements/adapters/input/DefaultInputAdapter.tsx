@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {useTemplateLiteralResolver} from '@thunder/hooks';
+import {useTemplateLiteralResolver} from '@thunderid/hooks';
 import {TextField} from '@wso2/oxygen-ui';
 import {type CSSProperties, type ReactElement, type ReactNode} from 'react';
 import {useTranslation} from 'react-i18next';

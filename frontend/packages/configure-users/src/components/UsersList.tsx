@@ -16,9 +16,9 @@
  * under the License.
  */
 
-import {ResourceAvatar, getInitials} from '@thunder/components';
-import {useDataGridLocaleText} from '@thunder/hooks';
-import {useLogger} from '@thunder/logger/react';
+import {ResourceAvatar, getInitials} from '@thunderid/components';
+import {useDataGridLocaleText} from '@thunderid/hooks';
+import {useLogger} from '@thunderid/logger/react';
 import {
   IconButton,
   Tooltip,

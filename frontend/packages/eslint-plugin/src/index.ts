@@ -41,7 +41,7 @@ const __dirname: string = dirname(__filename);
 const pkgPath: string = join(__dirname, '../package.json');
 
 const pkg: PackageJson = JSON.parse(readFileSync(pkgPath, 'utf8')) as PackageJson;
-const namespace = 'thunder';
+const namespace = 'thunderid';
 
 const DEV_DEPENDENCIES_ALLOWED_FILES: string[] = [
   '*.config.js',
@@ -79,9 +79,9 @@ const plugin: ESLint.Plugin = {
 Object.assign(plugin.configs, {
   javascript: [
     {
-      name: 'thunder/plugin-setup',
+      name: 'thunderid/plugin-setup',
       plugins: {
-        '@thunder': plugin,
+        '@thunderid': plugin,
       },
     },
     ...baseConfig,
@@ -97,9 +97,9 @@ Object.assign(plugin.configs, {
   ],
   typescript: [
     {
-      name: 'thunder/plugin-setup',
+      name: 'thunderid/plugin-setup',
       plugins: {
-        '@thunder': plugin,
+        '@thunderid': plugin,
       },
     },
     ...baseConfig,
@@ -117,9 +117,9 @@ Object.assign(plugin.configs, {
   ],
   react: [
     {
-      name: 'thunder/plugin-setup',
+      name: 'thunderid/plugin-setup',
       plugins: {
-        '@thunder': plugin,
+        '@thunderid': plugin,
       },
     },
     ...baseConfig,
@@ -140,9 +140,9 @@ Object.assign(plugin.configs, {
   // Overlay config for Playwright e2e test files — spread alongside base/react.
   playwright: [
     {
-      name: 'thunder/plugin-setup',
+      name: 'thunderid/plugin-setup',
       plugins: {
-        '@thunder': plugin,
+        '@thunderid': plugin,
       },
     },
     ...playwrightConfig,
@@ -150,9 +150,9 @@ Object.assign(plugin.configs, {
   // Overlay config for Vitest unit/integration test files — spread alongside base/react.
   vitest: [
     {
-      name: 'thunder/plugin-setup',
+      name: 'thunderid/plugin-setup',
       plugins: {
-        '@thunder': plugin,
+        '@thunderid': plugin,
       },
     },
     ...vitestConfig,
@@ -160,9 +160,9 @@ Object.assign(plugin.configs, {
   // Full project config for Vue applications.
   vue: [
     {
-      name: 'thunder/plugin-setup',
+      name: 'thunderid/plugin-setup',
       plugins: {
-        '@thunder': plugin,
+        '@thunderid': plugin,
       },
     },
     ...baseConfig,

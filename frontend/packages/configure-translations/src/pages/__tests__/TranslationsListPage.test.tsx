@@ -17,8 +17,8 @@
  */
 
 import userEvent from '@testing-library/user-event';
-import {useGetLanguages} from '@thunder/i18n';
-import {render, screen, fireEvent} from '@thunder/test-utils';
+import {useGetLanguages} from '@thunderid/i18n';
+import {render, screen, fireEvent} from '@thunderid/test-utils';
 import {describe, expect, it, vi, beforeEach} from 'vitest';
 import TranslationsListPage from '@/pages/TranslationsListPage';
 
@@ -43,14 +43,14 @@ vi.mock('../../../../hooks/useDataGridLocaleText', () => ({
   default: () => ({}),
 }));
 
-vi.mock('@thunder/i18n', () => ({
+vi.mock('@thunderid/i18n', () => ({
   useGetLanguages: vi.fn(),
   useDeleteTranslations: vi.fn().mockReturnValue({mutate: vi.fn(), isPending: false}),
   getDisplayNameForCode: (code: string) => `Language(${code})`,
   toFlagEmoji: (code: string) => `Flag(${code})`,
 }));
 
-vi.mock('@thunder/logger/react', () => ({
+vi.mock('@thunderid/logger/react', () => ({
   useLogger: () => ({error: vi.fn(), info: vi.fn(), warn: vi.fn(), debug: vi.fn()}),
 }));
 

@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {Kbd, SettingsCard} from '@thunder/components';
+import {Kbd, SettingsCard} from '@thunderid/components';
 import {Autocomplete, Chip, TextField} from '@wso2/oxygen-ui';
 import {useState} from 'react';
 import {useTranslation, Trans} from 'react-i18next';

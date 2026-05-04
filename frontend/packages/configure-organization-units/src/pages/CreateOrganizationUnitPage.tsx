@@ -17,8 +17,8 @@
  */
 
 import {zodResolver} from '@hookform/resolvers/zod';
-import {useLogger} from '@thunder/logger/react';
-import {generateRandomHumanReadableIdentifiers} from '@thunder/utils';
+import {useLogger} from '@thunderid/logger/react';
+import {generateRandomHumanReadableIdentifiers} from '@thunderid/utils';
 import {
   Box,
   Stack,

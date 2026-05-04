@@ -16,12 +16,12 @@
  * under the License.
  */
 
-import thunderPlugin from './dist/index.js';
+import thunderIdPlugin from './dist/index.js';
 
 export default [
   {
     ignores: ['dist/**', 'build/**', 'node_modules/**', 'coverage/**'],
   },
-  ...thunderPlugin.configs.typescript,
-  ...thunderPlugin.configs.vitest,
+  ...thunderIdPlugin.configs.typescript,
+  ...thunderIdPlugin.configs.vitest,
 ];

@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {useConfig} from '@thunder/contexts';
+import {useConfig} from '@thunderid/contexts';
 import {Box, Button, Card, Chip, Stack, Typography} from '@wso2/oxygen-ui';
 import {motion} from 'framer-motion';
 import type {JSX} from 'react';

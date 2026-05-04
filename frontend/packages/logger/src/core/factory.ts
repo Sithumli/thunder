@@ -178,7 +178,7 @@ export function createTransports(configs: TransportConfig[]): Transport[] {
  *
  * @example
  * ```typescript
- * import { registerTransport } from '@thunder/logger';
+ * import { registerTransport } from '@thunderid/logger';
  * import * as Sentry from '@sentry/browser';
  *
  * // Define a custom Sentry transport

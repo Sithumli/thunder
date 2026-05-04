@@ -18,7 +18,7 @@
 
 import {useAsgardeo} from '@asgardeo/react';
 import {useMutation, type UseMutationResult} from '@tanstack/react-query';
-import {useConfig} from '@thunder/contexts';
+import {useConfig} from '@thunderid/contexts';
 import type {ImportRequest, ImportResponse} from '../models/import-configuration';
 
 /**

@@ -16,15 +16,15 @@
  * under the License.
  */
 
-import {useTemplateLiteralResolver} from '@thunder/hooks';
+import {useTemplateLiteralResolver} from '@thunderid/hooks';
 import {
   useGetLanguages,
   useGetTranslations,
   useUpdateTranslation,
   NamespaceConstants,
   I18nDefaultConstants,
-} from '@thunder/i18n';
-import {isI18nTemplatePattern, I18N_KEY_PATTERN} from '@thunder/utils';
+} from '@thunderid/i18n';
+import {isI18nTemplatePattern, I18N_KEY_PATTERN} from '@thunderid/utils';
 import {
   Alert,
   Autocomplete,

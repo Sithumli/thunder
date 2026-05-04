@@ -65,7 +65,7 @@ vi.mock('@tanstack/react-query', () => ({
 }));
 
 // Mock contexts
-vi.mock('@thunder/contexts', () => ({
+vi.mock('@thunderid/contexts', () => ({
   useConfig: () => ({
     getServerUrl: () => 'https://api.example.com',
   }),

@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {screen, fireEvent, waitFor, renderWithProviders} from '@thunder/test-utils';
+import {screen, fireEvent, waitFor, renderWithProviders} from '@thunderid/test-utils';
 import type {ReactNode} from 'react';
 import {describe, it, expect, vi, beforeEach} from 'vitest';
 import type {OrganizationUnit} from '../../models/organization-unit';
@@ -48,7 +48,7 @@ vi.mock('react-router', async () => {
 });
 
 // Mock logger
-vi.mock('@thunder/logger/react', () => ({
+vi.mock('@thunderid/logger/react', () => ({
   useLogger: () => ({
     error: vi.fn(),
     info: vi.fn(),
@@ -117,12 +117,12 @@ vi.mock('../../contexts/useOrganizationUnit', () => ({
 }));
 
 // Mock useDataGridLocaleText
-vi.mock('@thunder/hooks', () => ({
+vi.mock('@thunderid/hooks', () => ({
   useDataGridLocaleText: () => ({}),
 }));
 
 // Mock EmojiPicker
-vi.mock('@thunder/components', async () => {
+vi.mock('@thunderid/components', async () => {
   const React = await import('react');
   return {
     EmojiPicker: vi.fn(() => null),

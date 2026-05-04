@@ -16,8 +16,8 @@
  * under the License.
  */
 
-import {useDataGridLocaleText} from '@thunder/hooks';
-import {useLogger} from '@thunder/logger/react';
+import {useDataGridLocaleText} from '@thunderid/hooks';
+import {useLogger} from '@thunderid/logger/react';
 import {
   Chip,
   IconButton,

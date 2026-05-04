@@ -30,7 +30,7 @@ vi.mock('../../../../../flows/api/useGetFlows');
 type MockedUseGetFlows = ReturnType<typeof useGetFlows>;
 
 // Mock the Components
-vi.mock('@thunder/components', () => ({
+vi.mock('@thunderid/components', () => ({
   SettingsCard: ({
     title,
     description,

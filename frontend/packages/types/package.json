@@ -1,9 +1,9 @@
 {
-  "name": "@thunder/types",
+  "name": "@thunderid/types",
   "version": "0.0.0",
-  "description": "Utility types for ⚡️ Thunder frontends",
+  "description": "Utility types for ⚡️ ThunderID frontends",
   "keywords": [
-    "thunder",
+    "thunderid",
     "types",
     "utility",
     "typescript",
@@ -52,9 +52,9 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@thunder/eslint-plugin-thunder": "workspace:^",
-    "@thunder/prettier-config": "workspace:^",
-    "@thunder/test-utils": "workspace:^",
+    "@thunderid/eslint-plugin": "workspace:^",
+    "@thunderid/prettier-config": "workspace:^",
+    "@thunderid/test-utils": "workspace:^",
     "@types/node": "catalog:",
     "eslint": "catalog:",
     "prettier": "catalog:",

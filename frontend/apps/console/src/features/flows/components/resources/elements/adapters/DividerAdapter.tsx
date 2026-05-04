@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {useTemplateLiteralResolver} from '@thunder/hooks';
+import {useTemplateLiteralResolver} from '@thunderid/hooks';
 import {Divider, type DividerProps} from '@wso2/oxygen-ui';
 import {useMemo, type ReactElement} from 'react';
 import {useTranslation} from 'react-i18next';

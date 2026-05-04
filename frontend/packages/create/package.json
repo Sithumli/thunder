@@ -1,9 +1,9 @@
 {
-  "name": "@thunder/create",
+  "name": "@thunderid/create",
   "version": "0.0.0",
-  "description": "CLI scaffolding tool for ⚡️ Thunder frontends",
+  "description": "CLI scaffolding tool for ⚡️ ThunderID frontends",
   "keywords": [
-    "thunder",
+    "thunderid",
     "cli",
     "scaffolding",
     "generator",
@@ -29,7 +29,7 @@
   },
   "types": "./dist/index.d.ts",
   "bin": {
-    "create": "./bin/create.js"
+    "create-thunderid": "./bin/create.js"
   },
   "sideEffects": false,
   "files": [
@@ -58,15 +58,15 @@
   "dependencies": {
     "@clack/prompts": "^0.7.0",
     "lodash-es": "catalog:",
-    "@thunder/logger": "workspace:^",
+    "@thunderid/logger": "workspace:^",
     "commander": "^11.1.0",
     "handlebars": "^4.7.9",
     "picocolors": "^1.0.0"
   },
   "devDependencies": {
-    "@thunder/eslint-plugin-thunder": "workspace:^",
-    "@thunder/prettier-config": "workspace:^",
-    "@thunder/test-utils": "workspace:^",
+    "@thunderid/eslint-plugin": "workspace:^",
+    "@thunderid/prettier-config": "workspace:^",
+    "@thunderid/test-utils": "workspace:^",
     "@types/lodash-es": "catalog:",
     "@types/node": "catalog:",
     "eslint": "catalog:",

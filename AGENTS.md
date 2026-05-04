@@ -1,6 +1,6 @@
 # Project Overview
 
-Thunder is a lightweight user and identity management product. Go backend + React frontend in a monorepo. It provides authentication and authorization via OAuth2/OIDC, flexible orchestration flows, and individual auth mechanisms (password, passwordless, social login).
+ThunderID is a lightweight user and identity management product. Go backend + React frontend in a monorepo. It provides authentication and authorization via OAuth2/OIDC, flexible orchestration flows, and individual auth mechanisms (password, passwordless, social login).
 
 - [ARCHITECTURE.md](ARCHITECTURE.md)
 - For build and running - [Makefile](Makefile) and [README.md](README.md)

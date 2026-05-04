@@ -19,7 +19,7 @@
 import {existsSync} from 'fs';
 import {join} from 'path';
 import {text, select, spinner, cancel} from '@clack/prompts';
-import {createLogger} from '@thunder/logger';
+import {createLogger} from '@thunderid/logger';
 import kebabCase from 'lodash-es/kebabCase';
 import colors from 'picocolors';
 import createFileFromTemplate from '../utils/createFileFromTemplate';
@@ -68,8 +68,8 @@ async function createPackage(): Promise<void> {
   }
 
   const packageName = kebabCase(name);
-  const fullPackageName = `@thunder/${packageName}`;
-  const packageDir = join(workspaceInfo.packagePath!, `thunder-${packageName}`);
+  const fullPackageName = `@thunderid/${packageName}`;
+  const packageDir = join(workspaceInfo.packagePath!, packageName);
 
   // Check if package already exists
   if (existsSync(packageDir)) {

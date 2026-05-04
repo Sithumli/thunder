@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {useConfig} from '@thunder/contexts';
+import {useConfig} from '@thunderid/contexts';
 import {
   Box,
   Button,

@@ -29,7 +29,7 @@ interface FormValues {
 }
 
 // Mock the Components
-vi.mock('@thunder/components', () => ({
+vi.mock('@thunderid/components', () => ({
   SettingsCard: ({title, description, children}: {title: string; description: string; children: React.ReactNode}) => (
     <div data-testid="settings-card">
       <div data-testid="card-title">{title}</div>

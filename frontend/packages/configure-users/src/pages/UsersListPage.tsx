@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {useLogger} from '@thunder/logger/react';
+import {useLogger} from '@thunderid/logger/react';
 import {Stack, TextField, Button, InputAdornment, PageContent, PageTitle} from '@wso2/oxygen-ui';
 import {Plus, Search, Mail} from '@wso2/oxygen-ui-icons-react';
 import {useTranslation} from 'react-i18next';

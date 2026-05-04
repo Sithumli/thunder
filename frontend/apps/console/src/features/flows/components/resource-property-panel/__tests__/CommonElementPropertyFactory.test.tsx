@@ -25,7 +25,7 @@ import {ElementTypes} from '../../../models/elements';
 import type {Resource} from '../../../models/resources';
 import CommonElementPropertyFactory from '../CommonElementPropertyFactory';
 
-vi.mock('@thunder/logger/react', () => ({
+vi.mock('@thunderid/logger/react', () => ({
   useLogger: () => ({
     info: vi.fn(),
     warn: vi.fn(),

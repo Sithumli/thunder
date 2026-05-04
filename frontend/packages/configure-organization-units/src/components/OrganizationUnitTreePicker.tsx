@@ -18,9 +18,9 @@
 
 import {useAsgardeo} from '@asgardeo/react';
 import {useQueryClient} from '@tanstack/react-query';
-import {ResourceAvatar} from '@thunder/components';
-import {useConfig} from '@thunder/contexts';
-import {useLogger} from '@thunder/logger/react';
+import {ResourceAvatar} from '@thunderid/components';
+import {useConfig} from '@thunderid/contexts';
+import {useLogger} from '@thunderid/logger/react';
 import {Box, Typography, CircularProgress, TreeView, useTheme} from '@wso2/oxygen-ui';
 import {useState, useCallback, useEffect, useRef, useMemo, type JSX, type SyntheticEvent} from 'react';
 import {useTranslation} from 'react-i18next';

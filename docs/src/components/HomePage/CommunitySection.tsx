@@ -21,7 +21,7 @@ import {Box, Typography, AvatarGroup, Avatar, Tooltip, Skeleton, Card, Container
 import useIsDarkMode from '../../hooks/useIsDarkMode';
 import useScrollAnimation from '../../hooks/useScrollAnimation';
 import {MessagesSquare, CircleDot} from '@wso2/oxygen-ui-icons-react';
-import {useLogger} from '@thunder/logger';
+import {useLogger} from '@thunderid/logger';
 
 interface Contributor {
   login: string;
@@ -85,10 +85,7 @@ function CommunityCard({
       >
         {icon}
       </Box>
-      <Typography
-        variant="h6"
-        sx={{fontWeight: 600, mb: 1, color: isDark ? '#ffffff' : '#1a1a2e', fontSize: '1.1rem'}}
-      >
+      <Typography variant="h6" sx={{fontWeight: 600, mb: 1, color: isDark ? '#ffffff' : '#1a1a2e', fontSize: '1.1rem'}}>
         {title}
       </Typography>
       <Typography

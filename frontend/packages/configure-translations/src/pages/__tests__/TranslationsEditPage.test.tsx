@@ -17,7 +17,7 @@
  */
 
 import userEvent from '@testing-library/user-event';
-import {render, screen} from '@thunder/test-utils';
+import {render, screen} from '@thunderid/test-utils';
 import {describe, expect, it, vi, beforeEach} from 'vitest';
 import TranslationsEditPage from '@/pages/TranslationsEditPage';
 
@@ -53,7 +53,7 @@ const {mockMutateAsync, mockUseGetTranslations, mockUseUpdateTranslation} = vi.h
   mockUseUpdateTranslation: vi.fn(),
 }));
 
-vi.mock('@thunder/i18n', () => ({
+vi.mock('@thunderid/i18n', () => ({
   useGetTranslations: mockUseGetTranslations,
   useUpdateTranslation: mockUseUpdateTranslation,
   NamespaceConstants: {
@@ -67,7 +67,7 @@ vi.mock('@thunder/i18n', () => ({
   },
 }));
 
-vi.mock('@thunder/logger/react', () => ({
+vi.mock('@thunderid/logger/react', () => ({
   useLogger: () => ({error: vi.fn(), info: vi.fn(), warn: vi.fn(), debug: vi.fn()}),
 }));
 

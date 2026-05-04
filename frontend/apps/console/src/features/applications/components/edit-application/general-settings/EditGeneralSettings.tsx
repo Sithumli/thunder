@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {useConfig} from '@thunder/contexts';
+import {useConfig} from '@thunderid/contexts';
 import {Stack} from '@wso2/oxygen-ui';
 import {useState, useCallback} from 'react';
 import type {JSX} from 'react';

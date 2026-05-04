@@ -16,8 +16,8 @@
  * under the License.
  */
 
-import {useGetTranslations, useUpdateTranslation, NamespaceConstants, I18nDefaultConstants} from '@thunder/i18n';
-import {useLogger} from '@thunder/logger/react';
+import {useGetTranslations, useUpdateTranslation, NamespaceConstants, I18nDefaultConstants} from '@thunderid/i18n';
+import {useLogger} from '@thunderid/logger/react';
 import {Alert, PageContent, Snackbar, useColorScheme} from '@wso2/oxygen-ui';
 import {useCallback, useMemo, useState, type JSX, type SyntheticEvent} from 'react';
 import {useTranslation} from 'react-i18next';

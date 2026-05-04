@@ -40,7 +40,7 @@ import type Logger from '../../../core/Logger';
  * @example
  * Basic usage without scoping:
  * ```tsx
- * import {useLogger} from '@thunder/logger/react';
+ * import {useLogger} from '@thunderid/logger/react';
  *
  * function MyComponent() {
  *   const logger = useLogger();
@@ -61,7 +61,7 @@ import type Logger from '../../../core/Logger';
  * @example
  * Usage with component scoping:
  * ```tsx
- * import {useLogger} from '@thunder/logger/react';
+ * import {useLogger} from '@thunderid/logger/react';
  *
  * function UserProfile({ userId }: { userId: string }) {
  *   const logger = useLogger('UserProfile');

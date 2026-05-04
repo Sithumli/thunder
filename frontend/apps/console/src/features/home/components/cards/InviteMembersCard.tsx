@@ -16,8 +16,8 @@
  * under the License.
  */
 
-import {getInitials} from '@thunder/components';
-import {useGetUsers} from '@thunder/configure-users';
+import {getInitials} from '@thunderid/components';
+import {useGetUsers} from '@thunderid/configure-users';
 import {Avatar, Box, Skeleton, Stack, Typography} from '@wso2/oxygen-ui';
 import {UsersRound} from '@wso2/oxygen-ui-icons-react';
 import {motion} from 'framer-motion';

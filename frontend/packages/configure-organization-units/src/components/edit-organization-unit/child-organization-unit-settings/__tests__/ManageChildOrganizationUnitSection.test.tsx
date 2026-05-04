@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {screen, fireEvent, waitFor, renderWithProviders} from '@thunder/test-utils';
+import {screen, fireEvent, waitFor, renderWithProviders} from '@thunderid/test-utils';
 import {describe, it, expect, vi, beforeEach} from 'vitest';
 import type {OrganizationUnit} from '../../../../models/organization-unit';
 import ManageChildOrganizationUnitSection from '../ManageChildOrganizationUnitSection';
@@ -28,7 +28,7 @@ vi.mock('../../../../api/useGetChildOrganizationUnits', () => ({
 }));
 
 // Mock useDataGridLocaleText hook
-vi.mock('@thunder/hooks', () => ({
+vi.mock('@thunderid/hooks', () => ({
   useDataGridLocaleText: () => ({}),
 }));
 
@@ -43,7 +43,7 @@ vi.mock('react-router', async () => {
 });
 
 // Mock logger
-vi.mock('@thunder/logger/react', () => ({
+vi.mock('@thunderid/logger/react', () => ({
   useLogger: () => ({
     error: vi.fn(),
   }),

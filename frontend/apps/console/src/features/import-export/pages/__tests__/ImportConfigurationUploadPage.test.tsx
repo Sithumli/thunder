@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {render, screen, userEvent, waitFor, fireEvent} from '@thunder/test-utils';
+import {render, screen, userEvent, waitFor, fireEvent} from '@thunderid/test-utils';
 import {afterEach, describe, expect, it, vi} from 'vitest';
 
 const mockNavigate = vi.fn();
@@ -30,7 +30,7 @@ vi.mock('react-router', async () => {
   return {...actual, useNavigate: () => mockNavigate};
 });
 
-vi.mock('@thunder/logger/react', () => ({
+vi.mock('@thunderid/logger/react', () => ({
   useLogger: () => ({error: vi.fn(), warn: vi.fn(), info: vi.fn(), debug: vi.fn()}),
 }));
 

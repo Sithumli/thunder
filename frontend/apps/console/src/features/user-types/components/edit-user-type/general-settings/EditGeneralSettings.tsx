@@ -16,9 +16,9 @@
  * under the License.
  */
 
-import {SettingsCard} from '@thunder/components';
-import {OrganizationUnitTreePicker} from '@thunder/configure-organization-units';
-import {useResolveDisplayName} from '@thunder/hooks';
+import {SettingsCard} from '@thunderid/components';
+import {OrganizationUnitTreePicker} from '@thunderid/configure-organization-units';
+import {useResolveDisplayName} from '@thunderid/hooks';
 import {Stack, Typography, Button, Select, MenuItem} from '@wso2/oxygen-ui';
 import type {JSX} from 'react';
 import {useState, useCallback, useRef, useEffect} from 'react';

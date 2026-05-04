@@ -16,8 +16,8 @@
  * under the License.
  */
 
-import {generateIconSuggestions, ResourceAvatar} from '@thunder/components';
-import {useGetThemes, useGetTheme, type ThemeListItem, type Theme} from '@thunder/design';
+import {generateIconSuggestions, ResourceAvatar} from '@thunderid/components';
+import {useGetThemes, useGetTheme, type ThemeListItem, type Theme} from '@thunderid/design';
 import {
   Typography,
   Stack,

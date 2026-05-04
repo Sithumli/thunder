@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {render, screen, waitFor, userEvent, within} from '@thunder/test-utils';
+import {render, screen, waitFor, userEvent, within} from '@thunderid/test-utils';
 import type {ReactNode} from 'react';
 import {describe, it, expect, vi, beforeEach} from 'vitest';
 import type useCreateUserTypeHook from '../../api/useCreateUserType';
@@ -55,7 +55,7 @@ vi.mock('../../api/useCreateUserType', () => ({
 }));
 
 // Mock useHasMultipleOUs (used by ConfigureGeneral to decide whether to show the OU picker)
-vi.mock('@thunder/configure-organization-units', () => ({
+vi.mock('@thunderid/configure-organization-units', () => ({
   useHasMultipleOUs: () => ({
     hasMultipleOUs: true,
     isLoading: false,
@@ -74,8 +74,8 @@ vi.mock('@thunder/configure-organization-units', () => ({
   ),
 }));
 
-vi.mock('@thunder/utils', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@thunder/utils')>();
+vi.mock('@thunderid/utils', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@thunderid/utils')>();
   return {
     ...actual,
     generateRandomHumanReadableIdentifiers: () => ['Alpha Users', 'Beta Users', 'Gamma Users'],
