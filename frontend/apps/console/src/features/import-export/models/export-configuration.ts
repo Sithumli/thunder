@@ -35,9 +35,9 @@ export interface ExportRequest {
    */
   notificationSenders?: string[];
   /**
-   * List of user schema IDs to export. Use `["*"]` to export all.
+   * List of user type IDs to export. Use `["*"]` to export all.
    */
-  userSchemas?: string[];
+  userTypes?: string[];
   /**
    * List of organization unit IDs to export. Use `["*"]` to export all.
    */
@@ -62,6 +62,14 @@ export interface ExportRequest {
    * List of theme IDs to export. Use `["*"]` to export all.
    */
   themes?: string[];
+  /**
+   * List of resource server IDs to export. Use `["*"]` to export all.
+   */
+  resourceServers?: string[];
+  /**
+   * List of role IDs to export. Use `["*"]` to export all.
+   */
+  roles?: string[];
   /**
    * Optional configuration for export behavior
    */

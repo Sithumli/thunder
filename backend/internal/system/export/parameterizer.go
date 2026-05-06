@@ -35,7 +35,7 @@ type templatingRules struct {
 	Application        *resourceRules `yaml:"Application,omitempty"`
 	IdentityProvider   *resourceRules `yaml:"IdentityProvider,omitempty"`
 	NotificationSender *resourceRules `yaml:"NotificationSender,omitempty"`
-	UserSchema         *resourceRules `yaml:"UserSchema,omitempty"`
+	EntityType         *resourceRules `yaml:"EntityType,omitempty"`
 }
 
 // ResourceRules defines variables and array variables to parameterize
@@ -372,6 +372,9 @@ func (p *parameterizer) structToNodeIgnoringOmitempty(
 			}
 		}
 
+		// Check for forced quoting via yamlfmt tag
+		forceQuoted := field.Tag.Get("yamlfmt") == "quoted"
+
 		// Build the current field path (using struct field names)
 		fieldPath := field.Name
 		if currentPath != "" {
@@ -394,6 +397,11 @@ func (p *parameterizer) structToNodeIgnoringOmitempty(
 		valueNode, err := p.fieldToNode(fieldValue, rules, fieldPath, resourceName)
 		if err != nil {
 			return err
+		}
+
+		// Apply forced quoting if requested
+		if forceQuoted && valueNode.Kind == yaml.ScalarNode {
+			valueNode.Style = yaml.DoubleQuotedStyle
 		}
 
 		// Add key-value pair to mapping

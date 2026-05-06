@@ -264,8 +264,8 @@ That means you can override only the fields you need. <ProductName /> continues 
 - `FlowByHandleCache`
 - `CertificateByIDCache`
 - `CertificateByReferenceCache`
-- `UserSchemaByIDCache`
-- `UserSchemaByNameCache`
+- `EntityTypeByIDCache`
+- `EntityTypeByNameCache`
 - `FlowGraphCache`
 
 :::note
@@ -289,7 +289,7 @@ cache:
     username: ""
     password: ""
     db: 0
-    key_prefix: "thunder"
+    key_prefix: "thunderid"
     max_retries: 5
     min_retry_backoff_ms: 10
     max_retry_backoff_ms: 100
@@ -350,7 +350,7 @@ User management settings.
 
 | Setting | Default | Description |
 |---------|---------|-------------|
-| `user.indexed_attributes` | `["username", "email", "mobileNumber", "sub"]` | User attributes that are indexed for fast lookups |
+| `user.indexed_attributes` | `["username", "email", "mobileNumber", "sub"]` | User attributes that are indexed for fast `lookups` |
 
 ## Declarative Resources
 
@@ -372,7 +372,7 @@ declarativeResources:
   # Mount as read-only (recommended)
   readOnly: true
   configMap:
-    name: thunder-declarative-resources
+    name: declarative-resources
     items:
       # Format 1 — string shorthand: key and path are the same
       - "identity_providers/google.yaml"
@@ -393,7 +393,7 @@ declarativeResources:
   mountPath: /opt/thunder/repository/resources
   readOnly: true
   secret:
-    name: thunder-declarative-resources-secret
+    name: declarative-resources-secret
     items:
       - key: my-app-with-secrets
         path: applications/my-app.yaml
@@ -411,7 +411,7 @@ Authorization resource settings.
 
 ### System Resource Server
 
-The system resource server controls administrative permissions for Thunder Console operations such as managing users, groups, organization units, and user schemas. You can customize the handle and identifier to fit your deployment requirements.
+The system resource server controls administrative permissions for Thunder Console operations such as managing users, groups, organization units, and user types. You can customize the handle and identifier to fit your deployment requirements.
 
 | Setting | Default | Description |
 |---------|---------|-------------|
@@ -437,8 +437,8 @@ With the handle set to `mgmt`, all system permissions change as follows:
 | `system:user:view` | `mgmt:system:user:view` |
 | `system:group` | `mgmt:system:group` |
 | `system:group:view` | `mgmt:system:group:view` |
-| `system:userschema` | `mgmt:system:userschema` |
-| `system:userschema:view` | `mgmt:system:userschema:view` |
+| `system:usertype` | `mgmt:system:usertype` |
+| `system:usertype:view` | `mgmt:system:usertype:view` |
 
 #### Update Console Scopes
 
@@ -446,8 +446,8 @@ When you change the system resource server handle, you must also update the Thun
 
 Update the `scopes` array in the Console configuration file for your deployment mode:
 
-- **Local development** (`pnpm dev`): Update `frontend/apps/thunder-console/public/config.js`.
-- **Packaged build** (`build.sh` / `setup.sh` / `setup.ps1`): The setup scripts read the handle from `deployment.yaml` and pass the value to the bootstrap process automatically. Update `frontend/apps/thunder-console/public/config.js` for the Console scopes.
+- **Local development** (`pnpm dev`): Update `frontend/apps/console/public/config.js`.
+- **Packaged build** (`build.sh` / `setup.sh` / `setup.ps1`): The setup scripts read the handle from `deployment.yaml` and pass the value to the bootstrap process automatically. Update `frontend/apps/console/public/config.js` for the Console scopes.
 - **Helm deployment**: Update `configuration.consoleClient.scopes` in your Helm values file (`install/helm/values.yaml`).
 
 For example, with the handle set to `mgmt`, update the Console `scopes` array to:
@@ -462,7 +462,7 @@ scopes: [
   'mgmt:system:user',
   'mgmt:system:group',
   'mgmt:system:ou:view',
-  'mgmt:system:userschema:view',
+  'mgmt:system:usertype:view',
 ],
 ```
 

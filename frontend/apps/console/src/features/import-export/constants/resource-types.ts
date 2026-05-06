@@ -28,7 +28,9 @@ export const ALLOWED_RESOURCE_TYPES = [
   'translation',
   'identity_provider',
   'organization_unit',
-  'user_schema',
+  'user_type',
+  'resource_server',
+  'role',
 ] as const;
 
 export type ResourceType = (typeof ALLOWED_RESOURCE_TYPES)[number];
