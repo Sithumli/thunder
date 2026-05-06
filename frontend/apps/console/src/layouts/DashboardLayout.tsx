@@ -49,9 +49,7 @@ import {
 import {useEffect, useMemo, useState, type ReactNode} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Link as NavigateLink, Outlet, useNavigate} from 'react-router';
-import useGetApplications from '../features/applications/api/useGetApplications';
 import getWelcomeDismissedStorageKey from '../features/welcome/utils/getWelcomeDismissedStorageKey';
-import getWelcomeSessionCheckedStorageKey from '../features/welcome/utils/getWelcomeSessionCheckedStorageKey';
 
 function ExportConfigButton(): ReactNode {
   const {t} = useTranslation();
@@ -89,41 +87,17 @@ export default function DashboardLayout(): ReactNode {
   const navigate = useNavigate();
   const [welcomeCheckComplete, setWelcomeCheckComplete] = useState(false);
 
-  // First-time user detection
-  const {data: applicationsData, isLoading: isLoadingApplications} = useGetApplications({limit: 2, offset: 0});
-
   useEffect(() => {
-    // Skip check while loading
-    if (isLoadingApplications) return;
-
     const productName = config.brand.product_name;
-    const hasCheckedThisSession = sessionStorage.getItem(getWelcomeSessionCheckedStorageKey(productName)) === 'true';
-    if (hasCheckedThisSession) {
-      setWelcomeCheckComplete(true);
-      return;
-    }
-
     const dismissed = sessionStorage.getItem(getWelcomeDismissedStorageKey(productName)) === 'true';
-    const applications = applicationsData?.applications ?? [];
-    const consoleClientId = (config?.client?.client_id ?? 'CONSOLE').toUpperCase();
 
-    const isOnlyConsoleApp =
-      applications.length === 1 &&
-      (applications[0]?.clientId?.toUpperCase() === consoleClientId ||
-        applications[0]?.name?.toUpperCase() === consoleClientId ||
-        applications[0]?.template?.toUpperCase() === consoleClientId);
-
-    sessionStorage.setItem(getWelcomeSessionCheckedStorageKey(productName), 'true');
-
-    // Show welcome only once per session when the org has only the system CONSOLE app.
-    if (isOnlyConsoleApp && !dismissed) {
+    if (!dismissed) {
       sessionStorage.setItem(getWelcomeDismissedStorageKey(productName), 'true');
       void navigate('/welcome', {replace: true});
     } else {
-      // Mark check as complete so we can render the page
       setWelcomeCheckComplete(true);
     }
-  }, [isLoadingApplications, applicationsData, config?.client?.client_id, navigate, config.brand.product_name]);
+  }, [navigate, config.brand.product_name]);
 
   const handleSignOut = (signOut: () => Promise<void>): void => {
     if (isTrustedIssuerGenericOidc()) {
