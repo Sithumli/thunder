@@ -72,6 +72,7 @@ import (
 	"github.com/asgardeo/thunder/internal/system/importer"
 	"github.com/asgardeo/thunder/internal/system/jose"
 	"github.com/asgardeo/thunder/internal/system/jose/jwt"
+	"github.com/asgardeo/thunder/internal/system/kmprovider/defaultkm"
 	"github.com/asgardeo/thunder/internal/system/kmprovider/defaultkm/pkiservice"
 	"github.com/asgardeo/thunder/internal/system/log"
 	"github.com/asgardeo/thunder/internal/system/mcp"
@@ -94,6 +95,12 @@ func registerServices(mux *http.ServeMux, cacheManager cache.CacheManagerInterfa
 	if err != nil {
 		logger.Fatal("Failed to initialize certificate service", log.Error(err))
 	}
+
+	configCryptoSvc, err := defaultkm.InitConfigProvider()
+	if err != nil {
+		logger.Fatal("Failed to initialize config crypto provider", log.Error(err))
+	}
+	runtimeCryptoSvc := defaultkm.NewRuntimeCryptoService(pkiService, configCryptoSvc)
 
 	jwtService, jweService, err := jose.Initialize(pkiService)
 	if err != nil {
@@ -327,7 +334,7 @@ func registerServices(mux *http.ServeMux, cacheManager cache.CacheManagerInterfa
 	)
 
 	flowExecService, err := flowexec.Initialize(mux, flowMgtService, applicationService, execRegistry,
-		observabilitySvc)
+		observabilitySvc, runtimeCryptoSvc)
 	if err != nil {
 		logger.Fatal("Failed to initialize flow execution service", log.Error(err))
 	}
