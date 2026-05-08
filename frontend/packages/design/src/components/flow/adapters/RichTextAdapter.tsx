@@ -28,6 +28,7 @@ const SIGN_UP_URL_META_KEY = 'application.sign_up_url';
 
 const REGISTRATION_ENABLED_META_KEY = 'isRegistrationFlowEnabled';
 
+DOMPurify.removeHooks('afterSanitizeAttributes');
 DOMPurify.addHook('afterSanitizeAttributes', (node: globalThis.Element) => {
   if (node.tagName === 'A' && node.getAttribute('target') === '_blank') {
     node.setAttribute('rel', 'noopener noreferrer');
