@@ -67,7 +67,7 @@ func (s *EntityTypeExporterTestSuite) TestGetParameterizerType() {
 
 func (s *EntityTypeExporterTestSuite) TestGetAllResourceIDs_Success() {
 	expectedResponse := &entitytype.EntityTypeListResponse{
-		Schemas: []entitytype.EntityTypeListItem{
+		Types: []entitytype.EntityTypeListItem{
 			{ID: "schema1", Name: "Schema 1"},
 			{ID: "schema2", Name: "Schema 2"},
 		},
@@ -106,7 +106,7 @@ func (s *EntityTypeExporterTestSuite) TestGetAllResourceIDs_Error() {
 
 func (s *EntityTypeExporterTestSuite) TestGetAllResourceIDs_EmptyList() {
 	expectedResponse := &entitytype.EntityTypeListResponse{
-		Schemas: []entitytype.EntityTypeListItem{},
+		Types: []entitytype.EntityTypeListItem{},
 	}
 
 	s.mockService.EXPECT().

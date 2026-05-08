@@ -181,7 +181,7 @@ describe('AgentCreatePage', () => {
     }));
 
     mockUseGetAgentTypes.mockReturnValue({
-      data: {schemas: [{id: 'schema-1', name: 'default', ouId: 'ou-1'}]},
+      data: {types: [{id: 'schema-1', name: 'default', ouId: 'ou-1'}]},
     });
 
     mockUseGetAgentType.mockReturnValue({

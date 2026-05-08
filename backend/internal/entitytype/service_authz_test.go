@@ -103,7 +103,7 @@ func (s *AuthzTestSuite) TestGetEntityTypeList_AllAllowed() {
 	s.Require().Nil(svcErr)
 	s.Require().NotNil(resp)
 	s.Equal(2, resp.TotalResults)
-	s.Len(resp.Schemas, 2)
+	s.Len(resp.Types, 2)
 }
 
 func (s *AuthzTestSuite) TestGetEntityTypeList_FilteredByOUIDs() {
@@ -129,8 +129,8 @@ func (s *AuthzTestSuite) TestGetEntityTypeList_FilteredByOUIDs() {
 	s.Require().Nil(svcErr)
 	s.Require().NotNil(resp)
 	s.Equal(1, resp.TotalResults)
-	s.Len(resp.Schemas, 1)
-	s.Equal("s1", resp.Schemas[0].ID)
+	s.Len(resp.Types, 1)
+	s.Equal("s1", resp.Types[0].ID)
 }
 
 func (s *AuthzTestSuite) TestGetEntityTypeList_EmptyAccessibleOUIDs() {
@@ -149,7 +149,7 @@ func (s *AuthzTestSuite) TestGetEntityTypeList_EmptyAccessibleOUIDs() {
 	s.Require().Nil(svcErr)
 	s.Require().NotNil(resp)
 	s.Equal(0, resp.TotalResults)
-	s.Empty(resp.Schemas)
+	s.Empty(resp.Types)
 }
 
 func (s *AuthzTestSuite) TestGetEntityTypeList_AuthzServiceError() {
@@ -628,9 +628,9 @@ func (s *AuthzTestSuite) TestGetEntityTypeList_WithIncludeDisplay() {
 		context.Background(), TypeCategoryUser, 10, 0, true)
 	s.Require().Nil(svcErr)
 	s.Require().NotNil(resp)
-	s.Require().Len(resp.Schemas, 2)
-	s.Equal("handle-1", resp.Schemas[0].OUHandle)
-	s.Equal("handle-2", resp.Schemas[1].OUHandle)
+	s.Require().Len(resp.Types, 2)
+	s.Equal("handle-1", resp.Types[0].OUHandle)
+	s.Equal("handle-2", resp.Types[1].OUHandle)
 	ouServiceMock.AssertExpectations(s.T())
 }
 

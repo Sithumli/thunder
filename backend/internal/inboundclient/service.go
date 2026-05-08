@@ -993,11 +993,11 @@ func (s *inboundClientService) validateAllowedUserTypes(
 				log.String("error", svcErr.Error.DefaultValue), log.String("code", svcErr.Code))
 			return ErrUserSchemaLookupFailed
 		}
-		for _, schema := range entityTypeList.Schemas {
+		for _, schema := range entityTypeList.Types {
 			existingUserTypes[schema.Name] = true
 		}
-		if len(entityTypeList.Schemas) == 0 ||
-			offset+len(entityTypeList.Schemas) >= entityTypeList.TotalResults {
+		if len(entityTypeList.Types) == 0 ||
+			offset+len(entityTypeList.Types) >= entityTypeList.TotalResults {
 			break
 		}
 		offset += limit

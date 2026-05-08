@@ -72,8 +72,8 @@ func (e *entityTypeExporter) GetAllResourceIDs(ctx context.Context) ([]string, *
 	if err != nil {
 		return nil, err
 	}
-	ids := make([]string, 0, len(response.Schemas))
-	for _, schema := range response.Schemas {
+	ids := make([]string, 0, len(response.Types))
+	for _, schema := range response.Types {
 		if !schema.IsReadOnly {
 			ids = append(ids, schema.ID)
 		}

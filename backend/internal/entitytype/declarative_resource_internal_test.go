@@ -407,7 +407,7 @@ func TestGetAllResourceIDs_WithReadOnlyFilter(t *testing.T) {
 	exporter := newEntityTypeExporter(mockService)
 
 	response := &EntityTypeListResponse{
-		Schemas: []EntityTypeListItem{
+		Types: []EntityTypeListItem{
 			{ID: "schema1", Name: "Schema 1", IsReadOnly: false}, // Mutable - should be included
 			{ID: "schema2", Name: "Schema 2", IsReadOnly: true},  // Immutable - should be excluded
 			{ID: "schema3", Name: "Schema 3", IsReadOnly: false}, // Mutable - should be included

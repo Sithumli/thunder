@@ -1618,7 +1618,7 @@ func (suite *ExportServiceTestSuite) TestExportEntityTypes_Wildcard() {
 	mockSchemaList := &entitytype.EntityTypeListResponse{
 		TotalResults: 2,
 		Count:        2,
-		Schemas: []entitytype.EntityTypeListItem{
+		Types: []entitytype.EntityTypeListItem{
 			{ID: "schema1", Name: "Customer Schema", OUID: "ou1"},
 			{ID: "schema2", Name: "Employee Schema", OUID: "ou1"},
 		},
@@ -1756,7 +1756,7 @@ func (suite *ExportServiceTestSuite) TestExportEntityTypes_WildcardPartialFailur
 	mockSchemaList := &entitytype.EntityTypeListResponse{
 		TotalResults: 3,
 		Count:        3,
-		Schemas: []entitytype.EntityTypeListItem{
+		Types: []entitytype.EntityTypeListItem{
 			{ID: "schema1", Name: "Customer Schema"},
 			{ID: "schema2", Name: "Employee Schema"},
 			{ID: "schema3", Name: "Partner Schema"},

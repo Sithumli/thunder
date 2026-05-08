@@ -307,8 +307,8 @@ func (ts *UserTypeAuthzTestSuite) TestListUserTypes() {
 	var listResp UserTypeListResponse
 	ts.Require().NoError(json.NewDecoder(resp.Body).Decode(&listResp))
 
-	ids := make([]string, 0, len(listResp.Schemas))
-	for _, s := range listResp.Schemas {
+	ids := make([]string, 0, len(listResp.Types))
+	for _, s := range listResp.Types {
 		ids = append(ids, s.ID)
 	}
 

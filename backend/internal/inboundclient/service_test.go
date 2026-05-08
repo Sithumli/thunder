@@ -1346,7 +1346,7 @@ func (suite *InboundClientServiceTestSuite) TestValidateAllowedUserTypes_AllExis
 	us.EXPECT().GetEntityTypeList(mock.Anything, mock.Anything, mock.Anything, 0, false).Return(
 		&entitytypepkg.EntityTypeListResponse{
 			TotalResults: 1,
-			Schemas:      []entitytypepkg.EntityTypeListItem{{Name: "person"}},
+			Types:        []entitytypepkg.EntityTypeListItem{{Name: "person"}},
 		}, nil)
 	svc := &inboundClientService{entityType: us, logger: log.GetLogger()}
 	assert.NoError(suite.T(), svc.validateAllowedUserTypes(context.Background(), []string{"person"}))
@@ -1357,7 +1357,7 @@ func (suite *InboundClientServiceTestSuite) TestValidateAllowedUserTypes_Missing
 	us.EXPECT().GetEntityTypeList(mock.Anything, mock.Anything, mock.Anything, 0, false).Return(
 		&entitytypepkg.EntityTypeListResponse{
 			TotalResults: 1,
-			Schemas:      []entitytypepkg.EntityTypeListItem{{Name: "person"}},
+			Types:        []entitytypepkg.EntityTypeListItem{{Name: "person"}},
 		}, nil)
 	svc := &inboundClientService{entityType: us, logger: log.GetLogger()}
 	err := svc.validateAllowedUserTypes(context.Background(), []string{"ghost"})
@@ -1959,7 +1959,7 @@ func (suite *InboundClientServiceTestSuite) TestCreateInboundClient_RejectsInval
 	us.EXPECT().GetEntityTypeList(mock.Anything, mock.Anything, mock.Anything, 0, false).Return(
 		&entitytypepkg.EntityTypeListResponse{
 			TotalResults: 1,
-			Schemas:      []entitytypepkg.EntityTypeListItem{{Name: "employee"}},
+			Types:        []entitytypepkg.EntityTypeListItem{{Name: "employee"}},
 		}, nil)
 	us.EXPECT().GetNonCredentialAttributes(mock.Anything, entitytypepkg.TypeCategoryUser, "employee", false).
 		Return([]entitytypepkg.AttributeInfo{{Attribute: "email"}}, nil)
@@ -1983,7 +1983,7 @@ func (suite *InboundClientServiceTestSuite) TestUpdateInboundClient_RejectsInval
 	us.EXPECT().GetEntityTypeList(mock.Anything, mock.Anything, mock.Anything, 0, false).Return(
 		&entitytypepkg.EntityTypeListResponse{
 			TotalResults: 1,
-			Schemas:      []entitytypepkg.EntityTypeListItem{{Name: "employee"}},
+			Types:        []entitytypepkg.EntityTypeListItem{{Name: "employee"}},
 		}, nil)
 	us.EXPECT().GetNonCredentialAttributes(mock.Anything, entitytypepkg.TypeCategoryUser, "employee", false).
 		Return([]entitytypepkg.AttributeInfo{{Attribute: "email"}}, nil)
@@ -2007,7 +2007,7 @@ func (suite *InboundClientServiceTestSuite) TestValidate_RejectsInvalidUserAttri
 	us.EXPECT().GetEntityTypeList(mock.Anything, mock.Anything, mock.Anything, 0, false).Return(
 		&entitytypepkg.EntityTypeListResponse{
 			TotalResults: 1,
-			Schemas:      []entitytypepkg.EntityTypeListItem{{Name: "employee"}},
+			Types:        []entitytypepkg.EntityTypeListItem{{Name: "employee"}},
 		}, nil)
 	us.EXPECT().GetNonCredentialAttributes(mock.Anything, entitytypepkg.TypeCategoryUser, "employee", false).
 		Return([]entitytypepkg.AttributeInfo{{Attribute: "email"}}, nil)
