@@ -727,6 +727,8 @@ var defaultMessages = map[string]string{
 	"error.ouservice.cannot_modify_declarative_resource_description": "The organization unit is declarative and cannot be modified or deleted",
 	"error.ouservice.circular_dependency_detected": "Circular dependency detected",
 	"error.ouservice.circular_dependency_detected_description": "Setting this parent would create a circular dependency",
+	"error.ouservice.invalid_filter": "Invalid filter parameter",
+	"error.ouservice.invalid_filter_description": "The filter parameter is invalid. Use format: attribute (eq|gt|lt) \"value\"",
 	"error.ouservice.invalid_handle_path": "Invalid handle path",
 	"error.ouservice.invalid_handle_path_description": "The specified handle path does not exist",
 	"error.ouservice.invalid_limit_parameter": "Invalid limit parameter",

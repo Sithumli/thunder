@@ -190,7 +190,7 @@ func (fms *flowMetaService) populateTypeMetadata(
 	response.IsRecoveryFlowEnabled = client.IsRecoveryFlowEnabled
 	response.Application = buildApplicationMetadata(client.ID, entity, client.Properties)
 
-	ouList, ouErr := fms.ouService.GetOrganizationUnitList(ctx, 1, 0)
+	ouList, ouErr := fms.ouService.GetOrganizationUnitList(ctx, 1, 0, nil)
 	if ouErr != nil {
 		if ouErr.Code == ou.ErrorOrganizationUnitNotFound.Code {
 			return "", &ErrorOUNotFound

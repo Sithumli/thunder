@@ -400,7 +400,7 @@ func (suite *OUResolverExecutorTestSuite) TestExecute_Prompt_NoChildOUs_Skips() 
 		UserInputs: map[string]string{},
 	}
 
-	suite.mockOUService.On("GetOrganizationUnitChildren", mock.Anything, parentOUID, 1, 0).
+	suite.mockOUService.On("GetOrganizationUnitChildren", mock.Anything, parentOUID, 1, 0, mock.Anything).
 		Return(&ou.OrganizationUnitListResponse{TotalResults: 0}, (*serviceerror.ServiceError)(nil))
 
 	result, err := suite.executor.Execute(ctx)
@@ -424,7 +424,7 @@ func (suite *OUResolverExecutorTestSuite) TestExecute_Prompt_HasChildOUs_Request
 		UserInputs: map[string]string{},
 	}
 
-	suite.mockOUService.On("GetOrganizationUnitChildren", mock.Anything, parentOUID, 1, 0).
+	suite.mockOUService.On("GetOrganizationUnitChildren", mock.Anything, parentOUID, 1, 0, mock.Anything).
 		Return(&ou.OrganizationUnitListResponse{TotalResults: 3}, (*serviceerror.ServiceError)(nil))
 
 	result, err := suite.executor.Execute(ctx)
@@ -457,7 +457,7 @@ func (suite *OUResolverExecutorTestSuite) TestExecute_Prompt_GetChildrenError_Re
 		Code:  "OU-50001",
 		Error: i18ncore.I18nMessage{Key: "error.test.internal_error", DefaultValue: "internal error"},
 	}
-	suite.mockOUService.On("GetOrganizationUnitChildren", mock.Anything, parentOUID, 1, 0).
+	suite.mockOUService.On("GetOrganizationUnitChildren", mock.Anything, parentOUID, 1, 0, mock.Anything).
 		Return((*ou.OrganizationUnitListResponse)(nil), svcErr)
 
 	result, err := suite.executor.Execute(ctx)

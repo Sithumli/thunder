@@ -29,6 +29,7 @@ import (
 	"github.com/thunder-id/thunderid/internal/system/config"
 	dbmodel "github.com/thunder-id/thunderid/internal/system/database/model"
 	"github.com/thunder-id/thunderid/internal/system/database/provider"
+	"github.com/thunder-id/thunderid/internal/system/filter"
 	"github.com/thunder-id/thunderid/internal/system/log"
 	"github.com/thunder-id/thunderid/internal/system/transaction"
 )
@@ -37,8 +38,10 @@ const storeLoggerComponentName = "OrganizationUnitStore"
 
 // organizationUnitStoreInterface defines the interface for organization unit store operations.
 type organizationUnitStoreInterface interface {
-	GetOrganizationUnitListCount(ctx context.Context) (int, error)
-	GetOrganizationUnitList(ctx context.Context, limit, offset int) ([]OrganizationUnitBasic, error)
+	GetOrganizationUnitListCount(ctx context.Context, f *filter.FilterGroup) (int, error)
+	GetOrganizationUnitList(
+		ctx context.Context, limit, offset int, f *filter.FilterGroup,
+	) ([]OrganizationUnitBasic, error)
 	GetOrganizationUnitsByIDs(ctx context.Context, ids []string) ([]OrganizationUnitBasic, error)
 	CreateOrganizationUnit(ctx context.Context, ou OrganizationUnit) error
 	GetOrganizationUnit(ctx context.Context, id string) (OrganizationUnit, error)
@@ -50,8 +53,10 @@ type organizationUnitStoreInterface interface {
 	CheckOrganizationUnitHandleConflict(ctx context.Context, handle string, parent *string) (bool, error)
 	UpdateOrganizationUnit(ctx context.Context, ou OrganizationUnit) error
 	DeleteOrganizationUnit(ctx context.Context, id string) error
-	GetOrganizationUnitChildrenCount(ctx context.Context, id string) (int, error)
-	GetOrganizationUnitChildrenList(ctx context.Context, id string, limit, offset int) ([]OrganizationUnitBasic, error)
+	GetOrganizationUnitChildrenCount(ctx context.Context, id string, f *filter.FilterGroup) (int, error)
+	GetOrganizationUnitChildrenList(
+		ctx context.Context, id string, limit, offset int, f *filter.FilterGroup,
+	) ([]OrganizationUnitBasic, error)
 }
 
 var getDBProvider = provider.GetDBProvider
@@ -76,13 +81,21 @@ func newOrganizationUnitStore() (organizationUnitStoreInterface, transaction.Tra
 }
 
 // GetOrganizationUnitListCount retrieves the total count of organization units.
-func (s *organizationUnitStore) GetOrganizationUnitListCount(ctx context.Context) (int, error) {
+func (s *organizationUnitStore) GetOrganizationUnitListCount(
+	ctx context.Context, f *filter.FilterGroup,
+) (int, error) {
 	dbClient, err := s.dbProvider.GetUserDBClient()
 	if err != nil {
 		return 0, fmt.Errorf("failed to get database client: %w", err)
 	}
 
-	results, err := dbClient.QueryContext(ctx, queryGetRootOrganizationUnitListCount, s.deploymentID)
+	query, filterArgs, err := buildRootOUCountQuery(f)
+	if err != nil {
+		return 0, fmt.Errorf("failed to build count query: %w", err)
+	}
+	args := append([]interface{}{s.deploymentID}, filterArgs...)
+
+	results, err := dbClient.QueryContext(ctx, query, args...)
 	if err != nil {
 		return 0, fmt.Errorf("failed to execute count query: %w", err)
 	}
@@ -101,14 +114,20 @@ func (s *organizationUnitStore) GetOrganizationUnitListCount(ctx context.Context
 
 // GetOrganizationUnitList retrieves organization units with pagination.
 func (s *organizationUnitStore) GetOrganizationUnitList(
-	ctx context.Context, limit, offset int,
+	ctx context.Context, limit, offset int, f *filter.FilterGroup,
 ) ([]OrganizationUnitBasic, error) {
 	dbClient, err := s.dbProvider.GetUserDBClient()
 	if err != nil {
 		return nil, fmt.Errorf("failed to get database client: %w", err)
 	}
 
-	results, err := dbClient.QueryContext(ctx, queryGetRootOrganizationUnitList, limit, offset, s.deploymentID)
+	query, filterArgs, err := buildRootOUListQuery(f)
+	if err != nil {
+		return nil, fmt.Errorf("failed to build list query: %w", err)
+	}
+	args := append([]interface{}{limit, offset, s.deploymentID}, filterArgs...)
+
+	results, err := dbClient.QueryContext(ctx, query, args...)
 	if err != nil {
 		return nil, fmt.Errorf("failed to execute query: %w", err)
 	}
@@ -398,13 +417,21 @@ func (s *organizationUnitStore) DeleteOrganizationUnit(ctx context.Context, id s
 }
 
 // GetOrganizationUnitChildrenCount retrieves the total count of child organization units for a given parent ID.
-func (s *organizationUnitStore) GetOrganizationUnitChildrenCount(ctx context.Context, parentID string) (int, error) {
+func (s *organizationUnitStore) GetOrganizationUnitChildrenCount(
+	ctx context.Context, parentID string, f *filter.FilterGroup,
+) (int, error) {
 	dbClient, err := s.dbProvider.GetUserDBClient()
 	if err != nil {
 		return 0, fmt.Errorf("failed to get database client: %w", err)
 	}
 
-	results, err := dbClient.QueryContext(ctx, queryGetOrganizationUnitChildrenCount, parentID, s.deploymentID)
+	query, filterArgs, err := buildChildrenOUCountQuery(f)
+	if err != nil {
+		return 0, fmt.Errorf("failed to build count query: %w", err)
+	}
+	args := append([]interface{}{parentID, s.deploymentID}, filterArgs...)
+
+	results, err := dbClient.QueryContext(ctx, query, args...)
 	if err != nil {
 		return 0, fmt.Errorf("failed to execute count query: %w", err)
 	}
@@ -424,16 +451,20 @@ func (s *organizationUnitStore) GetOrganizationUnitChildrenCount(ctx context.Con
 
 // GetOrganizationUnitChildrenList retrieves a paginated list of child organization units for a given parent ID.
 func (s *organizationUnitStore) GetOrganizationUnitChildrenList(ctx context.Context,
-	parentID string, limit, offset int,
+	parentID string, limit, offset int, f *filter.FilterGroup,
 ) ([]OrganizationUnitBasic, error) {
 	dbClient, err := s.dbProvider.GetUserDBClient()
 	if err != nil {
 		return nil, fmt.Errorf("failed to get database client: %w", err)
 	}
 
-	results, err := dbClient.QueryContext(
-		ctx, queryGetOrganizationUnitChildrenList, parentID, limit, offset, s.deploymentID,
-	)
+	query, filterArgs, err := buildChildrenOUListQuery(f)
+	if err != nil {
+		return nil, fmt.Errorf("failed to build list query: %w", err)
+	}
+	args := append([]interface{}{parentID, limit, offset, s.deploymentID}, filterArgs...)
+
+	results, err := dbClient.QueryContext(ctx, query, args...)
 	if err != nil {
 		return nil, fmt.Errorf("failed to execute query: %w", err)
 	}

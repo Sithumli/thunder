@@ -84,7 +84,7 @@ func (ds *dcrService) RegisterClient(ctx context.Context, request *DCRRegistrati
 
 	// TODO: Revisit OU for DCR apps
 	if request.OUID == "" {
-		rootOUs, svcErr := ds.ouService.GetOrganizationUnitList(ctx, 1, 0)
+		rootOUs, svcErr := ds.ouService.GetOrganizationUnitList(ctx, 1, 0, nil)
 		if svcErr != nil {
 			logger.Error("Failed to retrieve root organization units for DCR",
 				log.String("error", svcErr.Error.DefaultValue))

@@ -197,6 +197,19 @@ var (
 			DefaultValue: serverconst.CompositeStoreLimitWarning,
 		},
 	}
+	// ErrorInvalidFilter is the error returned when the filter parameter is invalid.
+	ErrorInvalidFilter = serviceerror.ServiceError{
+		Type: serviceerror.ClientErrorType,
+		Code: "OU-1014",
+		Error: core.I18nMessage{
+			Key:          "error.ouservice.invalid_filter",
+			DefaultValue: "Invalid filter parameter",
+		},
+		ErrorDescription: core.I18nMessage{
+			Key:          "error.ouservice.invalid_filter_description",
+			DefaultValue: "The filter parameter is invalid. Use format: attribute (eq|gt|lt) \"value\"",
+		},
+	}
 )
 
 // Error variables

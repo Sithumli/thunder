@@ -177,7 +177,7 @@ func (e *ouResolverExecutor) resolveFromPrompt(ctx *core.NodeContext,
 	}
 
 	// Check if the parent OU has child OUs.
-	children, svcErr := e.ouService.GetOrganizationUnitChildren(ctx.Context, parentOUID, 1, 0)
+	children, svcErr := e.ouService.GetOrganizationUnitChildren(ctx.Context, parentOUID, 1, 0, nil)
 	if svcErr != nil {
 		return nil, errors.New("failed to check child organization units: " + svcErr.Error.DefaultValue)
 	}
