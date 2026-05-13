@@ -437,6 +437,7 @@ func extractDisambiguationOptions(candidates []*entityprovider.Entity) []common.
 		}
 		inputs = append(inputs, common.Input{
 			Identifier: key,
+			Type:       common.InputTypeSelect,
 			Options:    options,
 		})
 	}
