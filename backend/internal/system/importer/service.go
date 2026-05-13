@@ -831,6 +831,7 @@ func applicationRequestToDTO(req *appmodel.ApplicationRequestWithID) *appmodel.A
 					UserInfo:                           config.OAuthConfig.UserInfo,
 					ScopeClaims:                        config.OAuthConfig.ScopeClaims,
 					Certificate:                        config.OAuthConfig.Certificate,
+					AcrValues:                          config.OAuthConfig.AcrValues,
 				},
 			})
 		}
