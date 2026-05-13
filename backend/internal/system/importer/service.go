@@ -112,6 +112,9 @@ type roleAdapter interface {
 	GetRoleWithPermissions(ctx context.Context, id string) (*role.RoleWithPermissions, *serviceerror.ServiceError)
 	UpdateRoleWithPermissions(ctx context.Context, id string, role role.RoleUpdateDetail) (*role.RoleWithPermissions,
 		*serviceerror.ServiceError)
+}
+
+type roleAssignmentAdapter interface {
 	AddAssignments(ctx context.Context, id string, assignments []role.RoleAssignment) *serviceerror.ServiceError
 }
 
@@ -180,18 +183,19 @@ const (
 )
 
 type importService struct {
-	applicationService applicationAdapter
-	idpService         idpAdapter
-	flowService        flowAdapter
-	ouService          ouAdapter
-	entityTypeService  entityTypeAdapter
-	roleService        roleAdapter
-	groupService       groupAdapter
-	resourceService    resourceServerAdapter
-	themeService       themeAdapter
-	layoutService      layoutAdapter
-	userService        userAdapter
-	translationService translationAdapter
+	applicationService    applicationAdapter
+	idpService            idpAdapter
+	flowService           flowAdapter
+	ouService             ouAdapter
+	entityTypeService     entityTypeAdapter
+	roleService           roleAdapter
+	roleAssignmentService roleAssignmentAdapter
+	groupService          groupAdapter
+	resourceService       resourceServerAdapter
+	themeService          themeAdapter
+	layoutService         layoutAdapter
+	userService           userAdapter
+	translationService    translationAdapter
 }
 
 func newImportService(
@@ -201,6 +205,7 @@ func newImportService(
 	ouService ouAdapter,
 	entityTypeService entityTypeAdapter,
 	roleService roleAdapter,
+	roleAssignmentService roleAssignmentAdapter,
 	groupService groupAdapter,
 	resourceService resourceServerAdapter,
 	themeService themeAdapter,
@@ -209,18 +214,19 @@ func newImportService(
 	translationService translationAdapter,
 ) ImportServiceInterface {
 	return &importService{
-		applicationService: applicationService,
-		idpService:         idpService,
-		flowService:        flowService,
-		ouService:          ouService,
-		entityTypeService:  entityTypeService,
-		roleService:        roleService,
-		groupService:       groupService,
-		resourceService:    resourceService,
-		themeService:       themeService,
-		layoutService:      layoutService,
-		userService:        userService,
-		translationService: translationService,
+		applicationService:    applicationService,
+		idpService:            idpService,
+		flowService:           flowService,
+		ouService:             ouService,
+		entityTypeService:     entityTypeService,
+		roleService:           roleService,
+		roleAssignmentService: roleAssignmentService,
+		groupService:          groupService,
+		resourceService:       resourceService,
+		themeService:          themeService,
+		layoutService:         layoutService,
+		userService:           userService,
+		translationService:    translationService,
 	}
 }
 

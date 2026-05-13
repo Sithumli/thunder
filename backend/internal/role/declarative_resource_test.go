@@ -34,9 +34,10 @@ import (
 // RoleExporterTestSuite contains tests for the roleExporter.
 type RoleExporterTestSuite struct {
 	suite.Suite
-	mockService *RoleServiceInterfaceMock
-	exporter    declarativeresource.ResourceExporter
-	ctx         context.Context
+	mockService           *RoleServiceInterfaceMock
+	mockAssignmentService *RoleAssignmentServiceInterfaceMock
+	exporter              declarativeresource.ResourceExporter
+	ctx                   context.Context
 }
 
 func TestRoleExporterTestSuite(t *testing.T) {
@@ -45,7 +46,8 @@ func TestRoleExporterTestSuite(t *testing.T) {
 
 func (suite *RoleExporterTestSuite) SetupTest() {
 	suite.mockService = NewRoleServiceInterfaceMock(suite.T())
-	suite.exporter = newRoleExporter(suite.mockService)
+	suite.mockAssignmentService = NewRoleAssignmentServiceInterfaceMock(suite.T())
+	suite.exporter = newRoleExporter(suite.mockService, suite.mockAssignmentService)
 	suite.ctx = context.Background()
 }
 
@@ -203,7 +205,7 @@ func (suite *RoleExporterTestSuite) TestGetResourceByID_Success() {
 	suite.mockService.On("GetRoleWithPermissions", suite.ctx, "role1").Return(
 		roleWithPerms, nil,
 	)
-	suite.mockService.On(
+	suite.mockAssignmentService.On(
 		"GetRoleAssignments", suite.ctx, "role1", serverconst.MaxPageSize, 0, false,
 	).Return(&AssignmentList{
 		Assignments: []RoleAssignmentWithDisplay{
@@ -212,7 +214,7 @@ func (suite *RoleExporterTestSuite) TestGetResourceByID_Success() {
 		},
 		TotalResults: 2,
 	}, nil)
-	suite.mockService.On(
+	suite.mockAssignmentService.On(
 		"GetRoleAssignments", suite.ctx, "role1", serverconst.MaxPageSize, 2, false,
 	).Return(&AssignmentList{
 		Assignments:  []RoleAssignmentWithDisplay{},

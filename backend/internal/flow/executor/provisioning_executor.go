@@ -40,11 +40,12 @@ import (
 type provisioningExecutor struct {
 	core.ExecutorInterface
 	identifyingExecutorInterface
-	entityProvider    entityprovider.EntityProviderInterface
-	groupService      group.GroupServiceInterface
-	roleService       role.RoleServiceInterface
-	entityTypeService entitytype.EntityTypeServiceInterface
-	logger            *log.Logger
+	entityProvider        entityprovider.EntityProviderInterface
+	groupService          group.GroupServiceInterface
+	roleService           role.RoleServiceInterface
+	roleAssignmentService role.RoleAssignmentServiceInterface
+	entityTypeService     entitytype.EntityTypeServiceInterface
+	logger                *log.Logger
 }
 
 var _ core.ExecutorInterface = (*provisioningExecutor)(nil)
@@ -55,6 +56,7 @@ func newProvisioningExecutor(
 	flowFactory core.FlowFactoryInterface,
 	groupService group.GroupServiceInterface,
 	roleService role.RoleServiceInterface,
+	roleAssignmentService role.RoleAssignmentServiceInterface,
 	entityProvider entityprovider.EntityProviderInterface,
 	entityTypeService entitytype.EntityTypeServiceInterface,
 ) *provisioningExecutor {
@@ -73,6 +75,7 @@ func newProvisioningExecutor(
 		entityProvider:               entityProvider,
 		groupService:                 groupService,
 		roleService:                  roleService,
+		roleAssignmentService:        roleAssignmentService,
 		entityTypeService:            entityTypeService,
 		logger:                       logger,
 	}
@@ -794,6 +797,13 @@ func (p *provisioningExecutor) assignToGroup(
 // assignToRole adds the user to the specified role.
 func (p *provisioningExecutor) assignToRole(
 	ctx context.Context, userID string, roleID string, logger *log.Logger) error {
+	if p.roleAssignmentService == nil {
+		logger.Error("Role assignment service is not configured",
+			log.String("roleID", roleID),
+			log.MaskedString(log.LoggerKeyUserID, userID))
+		return fmt.Errorf("role assignment service not configured")
+	}
+
 	logger.Debug("Adding user to role",
 		log.MaskedString(log.LoggerKeyUserID, userID),
 		log.String("roleID", roleID))
@@ -806,7 +816,7 @@ func (p *provisioningExecutor) assignToRole(
 		},
 	}
 
-	svcErr := p.roleService.AddAssignments(ctx, roleID, assignments)
+	svcErr := p.roleAssignmentService.AddAssignments(ctx, roleID, assignments)
 	if svcErr != nil {
 		logger.Error("Failed to add role assignment",
 			log.String("roleID", roleID),

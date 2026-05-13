@@ -191,7 +191,7 @@ func registerServices(mux *http.ServeMux, cacheManager cache.CacheManagerInterfa
 		logger.Fatal("Failed to initialize Resource Service", log.Error(err))
 	}
 	exporters = append(exporters, resourceExporter)
-	roleService, roleExporter, err := role.Initialize(
+	roleService, roleAssignmentService, roleExporter, err := role.Initialize(
 		mux, entityService, groupService, ouService, resourceService, entityTypeService,
 	)
 	if err != nil {
@@ -267,8 +267,9 @@ func registerServices(mux *http.ServeMux, cacheManager cache.CacheManagerInterfa
 	}
 	execRegistry := executor.Initialize(flowFactory, ouService, idpService, notifSenderSvc, jwtService, authAssertGen,
 		consentEnforcer, authnProvider, otpCoreService, passkeyService, magicLinkService, authZService,
-		entityTypeService, groupService, roleService, entityProvider, attributeCacheService, emailClient,
-		templateService, oauthAuthnService, oidcAuthnService, githubAuthnService, googleAuthnService)
+		entityTypeService, groupService, roleService, roleAssignmentService, entityProvider,
+		attributeCacheService, emailClient, templateService, oauthAuthnService, oidcAuthnService,
+		githubAuthnService, googleAuthnService)
 
 	flowMgtService, flowMgtExporter, err := flowmgt.Initialize(
 		mux, mcpServer, cacheManager, flowFactory, execRegistry, graphCache)
@@ -331,6 +332,7 @@ func registerServices(mux *http.ServeMux, cacheManager cache.CacheManagerInterfa
 		ouService,
 		entityTypeService,
 		roleService,
+		roleAssignmentService,
 		groupService,
 		resourceService,
 		themeMgtService,

@@ -302,7 +302,13 @@ func (s *importService) importRole(
 				return serviceErrorOutcome(resourceTypeRole, req.ID, req.Name, operationUpdate, updateErr)
 			}
 			if len(req.Assignments) > 0 {
-				if assignErr := s.roleService.AddAssignments(ctx, updated.ID, req.Assignments); assignErr != nil {
+				if s.roleAssignmentService == nil {
+					return serviceErrorOutcome(resourceTypeRole, updated.ID, updated.Name, operationUpdate,
+						serviceerror.CustomServiceError(serviceerror.InternalServerError,
+							core.I18nMessage{DefaultValue: "roleAssignmentService not configured"}))
+				}
+				assignErr := s.roleAssignmentService.AddAssignments(ctx, updated.ID, req.Assignments)
+				if assignErr != nil {
 					return serviceErrorOutcome(resourceTypeRole, updated.ID, updated.Name, operationUpdate, assignErr)
 				}
 			}

@@ -55,12 +55,13 @@ const (
 
 type ProvisioningExecutorTestSuite struct {
 	suite.Suite
-	mockGroupService      *groupmock.GroupServiceInterfaceMock
-	mockRoleService       *rolemock.RoleServiceInterfaceMock
-	mockFlowFactory       *coremock.FlowFactoryInterfaceMock
-	mockEntityProvider    *entityprovidermock.EntityProviderInterfaceMock
-	mockEntityTypeService *entitytypemock.EntityTypeServiceInterfaceMock
-	executor              *provisioningExecutor
+	mockGroupService          *groupmock.GroupServiceInterfaceMock
+	mockRoleService           *rolemock.RoleServiceInterfaceMock
+	mockRoleAssignmentService *rolemock.RoleAssignmentServiceInterfaceMock
+	mockFlowFactory           *coremock.FlowFactoryInterfaceMock
+	mockEntityProvider        *entityprovidermock.EntityProviderInterfaceMock
+	mockEntityTypeService     *entitytypemock.EntityTypeServiceInterfaceMock
+	executor                  *provisioningExecutor
 }
 
 func TestProvisioningExecutorSuite(t *testing.T) {
@@ -70,6 +71,7 @@ func TestProvisioningExecutorSuite(t *testing.T) {
 func (suite *ProvisioningExecutorTestSuite) SetupTest() {
 	suite.mockGroupService = groupmock.NewGroupServiceInterfaceMock(suite.T())
 	suite.mockRoleService = rolemock.NewRoleServiceInterfaceMock(suite.T())
+	suite.mockRoleAssignmentService = rolemock.NewRoleAssignmentServiceInterfaceMock(suite.T())
 	suite.mockFlowFactory = coremock.NewFlowFactoryInterfaceMock(suite.T())
 	suite.mockEntityProvider = entityprovidermock.NewEntityProviderInterfaceMock(suite.T())
 	suite.mockEntityTypeService = entitytypemock.NewEntityTypeServiceInterfaceMock(suite.T())
@@ -84,7 +86,7 @@ func (suite *ProvisioningExecutorTestSuite) SetupTest() {
 		[]common.Input{}, []common.Input{}).Return(mockExec)
 
 	suite.executor = newProvisioningExecutor(suite.mockFlowFactory,
-		suite.mockGroupService, suite.mockRoleService, suite.mockEntityProvider,
+		suite.mockGroupService, suite.mockRoleService, suite.mockRoleAssignmentService, suite.mockEntityProvider,
 		suite.mockEntityTypeService)
 }
 
@@ -198,7 +200,7 @@ func (suite *ProvisioningExecutorTestSuite) TestExecute_Success() {
 		})).Return(nil, nil)
 
 	// Mock role assignment
-	suite.mockRoleService.On("AddAssignments", mock.Anything, "test-role-id",
+	suite.mockRoleAssignmentService.On("AddAssignments", mock.Anything, "test-role-id",
 		mock.MatchedBy(func(assignments []role.RoleAssignment) bool {
 			return len(assignments) == 1 &&
 				assignments[0].ID == testNewUserID &&
@@ -215,6 +217,7 @@ func (suite *ProvisioningExecutorTestSuite) TestExecute_Success() {
 	suite.mockEntityProvider.AssertExpectations(suite.T())
 	suite.mockGroupService.AssertExpectations(suite.T())
 	suite.mockRoleService.AssertExpectations(suite.T())
+	suite.mockRoleAssignmentService.AssertExpectations(suite.T())
 }
 
 func (suite *ProvisioningExecutorTestSuite) TestExecute_UserAlreadyExists() {
@@ -493,7 +496,7 @@ func (suite *ProvisioningExecutorTestSuite) newExecutorWithNodeInputs(inputs []c
 		mock.Anything, mock.Anything).Return(identifyingMock).Maybe()
 
 	return newProvisioningExecutor(mockFlowFactory,
-		suite.mockGroupService, suite.mockRoleService, suite.mockEntityProvider,
+		suite.mockGroupService, suite.mockRoleService, suite.mockRoleAssignmentService, suite.mockEntityProvider,
 		suite.mockEntityTypeService)
 }
 
@@ -688,7 +691,7 @@ func (suite *ProvisioningExecutorTestSuite) TestExecute_SkipProvisioning_Proceed
 
 	// Verify no group/role methods were called
 	suite.mockGroupService.AssertNotCalled(suite.T(), "GetGroup")
-	suite.mockRoleService.AssertNotCalled(suite.T(), "AddAssignments")
+	suite.mockRoleAssignmentService.AssertNotCalled(suite.T(), "AddAssignments")
 }
 
 func (suite *ProvisioningExecutorTestSuite) TestExecute_UserEligibleForProvisioning() {
@@ -1094,7 +1097,7 @@ func (suite *ProvisioningExecutorTestSuite) TestExecute_Failure_GroupAssignmentF
 		})
 
 	// Role assignment should still be attempted
-	suite.mockRoleService.On("AddAssignments", mock.Anything, "test-role-id", mock.Anything).Return(nil)
+	suite.mockRoleAssignmentService.On("AddAssignments", mock.Anything, "test-role-id", mock.Anything).Return(nil)
 
 	resp, err := suite.executor.Execute(ctx)
 
@@ -1152,7 +1155,7 @@ func (suite *ProvisioningExecutorTestSuite) TestExecute_Failure_BothGroupAndRole
 		})
 
 	// Mock role assignment also fails
-	suite.mockRoleService.On("AddAssignments", mock.Anything, "test-role-id", mock.Anything).
+	suite.mockRoleAssignmentService.On("AddAssignments", mock.Anything, "test-role-id", mock.Anything).
 		Return(&serviceerror.ServiceError{
 			Error: i18ncore.I18nMessage{Key: "error.test.role_not_found", DefaultValue: "Role not found"},
 		})
@@ -1211,7 +1214,7 @@ func (suite *ProvisioningExecutorTestSuite) TestExecute_Failure_RoleAssignmentFa
 		Return(nil, nil)
 
 	// Role assignment fails (e.g., role doesn't exist)
-	suite.mockRoleService.On("AddAssignments", mock.Anything, "test-role-id", mock.Anything).
+	suite.mockRoleAssignmentService.On("AddAssignments", mock.Anything, "test-role-id", mock.Anything).
 		Return(&serviceerror.ServiceError{
 			Error: i18ncore.I18nMessage{Key: "error.test.role_not_found", DefaultValue: "Role not found"},
 		})
@@ -1274,7 +1277,7 @@ func (suite *ProvisioningExecutorTestSuite) TestExecute_GroupWithExistingMembers
 				members[0].Type == group.MemberTypeUser
 		})).Return(nil, nil)
 
-	suite.mockRoleService.On("AddAssignments", mock.Anything, "test-role-id", mock.Anything).Return(nil)
+	suite.mockRoleAssignmentService.On("AddAssignments", mock.Anything, "test-role-id", mock.Anything).Return(nil)
 
 	resp, err := suite.executor.Execute(ctx)
 
@@ -1325,7 +1328,7 @@ func (suite *ProvisioningExecutorTestSuite) TestExecute_AuthFlow_AutoProvisionin
 	// Mock successful group and role assignment
 	suite.mockGroupService.On("AddGroupMembers", mock.Anything, "test-group-id", mock.Anything).
 		Return(nil, nil)
-	suite.mockRoleService.On("AddAssignments", mock.Anything, "test-role-id", mock.Anything).Return(nil)
+	suite.mockRoleAssignmentService.On("AddAssignments", mock.Anything, "test-role-id", mock.Anything).Return(nil)
 
 	resp, err := suite.executor.Execute(ctx)
 
@@ -1390,7 +1393,7 @@ func (suite *ProvisioningExecutorTestSuite) TestExecute_Success_WithGroupAndRole
 		})).Return(nil, nil)
 
 	// Mock role assignment
-	suite.mockRoleService.On("AddAssignments", mock.Anything, "test-role-id",
+	suite.mockRoleAssignmentService.On("AddAssignments", mock.Anything, "test-role-id",
 		mock.MatchedBy(func(assignments []role.RoleAssignment) bool {
 			return len(assignments) == 1 &&
 				assignments[0].ID == testNewUserID &&

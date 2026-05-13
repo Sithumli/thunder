@@ -63,6 +63,7 @@ func Initialize(
 	entityTypeService entitytype.EntityTypeServiceInterface,
 	groupService group.GroupServiceInterface,
 	roleService role.RoleServiceInterface,
+	roleAssignmentService role.RoleAssignmentServiceInterface,
 	entityProvider entityprovider.EntityProviderInterface,
 	attributeCacheSvc attributecache.AttributeCacheServiceInterface,
 	emailClient email.EmailClientInterface,
@@ -93,7 +94,7 @@ func Initialize(
 		flowFactory, idpService, entityTypeService, googleSvc, authnProvider))
 
 	reg.RegisterExecutor(ExecutorNameProvisioning, newProvisioningExecutor(flowFactory,
-		groupService, roleService, entityProvider, entityTypeService))
+		groupService, roleService, roleAssignmentService, entityProvider, entityTypeService))
 	reg.RegisterExecutor(ExecutorNameOUCreation, newOUExecutor(flowFactory, ouService))
 
 	reg.RegisterExecutor(ExecutorNameAttributeCollect, newAttributeCollector(flowFactory, entityProvider))

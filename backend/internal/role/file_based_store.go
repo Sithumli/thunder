@@ -251,6 +251,11 @@ func (f *fileBasedStore) DeleteRole(ctx context.Context, id string) error {
 	return errors.New("DeleteRole is not supported in file-based store")
 }
 
+// DeleteAssignmentsByRoleID is not supported in file-based store.
+func (f *fileBasedStore) DeleteAssignmentsByRoleID(ctx context.Context, id string) error {
+	return errors.New("DeleteAssignmentsByRoleID is not supported in file-based store")
+}
+
 // AddAssignments is not supported in file-based store.
 func (f *fileBasedStore) AddAssignments(ctx context.Context, id string, assignments []RoleAssignment) error {
 	return errors.New("AddAssignments is not supported in file-based store")

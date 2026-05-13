@@ -41,22 +41,25 @@ func Initialize(
 	ouService oupkg.OrganizationUnitServiceInterface,
 	resourceService resourcepkg.ResourceServiceInterface,
 	entityTypeService entitytype.EntityTypeServiceInterface,
-) (RoleServiceInterface, declarativeresource.ResourceExporter, error) {
+) (RoleServiceInterface, RoleAssignmentServiceInterface, declarativeresource.ResourceExporter, error) {
 	// Step 1: Initialize store and transactioner based on store mode
 	roleStore, transactioner, err := initializeStore()
 	if err != nil {
-		return nil, nil, err
+		return nil, nil, nil, err
 	}
 
 	// Step 2: Create service with store
 	roleService := newRoleService(
 		roleStore, entityService, groupService, ouService, resourceService,
-		entityTypeService, transactioner,
+		transactioner,
 	)
-	roleHandler := newRoleHandler(roleService)
+	assignmentService := newRoleAssignmentService(
+		roleStore, entityService, groupService, entityTypeService, transactioner,
+	)
+	roleHandler := newRoleHandler(roleService, assignmentService)
 	registerRoutes(mux, roleHandler)
-	exporter := newRoleExporter(roleService)
-	return roleService, exporter, nil
+	exporter := newRoleExporter(roleService, assignmentService)
+	return roleService, assignmentService, exporter, nil
 }
 
 // Store Selection (based on role.store configuration):
