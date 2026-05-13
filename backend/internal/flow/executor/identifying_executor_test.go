@@ -745,7 +745,7 @@ func (suite *IdentifyingExecutorTestSuite) TestExecute_IdentifyMode_AmbiguousUse
 
 	assert.NoError(suite.T(), err)
 	assert.Equal(suite.T(), common.ExecFailure, resp.Status)
-	assert.Equal(suite.T(), failureReasonFailedToIdentifyUser, resp.FailureReason)
+	assert.Equal(suite.T(), failureReasonAmbiguousUser, resp.FailureReason)
 	assert.Empty(suite.T(), resp.Inputs, "Inputs must not be populated for ambiguous user in identify mode")
 }
 

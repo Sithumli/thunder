@@ -25,6 +25,8 @@ import (
 
 	authncm "github.com/thunder-id/thunderid/internal/authn/common"
 	"github.com/thunder-id/thunderid/internal/entityprovider"
+	"github.com/thunder-id/thunderid/internal/flow/common"
+	"github.com/thunder-id/thunderid/internal/flow/core"
 )
 
 // getAuthnServiceName returns the authn service name for an executor.
@@ -59,4 +61,47 @@ func GetUserAttribute(user *entityprovider.Entity, attributeKey string) (string,
 	}
 
 	return "", fmt.Errorf("attribute '%s' not found or is empty", attributeKey)
+}
+
+// isAuthenticationWithoutLocalUserAllowed returns the value of the AllowAuthenticationWithoutLocalUser
+// node property, defaulting to false if absent or not a bool.
+// This is used to determine if authentication flow can proceed without a local user account.
+// Idea is to use this in authentication flows which has a ProvisioningExecutor attached at the end
+// to provision the user account and auto login without throwing an error for user not found.
+func isAuthenticationWithoutLocalUserAllowed(ctx *core.NodeContext) bool {
+	if val, ok := ctx.NodeProperties[common.NodePropertyAllowAuthenticationWithoutLocalUser]; ok {
+		if boolVal, ok := val.(bool); ok {
+			return boolVal
+		}
+	}
+	return false
+}
+
+// isRegistrationWithExistingUserAllowed returns the value of the AllowRegistrationWithExistingUser
+// node property, defaulting to false if absent or not a bool.
+// This is used to determine if registration flow can proceed when an existing user account is found.
+// Idea is to use this in registration flows which can continue with the existing user account
+// instead of throwing an error for user already exists and allow the flow to complete successfully.
+func isRegistrationWithExistingUserAllowed(ctx *core.NodeContext) bool {
+	if val, ok := ctx.NodeProperties[common.NodePropertyAllowRegistrationWithExistingUser]; ok {
+		if boolVal, ok := val.(bool); ok {
+			return boolVal
+		}
+	}
+	return false
+}
+
+// isCrossOUProvisioningAllowed returns the value of the AllowCrossOUProvisioning node property,
+// defaulting to false if absent or not a bool.
+// This is used to determine if provisioning can proceed across organizational units (OUs).
+// Idea is to use this in registration flows which can continue even if an existing user account
+// is found, but the provisioning executor is trying to provision the user to a different OU than
+// the one in the existing account.
+func isCrossOUProvisioningAllowed(ctx *core.NodeContext) bool {
+	if val, ok := ctx.NodeProperties[common.NodePropertyAllowCrossOUProvisioning]; ok {
+		if boolVal, ok := val.(bool); ok {
+			return boolVal
+		}
+	}
+	return false
 }
