@@ -3157,3 +3157,169 @@ func (suite *ProvisioningExecutorTestSuite) TestHasRequiredInputs_NoProperties_D
 	assert.Len(suite.T(), execResp.Inputs, 2,
 		"all required missing inputs must be prompted at once when maxPerPrompt is absent")
 }
+
+// Ambiguous user (exists in multiple OUs) + cross-OU allowed + no match in target OU → create.
+func (suite *ProvisioningExecutorTestSuite) TestExecute_CrossOU_AmbiguousUser_NoMatchInTargetOU_Creates() {
+	suite.expectSchemaForProvisioning()
+	attrs := map[string]interface{}{"sub": "user-sub-123"}
+	attrsJSON, _ := json.Marshal(attrs)
+
+	createdUser := &entityprovider.Entity{
+		ID:         testNewUserID,
+		Type:       testUserType,
+		OUID:       testOUID,
+		Attributes: attrsJSON,
+	}
+
+	ctx := &core.NodeContext{
+		ExecutionID: "flow-123",
+		FlowType:    common.FlowTypeRegistration,
+		UserInputs:  map[string]string{"sub": "user-sub-123"},
+		RuntimeData: map[string]string{
+			ouIDKey:     testOUID,
+			userTypeKey: testUserType,
+		},
+		NodeProperties: map[string]interface{}{
+			common.NodePropertyAllowCrossOUProvisioning: true,
+		},
+	}
+
+	suite.mockEntityProvider.On("IdentifyEntity", attrs).
+		Return(nil, entityprovider.NewEntityProviderError(entityprovider.ErrorCodeAmbiguousEntity, "ambiguous", ""))
+	suite.mockEntityProvider.On("SearchEntities", attrs).
+		Return([]*entityprovider.Entity{
+			{ID: testExistingUserID, OUID: "ou-toyota"},
+			{ID: "other-user-id", OUID: "ou-honda"},
+		}, nil)
+	suite.mockEntityProvider.On("CreateEntity", mock.MatchedBy(func(u *entityprovider.Entity) bool {
+		return u.OUID == testOUID
+	}), mock.Anything).Return(createdUser, nil)
+
+	resp, err := suite.executor.Execute(ctx)
+
+	assert.NoError(suite.T(), err)
+	assert.NotNil(suite.T(), resp)
+	assert.Equal(suite.T(), common.ExecComplete, resp.Status)
+	assert.Equal(suite.T(), testNewUserID, resp.RuntimeData[userAttributeUserID])
+}
+
+// Ambiguous user + cross-OU allowed + match found in target OU → fail "already exists in target".
+func (suite *ProvisioningExecutorTestSuite) TestExecute_CrossOU_AmbiguousUser_MatchInTargetOU_Fails() {
+	suite.expectSchemaForProvisioning()
+	attrs := map[string]interface{}{"sub": "user-sub-123"}
+
+	ctx := &core.NodeContext{
+		ExecutionID: "flow-123",
+		FlowType:    common.FlowTypeRegistration,
+		UserInputs:  map[string]string{"sub": "user-sub-123"},
+		RuntimeData: map[string]string{
+			ouIDKey:     testOUID,
+			userTypeKey: testUserType,
+		},
+		NodeProperties: map[string]interface{}{
+			common.NodePropertyAllowCrossOUProvisioning: true,
+		},
+	}
+
+	suite.mockEntityProvider.On("IdentifyEntity", attrs).
+		Return(nil, entityprovider.NewEntityProviderError(entityprovider.ErrorCodeAmbiguousEntity, "ambiguous", ""))
+	suite.mockEntityProvider.On("SearchEntities", attrs).
+		Return([]*entityprovider.Entity{
+			{ID: testExistingUserID, OUID: testOUID},
+			{ID: "other-user-id", OUID: "ou-honda"},
+		}, nil)
+	suite.mockEntityProvider.On("GetEntity", testExistingUserID).
+		Return(&entityprovider.Entity{ID: testExistingUserID, OUID: testOUID}, nil)
+
+	resp, err := suite.executor.Execute(ctx)
+
+	assert.NoError(suite.T(), err)
+	assert.NotNil(suite.T(), resp)
+	assert.Equal(suite.T(), "User already exists in the target organization", resp.FailureReason)
+}
+
+// Ambiguous user + cross-OU NOT allowed → fail immediately without searching.
+func (suite *ProvisioningExecutorTestSuite) TestExecute_CrossOU_AmbiguousUser_CrossOUNotAllowed_Fails() {
+	suite.expectSchemaForProvisioning()
+	attrs := map[string]interface{}{"sub": "user-sub-123"}
+
+	ctx := &core.NodeContext{
+		ExecutionID: "flow-123",
+		FlowType:    common.FlowTypeRegistration,
+		UserInputs:  map[string]string{"sub": "user-sub-123"},
+		RuntimeData: map[string]string{
+			ouIDKey:     testOUID,
+			userTypeKey: testUserType,
+		},
+		NodeProperties: map[string]interface{}{},
+	}
+
+	suite.mockEntityProvider.On("IdentifyEntity", attrs).
+		Return(nil, entityprovider.NewEntityProviderError(entityprovider.ErrorCodeAmbiguousEntity, "ambiguous", ""))
+
+	resp, err := suite.executor.Execute(ctx)
+
+	assert.NoError(suite.T(), err)
+	assert.NotNil(suite.T(), resp)
+	assert.Equal(suite.T(), common.ExecFailure, resp.Status)
+	assert.Equal(suite.T(), failureReasonAmbiguousUser, resp.FailureReason)
+}
+
+// Ambiguous user + cross-OU allowed + SearchEntities returns error
+func (suite *ProvisioningExecutorTestSuite) TestExecute_CrossOU_AmbiguousUser_SearchError_ReturnsServerError() {
+	suite.expectSchemaForProvisioning()
+	attrs := map[string]interface{}{"sub": "user-sub-123"}
+
+	ctx := &core.NodeContext{
+		ExecutionID: "flow-123",
+		FlowType:    common.FlowTypeRegistration,
+		UserInputs:  map[string]string{"sub": "user-sub-123"},
+		RuntimeData: map[string]string{
+			ouIDKey:     testOUID,
+			userTypeKey: testUserType,
+		},
+		NodeProperties: map[string]interface{}{
+			common.NodePropertyAllowCrossOUProvisioning: true,
+		},
+	}
+
+	suite.mockEntityProvider.On("IdentifyEntity", attrs).
+		Return(nil, entityprovider.NewEntityProviderError(entityprovider.ErrorCodeAmbiguousEntity, "ambiguous", ""))
+	suite.mockEntityProvider.On("SearchEntities", attrs).
+		Return(nil, entityprovider.NewEntityProviderError(entityprovider.ErrorCodeSystemError, "search failed", ""))
+
+	resp, err := suite.executor.Execute(ctx)
+
+	assert.Error(suite.T(), err)
+	assert.Nil(suite.T(), resp)
+}
+
+// Non-ambiguous system error + cross-OU allowed → fail immediately, no search attempted.
+func (suite *ProvisioningExecutorTestSuite) TestExecute_CrossOU_SystemError_NoSearchAttempted() {
+	suite.expectSchemaForProvisioning()
+	attrs := map[string]interface{}{"sub": "user-sub-123"}
+
+	ctx := &core.NodeContext{
+		ExecutionID: "flow-123",
+		FlowType:    common.FlowTypeRegistration,
+		UserInputs:  map[string]string{"sub": "user-sub-123"},
+		RuntimeData: map[string]string{
+			ouIDKey:     testOUID,
+			userTypeKey: testUserType,
+		},
+		NodeProperties: map[string]interface{}{
+			common.NodePropertyAllowCrossOUProvisioning: true,
+		},
+	}
+
+	suite.mockEntityProvider.On("IdentifyEntity", attrs).
+		Return(nil, entityprovider.NewEntityProviderError(entityprovider.ErrorCodeSystemError, "db error", ""))
+
+	resp, err := suite.executor.Execute(ctx)
+
+	assert.NoError(suite.T(), err)
+	assert.NotNil(suite.T(), resp)
+	assert.Equal(suite.T(), common.ExecFailure, resp.Status)
+	assert.Equal(suite.T(), failureReasonFailedToIdentifyUser, resp.FailureReason)
+	suite.mockEntityProvider.AssertNotCalled(suite.T(), "SearchEntities", mock.Anything)
+}

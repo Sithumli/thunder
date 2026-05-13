@@ -157,3 +157,138 @@ func (s *UtilsTestSuite) TestGetUserAttribute() {
 		})
 	}
 }
+
+func (s *UtilsTestSuite) TestIsAuthenticationWithoutLocalUserAllowed() {
+	tests := []struct {
+		name       string
+		properties map[string]interface{}
+		expected   bool
+	}{
+		{
+			name: "Property true",
+			properties: map[string]interface{}{
+				common.NodePropertyAllowAuthenticationWithoutLocalUser: true,
+			},
+			expected: true,
+		},
+		{
+			name: "Property false",
+			properties: map[string]interface{}{
+				common.NodePropertyAllowAuthenticationWithoutLocalUser: false,
+			},
+			expected: false,
+		},
+		{
+			name: "Property missing",
+			properties: map[string]interface{}{
+				"other": true,
+			},
+			expected: false,
+		},
+		{
+			name: "Property invalid type",
+			properties: map[string]interface{}{
+				common.NodePropertyAllowAuthenticationWithoutLocalUser: "true",
+			},
+			expected: false,
+		},
+	}
+
+	for _, tt := range tests {
+		s.Run(tt.name, func() {
+			ctx := &core.NodeContext{NodeProperties: tt.properties}
+			result := isAuthenticationWithoutLocalUserAllowed(ctx)
+			s.Equal(tt.expected, result)
+		})
+	}
+}
+
+func (s *UtilsTestSuite) TestIsRegistrationWithExistingUserAllowed() {
+	tests := []struct {
+		name       string
+		properties map[string]interface{}
+		expected   bool
+	}{
+		{
+			name: "Property true",
+			properties: map[string]interface{}{
+				common.NodePropertyAllowRegistrationWithExistingUser: true,
+			},
+			expected: true,
+		},
+		{
+			name: "Property false",
+			properties: map[string]interface{}{
+				common.NodePropertyAllowRegistrationWithExistingUser: false,
+			},
+			expected: false,
+		},
+		{
+			name: "Property missing",
+			properties: map[string]interface{}{
+				"other": true,
+			},
+			expected: false,
+		},
+		{
+			name: "Property invalid type",
+			properties: map[string]interface{}{
+				common.NodePropertyAllowRegistrationWithExistingUser: 1,
+			},
+			expected: false,
+		},
+	}
+
+	for _, tt := range tests {
+		s.Run(tt.name, func() {
+			ctx := &core.NodeContext{NodeProperties: tt.properties}
+			result := isRegistrationWithExistingUserAllowed(ctx)
+			s.Equal(tt.expected, result)
+		})
+	}
+}
+
+func (s *UtilsTestSuite) TestIsCrossOUProvisioningAllowed() {
+	tests := []struct {
+		name       string
+		properties map[string]interface{}
+		expected   bool
+	}{
+		{
+			name: "Property true",
+			properties: map[string]interface{}{
+				common.NodePropertyAllowCrossOUProvisioning: true,
+			},
+			expected: true,
+		},
+		{
+			name: "Property false",
+			properties: map[string]interface{}{
+				common.NodePropertyAllowCrossOUProvisioning: false,
+			},
+			expected: false,
+		},
+		{
+			name: "Property missing",
+			properties: map[string]interface{}{
+				"other": true,
+			},
+			expected: false,
+		},
+		{
+			name: "Property invalid type",
+			properties: map[string]interface{}{
+				common.NodePropertyAllowCrossOUProvisioning: []string{"true"},
+			},
+			expected: false,
+		},
+	}
+
+	for _, tt := range tests {
+		s.Run(tt.name, func() {
+			ctx := &core.NodeContext{NodeProperties: tt.properties}
+			result := isCrossOUProvisioningAllowed(ctx)
+			s.Equal(tt.expected, result)
+		})
+	}
+}

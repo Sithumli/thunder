@@ -96,7 +96,7 @@ func (i *identifyingExecutor) IdentifyUser(filters map[string]interface{},
 		} else if err.Code == entityprovider.ErrorCodeAmbiguousEntity {
 			logger.Debug("Multiple users found for the provided filters")
 			execResp.Status = common.ExecFailure
-			execResp.FailureReason = failureReasonFailedToIdentifyUser
+			execResp.FailureReason = failureReasonAmbiguousUser
 			return nil, nil
 		} else {
 			logger.Debug("Failed to identify user due to error: " + err.Error())

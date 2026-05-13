@@ -975,7 +975,7 @@ func (suite *OAuthExecutorTestSuite) TestGetContextUserForRegistration_WithExist
 	assert.Equal(suite.T(), common.ExecComplete, execResp.Status)
 }
 
-func (suite *OAuthExecutorTestSuite) TestGetContextUserForRegistration_AmbiguousUser_NoLocalUser() {
+func (suite *OAuthExecutorTestSuite) TestGetContextUserForRegistration_AmbiguousUser_NoCrossOUProvisioning() {
 	ctx := &core.NodeContext{
 		ExecutionID: "flow-123",
 		FlowType:    common.FlowTypeRegistration,
@@ -998,7 +998,34 @@ func (suite *OAuthExecutorTestSuite) TestGetContextUserForRegistration_Ambiguous
 	assert.Equal(suite.T(), "User identity is ambiguous and cannot be registered.", execResp.FailureReason)
 }
 
-func (suite *OAuthExecutorTestSuite) TestGetContextUserForRegistration_AmbiguousUser_WithExistingUser() {
+func (suite *OAuthExecutorTestSuite) TestGetContextUserForRegistration_AmbiguousUser_AllowRegistrationOnly() {
+	// allowRegistrationWithExistingUser=true but allowCrossOUProvisioning=false — should still fail.
+	ctx := &core.NodeContext{
+		ExecutionID: "flow-123",
+		FlowType:    common.FlowTypeRegistration,
+		NodeProperties: map[string]interface{}{
+			"idpId":                             "idp-123",
+			"allowRegistrationWithExistingUser": true,
+			"allowCrossOUProvisioning":          false,
+		},
+	}
+
+	execResp := &common.ExecutorResponse{
+		AdditionalData: make(map[string]string),
+		RuntimeData:    make(map[string]string),
+	}
+
+	contextUser, err := suite.executor.(*oAuthExecutor).getContextUserForRegistration(
+		ctx, execResp, "ambiguous-sub", nil, true)
+
+	assert.NoError(suite.T(), err)
+	assert.Nil(suite.T(), contextUser)
+	assert.Equal(suite.T(), common.ExecFailure, execResp.Status)
+	assert.Equal(suite.T(), "User identity is ambiguous and cannot be registered.", execResp.FailureReason)
+}
+
+func (suite *OAuthExecutorTestSuite) TestGetContextUserForRegistration_AmbiguousUser_CrossOUProvisioningAllowed() {
+	// allowRegistrationWithExistingUser=true AND allowCrossOUProvisioning=true — should proceed.
 	ctx := &core.NodeContext{
 		ExecutionID: "flow-123",
 		FlowType:    common.FlowTypeRegistration,
@@ -1014,19 +1041,15 @@ func (suite *OAuthExecutorTestSuite) TestGetContextUserForRegistration_Ambiguous
 		RuntimeData:    make(map[string]string),
 	}
 
-	existingUser := &entityprovider.Entity{
-		ID:   "user-789",
-		OUID: "ou-789",
-		Type: "INTERNAL",
-	}
-
 	contextUser, err := suite.executor.(*oAuthExecutor).getContextUserForRegistration(
-		ctx, execResp, "ambiguous-sub", existingUser, true)
+		ctx, execResp, "ambiguous-sub", nil, true)
 
 	assert.NoError(suite.T(), err)
-	assert.Nil(suite.T(), contextUser)
-	assert.Equal(suite.T(), common.ExecFailure, execResp.Status)
-	assert.Equal(suite.T(), "User identity is ambiguous and cannot be registered.", execResp.FailureReason)
+	assert.NotNil(suite.T(), contextUser)
+	assert.False(suite.T(), contextUser.IsAuthenticated)
+	assert.Equal(suite.T(), common.ExecComplete, execResp.Status)
+	assert.Empty(suite.T(), execResp.FailureReason)
+	assert.Equal(suite.T(), "ambiguous-sub", execResp.RuntimeData[userAttributeSub])
 }
 
 func (suite *OAuthExecutorTestSuite) TestResolveUserTypeForAutoProvisioning_FailureScenarios() {

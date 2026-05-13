@@ -126,6 +126,17 @@ func (p *provisioningExecutor) Execute(ctx *core.NodeContext) (*common.ExecutorR
 		execResp.FailureReason = failureReasonFailedToIdentifyUser
 		return execResp, nil
 	}
+	if execResp.Status == common.ExecFailure &&
+		execResp.FailureReason == failureReasonAmbiguousUser &&
+		isCrossOUProvisioningAllowed(ctx) {
+		resolved, err := p.resolveAmbiguousUserForProvisioning(ctx, identifyingAttrs)
+		if err != nil {
+			return nil, err
+		}
+		userID = resolved
+		execResp.Status = ""
+		execResp.FailureReason = ""
+	}
 	if execResp.Status == common.ExecFailure && execResp.FailureReason != failureReasonUserNotFound {
 		return execResp, nil
 	}
@@ -139,7 +150,7 @@ func (p *provisioningExecutor) Execute(ctx *core.NodeContext) (*common.ExecutorR
 		}
 	}
 
-	// Merge identifying and credential attributes for user creation.
+	// Merge identifying and credential attributes for user creation
 	userAttributes := make(map[string]interface{}, len(identifyingAttrs)+len(credentialAttrs))
 	for k, v := range identifyingAttrs {
 		userAttributes[k] = v
@@ -219,15 +230,8 @@ func (p *provisioningExecutor) handleExistingUser(ctx *core.NodeContext, userID 
 		}
 	}
 
-	// Check if cross-OU provisioning is explicitly enabled for this node.
-	allowCrossOUProvisioning := false
-	if val, ok := ctx.NodeProperties[common.NodePropertyAllowCrossOUProvisioning]; ok {
-		if boolVal, ok := val.(bool); ok {
-			allowCrossOUProvisioning = boolVal
-		}
-	}
-
-	if !allowCrossOUProvisioning {
+	// Check if cross-OU provisioning is explicitly enabled for this node
+	if !isCrossOUProvisioningAllowed(ctx) {
 		if ctx.FlowType == common.FlowTypeRegistration {
 			execResp.Status = common.ExecUserInputRequired
 			execResp.Inputs = p.GetRequiredInputs(ctx)
@@ -266,6 +270,34 @@ func (p *provisioningExecutor) handleExistingUser(ctx *core.NodeContext, userID 
 		log.String("existingOUID", existingUser.OUID),
 		log.String("targetOUID", targetOUID))
 	return true, nil
+}
+
+// resolveAmbiguousUserForProvisioning is called when IdentifyUser reports ambiguity and cross-OU
+// provisioning is allowed. It searches for all matching users and returns the ID of the one in the
+// target OU, or nil if none exists there.
+func (p *provisioningExecutor) resolveAmbiguousUserForProvisioning(ctx *core.NodeContext,
+	identifyingAttrs map[string]interface{}) (*string, error) {
+	logger := p.logger.With(log.String(log.LoggerKeyExecutionID, ctx.ExecutionID))
+
+	matches, searchErr := p.entityProvider.SearchEntities(identifyingAttrs)
+	if searchErr != nil {
+		return nil, fmt.Errorf("failed to search for matching users: code=%s, description=%s",
+			searchErr.Code, searchErr.Description)
+	}
+
+	targetOUID := p.getOUID(ctx)
+	for _, m := range matches {
+		if m == nil || m.OUID == "" {
+			return nil, fmt.Errorf("ambiguous user search returned an entity with missing OUID")
+		}
+		if m.OUID == targetOUID {
+			logger.Debug("Ambiguous user has a match in the target OU", log.MaskedString(log.LoggerKeyUserID, m.ID))
+			return &m.ID, nil
+		}
+	}
+
+	logger.Debug("Ambiguous user has no match in target OU", log.Int("matchCount", len(matches)))
+	return nil, nil
 }
 
 // HasRequiredInputs checks whether all schema-driven provisioning inputs are satisfied and appends
