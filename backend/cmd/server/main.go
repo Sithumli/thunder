@@ -33,16 +33,16 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/asgardeo/thunder/internal/system/cache"
-	"github.com/asgardeo/thunder/internal/system/config"
-	"github.com/asgardeo/thunder/internal/system/constants"
-	"github.com/asgardeo/thunder/internal/system/cors"
-	"github.com/asgardeo/thunder/internal/system/database/provider"
-	"github.com/asgardeo/thunder/internal/system/jose/jwt"
-	"github.com/asgardeo/thunder/internal/system/kmprovider/defaultkm/pkiservice"
-	"github.com/asgardeo/thunder/internal/system/log"
-	"github.com/asgardeo/thunder/internal/system/middleware"
-	"github.com/asgardeo/thunder/internal/system/security"
+	"github.com/thunder-id/thunderid/internal/system/cache"
+	"github.com/thunder-id/thunderid/internal/system/config"
+	"github.com/thunder-id/thunderid/internal/system/constants"
+	"github.com/thunder-id/thunderid/internal/system/cors"
+	"github.com/thunder-id/thunderid/internal/system/database/provider"
+	"github.com/thunder-id/thunderid/internal/system/jose/jwt"
+	"github.com/thunder-id/thunderid/internal/system/kmprovider/defaultkm/pkiservice"
+	"github.com/thunder-id/thunderid/internal/system/log"
+	"github.com/thunder-id/thunderid/internal/system/middleware"
+	"github.com/thunder-id/thunderid/internal/system/security"
 )
 
 // shutdownTimeout defines the timeout duration for graceful shutdown.
@@ -72,7 +72,7 @@ func main() {
 	}
 
 	// Initialize the cache manager.
-	initCacheManager(logger)
+	cacheManager := cache.Initialize()
 
 	// Initialize system permission strings before any service or middleware uses them.
 	security.InitSystemPermissions(cfg.Resource.SystemResourceServer.Handle)
@@ -84,7 +84,7 @@ func main() {
 	}
 
 	// Register the services.
-	jwtService := registerServices(mux)
+	jwtService := registerServices(mux, cacheManager)
 
 	// Register static file handlers for frontend applications.
 	registerStaticFileHandlers(logger, mux, serverHome)
@@ -121,7 +121,7 @@ func main() {
 	// Wait for shutdown signal
 	<-sigChan
 	logger.Info("Shutting down server...")
-	gracefulShutdown(logger, server)
+	gracefulShutdown(logger, server, cacheManager)
 }
 
 // getThunderHome retrieves and return the home directory.
@@ -162,15 +162,6 @@ func initThunderConfigurations(logger *log.Logger, serverHome string) *config.Co
 	}
 
 	return cfg
-}
-
-// initCacheManager initializes the cache manager with centralized cleanup.
-func initCacheManager(logger *log.Logger) {
-	cm := cache.GetCacheManager()
-	if cm == nil {
-		logger.Fatal("Failed to get cache manager instance")
-	}
-	cm.Init()
 }
 
 // loadCertConfig loads the certificate configuration and extracts the Key ID (kid).
@@ -243,6 +234,7 @@ func createSecurityMiddleware(logger *log.Logger, mux *http.ServeMux,
 func gracefulShutdown(
 	logger *log.Logger,
 	server *http.Server,
+	cacheManager cache.CacheManagerInterface,
 ) {
 	ctx, cancel := context.WithTimeout(context.Background(), shutdownTimeout)
 	defer cancel()
@@ -265,7 +257,6 @@ func gracefulShutdown(
 		logger.Debug("Database connections closed successfully")
 	}
 
-	cacheManager := cache.GetCacheManager()
 	if cacheManager != nil {
 		cacheManager.Close()
 		logger.Debug("Cache manager closed successfully")

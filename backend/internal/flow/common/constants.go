@@ -31,6 +31,8 @@ const (
 	FlowTypeRegistration FlowType = "REGISTRATION"
 	// FlowTypeUserOnboarding represents an admin-initiated user onboarding flow.
 	FlowTypeUserOnboarding FlowType = "USER_ONBOARDING"
+	// FlowTypeRecovery represents a flow execution for account recovery (e.g., password reset).
+	FlowTypeRecovery FlowType = "RECOVERY"
 )
 
 // FlowStatus defines the status of a flow execution.
@@ -146,6 +148,14 @@ const (
 // DefaultHTTPTimeout defines the default timeout duration for HTTP requests.
 const DefaultHTTPTimeout = 5 * time.Second
 
+// NodeVariant identifies a PROMPT node sub-type that activates a variant-specific code path.
+type NodeVariant string
+
+const (
+	// NodeVariantLoginOptions identifies a PROMPT node that presents login method choices to the user.
+	NodeVariantLoginOptions NodeVariant = "LOGIN_OPTIONS"
+)
+
 const (
 	// NodePropertyAllowAuthenticationWithoutLocalUser indicates whether authentication is allowed without a local user
 	NodePropertyAllowAuthenticationWithoutLocalUser = "allowAuthenticationWithoutLocalUser"
@@ -158,6 +168,8 @@ const (
 	// NodePropertyOUResolveFrom specifies the strategy for resolving the organization unit.
 	// Supported values: "caller" (use the caller's OU).
 	NodePropertyOUResolveFrom = "resolveFrom"
+	// NodePropertyAuthMethodMapping maps authentication classes to action refs on login_options PROMPT nodes.
+	NodePropertyAuthMethodMapping = "authMethodMapping"
 )
 
 const (
@@ -193,6 +205,12 @@ const (
 	RuntimeKeyUserAttributesCacheTTLSeconds = "user_attributes_cache_ttl_seconds"
 	// RuntimeKeyInviteLink holds the generated invite link for downstream executors (e.g., EmailExecutor).
 	RuntimeKeyInviteLink = "inviteLink"
+	// RuntimeKeyMagicLinkURL holds the generated magic link URL for downstream executors.
+	RuntimeKeyMagicLinkURL = "magicLinkURL"
+	// RuntimeKeyMagicLinkExpiryMinutes holds the expiry duration used by the magic-link email template.
+	RuntimeKeyMagicLinkExpiryMinutes = "magicLinkExpiryMinutes"
+	// RuntimeKeyMagicLinkDestinationAttribute holds the destination attribute used to generate the magic link.
+	RuntimeKeyMagicLinkDestinationAttribute = "magicLinkDestinationAttribute"
 	// RuntimeKeySkipDelivery indicates that delivery should be skipped for the current flow.
 	RuntimeKeySkipDelivery = "skipDelivery"
 	// RuntimeKeyCandidateUsers holds serialized candidate users during disambiguation in resolve mode.
@@ -209,8 +227,16 @@ const (
 	// RuntimeKeySMSOTPPhoneAttr holds the schema attribute name used to look up the mobile number.
 	// TODO: Revisit when the generic OTP executor is implemented.
 	RuntimeKeySMSOTPPhoneAttr = "smsOTPPhoneAttr"
+	// RuntimeKeyMagicLinkUsedJti is the JWT ID claim value of a magic link token that has already been used.
+	RuntimeKeyMagicLinkUsedJti = "magicLinkUsedJti"
 	// RuntimeKeyOAuthState holds the generated OAuth state parameter for CSRF validation.
 	RuntimeKeyOAuthState = "oauthState"
+	// RuntimeKeyRequestedAuthClasses holds the space-separated ACR values from acr_values.
+	RuntimeKeyRequestedAuthClasses = "requested_auth_classes"
+	// RuntimeKeySelectedAuthClass holds the ACR value of the chosen authentication method.
+	RuntimeKeySelectedAuthClass = "selected_auth_class"
+	// RuntimeKeyAllowedLoginOptions holds the space-separated action refs allowed on a LOGIN_OPTIONS node.
+	RuntimeKeyAllowedLoginOptions = "allowed_login_options"
 )
 
 // TODO: Define a go type for InputType when formalizing input types
@@ -229,6 +255,8 @@ const (
 	InputTypePhone = "PHONE_INPUT"
 	// InputTypeConsent represents a consent decisions input type.
 	InputTypeConsent = "CONSENT_INPUT"
+	// InputTypeHidden represents a hidden input type.
+	InputTypeHidden = "HIDDEN"
 	// InputTypeSelect represents a select (dropdown) input type.
 	InputTypeSelect = "SELECT"
 
@@ -261,6 +289,11 @@ var sensitiveInputTypes = []string{
 	InputTypePassword,
 	InputTypeOTP,
 }
+
+const (
+	// AttributeEmail is the default attribute name for a user's email.
+	AttributeEmail = "email"
+)
 
 // ActionType represents the type of action in a prompt.
 type ActionType string

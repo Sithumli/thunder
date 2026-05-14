@@ -24,25 +24,27 @@ import (
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 
-	"github.com/asgardeo/thunder/internal/flow/core"
-	"github.com/asgardeo/thunder/internal/flow/executor"
+	"github.com/thunder-id/thunderid/internal/flow/core"
+	"github.com/thunder-id/thunderid/internal/flow/executor"
 
-	"github.com/asgardeo/thunder/internal/system/config"
-	serverconst "github.com/asgardeo/thunder/internal/system/constants"
-	declarativeresource "github.com/asgardeo/thunder/internal/system/declarative_resource"
-	"github.com/asgardeo/thunder/internal/system/middleware"
-	"github.com/asgardeo/thunder/internal/system/transaction"
+	"github.com/thunder-id/thunderid/internal/system/cache"
+	"github.com/thunder-id/thunderid/internal/system/config"
+	serverconst "github.com/thunder-id/thunderid/internal/system/constants"
+	declarativeresource "github.com/thunder-id/thunderid/internal/system/declarative_resource"
+	"github.com/thunder-id/thunderid/internal/system/middleware"
+	"github.com/thunder-id/thunderid/internal/system/transaction"
 )
 
 // Initialize initializes the flow management service and registers HTTP routes.
 func Initialize(
 	mux *http.ServeMux,
 	mcpServer *mcp.Server,
+	cacheManager cache.CacheManagerInterface,
 	flowFactory core.FlowFactoryInterface,
 	executorRegistry executor.ExecutorRegistryInterface,
 	graphCache core.GraphCacheInterface,
 ) (FlowMgtServiceInterface, declarativeresource.ResourceExporter, error) {
-	store, compositeStore, transactioner, err := initializeStore()
+	store, compositeStore, transactioner, err := initializeStore(cacheManager)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -83,15 +85,19 @@ func Initialize(
 //   - Reads check both stores (merged results)
 //   - Writes only go to database store
 //   - Declarative flows cannot be updated or deleted
-func initializeStore() (flowStoreInterface, *compositeFlowStore, transaction.Transactioner, error) {
+func initializeStore(cacheManager cache.CacheManagerInterface) (
+	flowStoreInterface, *compositeFlowStore, transaction.Transactioner, error) {
 	var compositeStore *compositeFlowStore
 
 	storeMode := getFlowStoreMode()
 
+	flowByIDCache := cache.GetCache[*CompleteFlowDefinition](cacheManager, "FlowByIDCache")
+	flowByHandleCache := cache.GetCache[*CompleteFlowDefinition](cacheManager, "FlowByHandleCache")
+
 	switch storeMode {
 	case serverconst.StoreModeComposite:
 		fileStore, _ := newFileBasedStore()
-		dbStore, transactioner, err := newCacheBackedFlowStore()
+		dbStore, transactioner, err := newCacheBackedFlowStore(flowByIDCache, flowByHandleCache)
 		if err != nil {
 			return nil, nil, nil, err
 		}
@@ -109,7 +115,7 @@ func initializeStore() (flowStoreInterface, *compositeFlowStore, transaction.Tra
 		return fileStore, nil, transactioner, nil
 
 	default:
-		store, transactioner, err := newCacheBackedFlowStore()
+		store, transactioner, err := newCacheBackedFlowStore(flowByIDCache, flowByHandleCache)
 		if err != nil {
 			return nil, nil, nil, err
 		}

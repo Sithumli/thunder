@@ -30,9 +30,9 @@ import (
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
 
-	oauth2const "github.com/asgardeo/thunder/internal/oauth/oauth2/constants"
-	oauth2model "github.com/asgardeo/thunder/internal/oauth/oauth2/model"
-	"github.com/asgardeo/thunder/internal/system/config"
+	oauth2const "github.com/thunder-id/thunderid/internal/oauth/oauth2/constants"
+	oauth2model "github.com/thunder-id/thunderid/internal/oauth/oauth2/model"
+	"github.com/thunder-id/thunderid/internal/system/config"
 )
 
 const (
@@ -816,6 +816,29 @@ func (suite *AuthorizeHandlerTestSuite) TestDecodeAttributesFromAssertion_NonStr
 
 	assert.Error(suite.T(), err)
 	assert.Contains(suite.T(), err.Error(), "JWT 'aci' claim is not a string")
+}
+
+func (suite *AuthorizeHandlerTestSuite) TestDecodeAttributesFromAssertion_WithCompletedAuthClass() {
+	// JWT payload: {"sub":"test-user","completed_auth_class":"urn:thunder:acr:password"}
+	jwtToken := "eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0." +
+		"eyJzdWIiOiJ0ZXN0LXVzZXIiLCJjb21wbGV0ZWRfYXV0aF9jbGFzcyI6InVybjp0aHVuZGVyOmFjcjpwYXNzd29yZCJ9."
+
+	clms, _, err := decodeAttributesFromAssertion(jwtToken)
+
+	assert.NoError(suite.T(), err)
+	assert.Equal(suite.T(), "test-user", clms.userID)
+	assert.Equal(suite.T(), "urn:thunder:acr:password", clms.completedACR)
+}
+
+func (suite *AuthorizeHandlerTestSuite) TestDecodeAttributesFromAssertion_NonStringCompletedAuthClass() {
+	// JWT payload: {"sub":"test-user","completed_auth_class":12345}
+	jwtToken := "eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0." +
+		"eyJzdWIiOiJ0ZXN0LXVzZXIiLCJjb21wbGV0ZWRfYXV0aF9jbGFzcyI6MTIzNDV9."
+
+	_, _, err := decodeAttributesFromAssertion(jwtToken)
+
+	assert.Error(suite.T(), err)
+	assert.Contains(suite.T(), err.Error(), "JWT 'completed_auth_class' claim is not a string")
 }
 
 func (suite *AuthorizeHandlerTestSuite) TestValidateSubClaimConstraint() {

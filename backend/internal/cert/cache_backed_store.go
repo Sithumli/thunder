@@ -22,8 +22,8 @@ import (
 	"context"
 	"errors"
 
-	"github.com/asgardeo/thunder/internal/system/cache"
-	"github.com/asgardeo/thunder/internal/system/log"
+	"github.com/thunder-id/thunderid/internal/system/cache"
+	"github.com/thunder-id/thunderid/internal/system/log"
 )
 
 const cacheBackedStoreLoggerComponentName = "CacheBackedCertificateStore"
@@ -36,10 +36,12 @@ type cacheBackedStore struct {
 }
 
 // NewCachedBackedCertificateStore creates a new instance of CachedBackedCertificateStore.
-func newCachedBackedCertificateStore() certificateStoreInterface {
+func newCachedBackedCertificateStore(
+	certByIDCache cache.CacheInterface[*Certificate],
+	certByReferenceCache cache.CacheInterface[*Certificate]) certificateStoreInterface {
 	return &cacheBackedStore{
-		certByIDCache:        cache.GetCache[*Certificate]("CertificateByIDCache"),
-		certByReferenceCache: cache.GetCache[*Certificate]("CertificateByReferenceCache"),
+		certByIDCache:        certByIDCache,
+		certByReferenceCache: certByReferenceCache,
 		store:                newCertificateStore(),
 	}
 }

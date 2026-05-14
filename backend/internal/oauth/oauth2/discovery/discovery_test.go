@@ -31,9 +31,9 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 
-	"github.com/asgardeo/thunder/internal/oauth/oauth2/constants"
-	"github.com/asgardeo/thunder/internal/system/config"
-	"github.com/asgardeo/thunder/internal/system/error/serviceerror"
+	"github.com/thunder-id/thunderid/internal/oauth/oauth2/constants"
+	"github.com/thunder-id/thunderid/internal/system/config"
+	"github.com/thunder-id/thunderid/internal/system/error/serviceerror"
 )
 
 // testPKIService is a minimal PKIServiceInterface implementation for discovery tests.
@@ -80,6 +80,15 @@ func (suite *DiscoveryTestSuite) SetupTest() {
 		JWT: config.JWTConfig{
 			Issuer:         "https://auth.example.com",
 			ValidityPeriod: 3600,
+		},
+		OAuth: config.OAuthConfig{
+			AuthClass: config.AuthClassConfig{
+				Amrs: []string{"PWD", "OTP"},
+				AcrAMR: map[string][]string{
+					"urn:thunder:acr:password":       {"PWD"},
+					"urn:thunder:acr:generated-code": {"OTP"},
+				},
+			},
 		},
 	}
 	_ = config.InitializeServerRuntime("test", testConfig)
@@ -161,6 +170,8 @@ func (suite *DiscoveryTestSuite) TestOIDCDiscovery() {
 
 	// Verify RFC 9207 advertisement (inherited from embedded OAuth2AuthorizationServerMetadata)
 	assert.True(suite.T(), metadata.AuthorizationResponseIssParameterSupported)
+	assert.Contains(suite.T(), metadata.AcrValuesSupported, "urn:thunder:acr:password")
+	assert.Contains(suite.T(), metadata.AcrValuesSupported, "urn:thunder:acr:generated-code")
 }
 
 // TestGrantTypeIsValid tests the GrantType.IsValid() method

@@ -21,7 +21,7 @@ package authz
 import (
 	"time"
 
-	oauth2model "github.com/asgardeo/thunder/internal/oauth/oauth2/model"
+	oauth2model "github.com/thunder-id/thunderid/internal/oauth/oauth2/model"
 )
 
 // OAuthMessage represents the OAuth message.
@@ -51,6 +51,7 @@ type AuthorizationCode struct {
 	ClaimsRequest       *oauth2model.ClaimsRequest
 	ClaimsLocales       string
 	Nonce               string
+	CompletedACR        string
 }
 
 // AuthZPostRequest represents the request body for the authorization POST request.
@@ -83,4 +84,5 @@ type assertionClaims struct {
 	userID                string
 	authorizedPermissions string
 	attributeCacheID      string
+	completedACR          string
 }

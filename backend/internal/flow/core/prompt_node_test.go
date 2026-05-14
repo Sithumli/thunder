@@ -23,7 +23,7 @@ import (
 
 	"github.com/stretchr/testify/suite"
 
-	"github.com/asgardeo/thunder/internal/flow/common"
+	"github.com/thunder-id/thunderid/internal/flow/common"
 )
 
 const testEmailAttr = "email"
@@ -901,13 +901,13 @@ func (s *PromptOnlyNodeTestSuite) TestGetNextNodeForActionRef() {
 	})
 
 	// Test finding existing actions
-	nextNode := promptNode.getNextNodeForActionRef("login", promptNode.logger)
+	nextNode := promptNode.getNextNodeForActionRef("login")
 	s.Equal("auth_node", nextNode)
 
-	nextNode = promptNode.getNextNodeForActionRef("signup", promptNode.logger)
+	nextNode = promptNode.getNextNodeForActionRef("signup")
 	s.Equal("register_node", nextNode)
 
-	nextNode = promptNode.getNextNodeForActionRef("cancel", promptNode.logger)
+	nextNode = promptNode.getNextNodeForActionRef("cancel")
 	s.Equal("exit_node", nextNode)
 }
 
@@ -926,7 +926,7 @@ func (s *PromptOnlyNodeTestSuite) TestGetNextNodeForActionRefNotFound() {
 	})
 
 	// Test finding non-existent action
-	nextNode := promptNode.getNextNodeForActionRef("nonexistent", promptNode.logger)
+	nextNode := promptNode.getNextNodeForActionRef("nonexistent")
 	s.Equal("", nextNode, "Should return empty string when action not found")
 }
 
@@ -942,7 +942,7 @@ func (s *PromptOnlyNodeTestSuite) TestGetNextNodeForActionRefEmptyRef() {
 	})
 
 	// Test with empty action ref
-	nextNode := promptNode.getNextNodeForActionRef("", promptNode.logger)
+	nextNode := promptNode.getNextNodeForActionRef("")
 	s.Equal("", nextNode, "Should return empty string for empty action ref")
 }
 
@@ -2390,6 +2390,112 @@ func (s *PromptOnlyNodeTestSuite) TestSyntheticMeta_NotAddedWhenMetaComponentExi
 	s.Equal(1, emailCount, "email component must not be duplicated when meta component ref matches identifier")
 }
 
+func (s *PromptOnlyNodeTestSuite) TestSyntheticMeta_ExistingComponentPromotedToPasswordType() {
+	meta := map[string]interface{}{
+		"components": []interface{}{
+			map[string]interface{}{
+				"id":       "input_pin",
+				"ref":      "pin",
+				"type":     "TEXT_INPUT",
+				"label":    "PIN",
+				"required": false,
+			},
+		},
+	}
+	node := newPromptNode("prompt-1", map[string]interface{}{}, false, false)
+	pn := node.(PromptNodeInterface)
+	pn.SetMeta(meta)
+	pn.SetPrompts([]common.Prompt{
+		{
+			Inputs: []common.Input{{Ref: "pin", Identifier: "pin", Required: true}},
+			Action: &common.Action{Ref: "submit", NextNode: "next"},
+		},
+	})
+
+	ctx := &NodeContext{
+		ExecutionID:   "test-flow",
+		CurrentAction: "submit",
+		UserInputs:    map[string]string{},
+		Verbose:       true,
+		ForwardedData: map[string]interface{}{
+			common.ForwardedDataKeyInputs: []common.Input{
+				{Identifier: "pin", Type: common.InputTypePassword, Required: true, DisplayName: "PIN"},
+			},
+		},
+	}
+	resp, err := node.Execute(ctx)
+
+	s.Nil(err)
+	s.NotNil(resp)
+	s.NotNil(resp.Meta)
+	s.Require().Len(resp.Inputs, 1)
+	s.Equal(common.InputTypePassword, resp.Inputs[0].Type)
+
+	metaMap, ok := resp.Meta.(map[string]interface{})
+	s.Require().True(ok)
+	comps, ok := metaMap["components"].([]interface{})
+	s.Require().True(ok)
+	s.Require().Len(comps, 1)
+
+	comp, ok := comps[0].(map[string]interface{})
+	s.Require().True(ok)
+	s.Equal(common.InputTypePassword, comp["type"], "existing meta component must be promoted to password type")
+	s.Equal(true, comp["required"], "existing meta component must reflect promoted required flag")
+}
+
+func (s *PromptOnlyNodeTestSuite) TestSyntheticMeta_PromotionDoesNotMutateSharedMeta() {
+	original := map[string]interface{}{
+		"components": []interface{}{
+			map[string]interface{}{
+				"id":       "input_pin",
+				"ref":      "pin",
+				"type":     "TEXT_INPUT",
+				"required": false,
+			},
+		},
+	}
+	node := newPromptNode("prompt-1", map[string]interface{}{}, false, false)
+	pn := node.(PromptNodeInterface)
+	pn.SetMeta(original)
+	pn.SetPrompts([]common.Prompt{
+		{
+			Inputs: []common.Input{{Ref: "pin", Identifier: "pin", Required: true}},
+			Action: &common.Action{Ref: "submit", NextNode: "next"},
+		},
+	})
+
+	ctx := &NodeContext{
+		ExecutionID:   "test-flow",
+		CurrentAction: "submit",
+		UserInputs:    map[string]string{},
+		Verbose:       true,
+		ForwardedData: map[string]interface{}{
+			common.ForwardedDataKeyInputs: []common.Input{
+				{Identifier: "pin", Type: common.InputTypePassword, Required: true},
+			},
+		},
+	}
+
+	_, err := node.Execute(ctx)
+	s.Require().Nil(err)
+
+	// The original meta map must be untouched after the first execution.
+	origComps, _ := original["components"].([]interface{})
+	origComp, _ := origComps[0].(map[string]interface{})
+	s.Equal("TEXT_INPUT", origComp["type"], "original meta component type must not be mutated by promotion")
+	s.Equal(false, origComp["required"], "original meta component required must not be mutated by promotion")
+
+	// A second execution must still see the correct (unpromoted) original.
+	resp2, err := node.Execute(ctx)
+	s.Require().Nil(err)
+	metaMap, _ := resp2.Meta.(map[string]interface{})
+	comps, _ := metaMap["components"].([]interface{})
+	s.Require().Len(comps, 1)
+	comp, _ := comps[0].(map[string]interface{})
+	s.Equal(common.InputTypePassword, comp["type"], "second execution must still promote the type correctly")
+	s.Equal(true, comp["required"], "second execution must still promote required correctly")
+}
+
 func (s *PromptOnlyNodeTestSuite) TestSyntheticMeta_InsertedInsideBlockBeforeAction() {
 	meta := map[string]interface{}{
 		"components": []interface{}{
@@ -2763,4 +2869,412 @@ func (s *PromptOnlyNodeTestSuite) TestSyntheticMeta_EmptyInputType_FallsBackToTe
 		}
 	}
 	s.Fail("synthetic component for schemaField not found in meta")
+}
+
+func loginOptionsProps() map[string]interface{} {
+	return map[string]interface{}{
+		common.NodePropertyAuthMethodMapping: map[string]interface{}{
+			"urn:thunder:acr:password":       "pwd",
+			"urn:thunder:acr:generated-code": "otp",
+			"urn:thunder:acr:linked-wallet":  "wallet",
+		},
+	}
+}
+
+func (s *PromptOnlyNodeTestSuite) TestLoginOptionsVariant_GetSetVariant() {
+	node := newPromptNode("login-chooser", map[string]interface{}{}, false, false)
+	pn := node.(PromptNodeInterface)
+
+	s.Equal(common.NodeVariant(""), pn.GetVariant())
+	pn.SetVariant(common.NodeVariantLoginOptions)
+	s.Equal(common.NodeVariantLoginOptions, pn.GetVariant())
+}
+
+func (s *PromptOnlyNodeTestSuite) TestLoginOptionsVariant_NoACRFilter_AllActionsReturned() {
+	node := newPromptNode("login-chooser", loginOptionsProps(), false, false)
+	pn := node.(PromptNodeInterface)
+	pn.SetVariant(common.NodeVariantLoginOptions)
+	pn.SetPrompts([]common.Prompt{
+		{Action: &common.Action{Ref: "pwd", NextNode: "pwd-node"}},
+		{Action: &common.Action{Ref: "otp", NextNode: "otp-node"}},
+	})
+
+	// No requested_acr_values in RuntimeData → all actions returned
+	ctx := &NodeContext{
+		ExecutionID: "test-flow",
+		UserInputs:  map[string]string{},
+		RuntimeData: map[string]string{},
+	}
+	resp, err := node.Execute(ctx)
+
+	s.Nil(err)
+	s.Equal(common.NodeStatusIncomplete, resp.Status)
+	s.Len(resp.Actions, 2)
+	refs := []string{resp.Actions[0].Ref, resp.Actions[1].Ref}
+	s.ElementsMatch([]string{"pwd", "otp"}, refs)
+	// On the prompt-out leg, allowed_login_options should record the action refs.
+	s.NotEmpty(resp.RuntimeData[common.RuntimeKeyAllowedLoginOptions],
+		"allowed_login_options must be set on the prompt-out leg")
+}
+
+func (s *PromptOnlyNodeTestSuite) TestLoginOptionsVariant_SingleACRFilter() {
+	node := newPromptNode("login-chooser", loginOptionsProps(), false, false)
+	pn := node.(PromptNodeInterface)
+	pn.SetVariant(common.NodeVariantLoginOptions)
+	pn.SetPrompts([]common.Prompt{
+		{Action: &common.Action{Ref: "pwd", NextNode: "pwd-node"}},
+		{Action: &common.Action{Ref: "otp", NextNode: "otp-node"}},
+		{Action: &common.Action{Ref: "wallet", NextNode: "wallet-node"}},
+	})
+
+	ctx := &NodeContext{
+		ExecutionID: "test-flow",
+		UserInputs:  map[string]string{},
+		RuntimeData: map[string]string{
+			common.RuntimeKeyRequestedAuthClasses: "urn:thunder:acr:generated-code",
+		},
+	}
+	resp, err := node.Execute(ctx)
+
+	s.Nil(err)
+	s.Equal(common.NodeStatusComplete, resp.Status,
+		"login_options node must auto-select when only one ACR option remains after filtering")
+	s.Equal("otp-node", resp.NextNodeID, "must forward to the next node for the auto-selected action")
+	s.Empty(resp.Actions, "chooser actions must not be returned after auto-selection")
+	s.Equal("otp", ctx.CurrentAction, "context must have the auto-selected action")
+	s.Equal("urn:thunder:acr:generated-code", resp.RuntimeData[common.RuntimeKeySelectedAuthClass],
+		"selected_auth_class must be recorded for the auto-selected ACR")
+}
+
+func (s *PromptOnlyNodeTestSuite) TestLoginOptionsVariant_PreferenceOrder() {
+	node := newPromptNode("login-chooser", loginOptionsProps(), false, false)
+	pn := node.(PromptNodeInterface)
+	pn.SetVariant(common.NodeVariantLoginOptions)
+	// Graph order: password first, then OTP
+	pn.SetPrompts([]common.Prompt{
+		{Action: &common.Action{Ref: "pwd", NextNode: "pwd-node"}},
+		{Action: &common.Action{Ref: "otp", NextNode: "otp-node"}},
+	})
+
+	// Preference order: OTP first, then password
+	ctx := &NodeContext{
+		ExecutionID: "test-flow",
+		UserInputs:  map[string]string{},
+		RuntimeData: map[string]string{
+			common.RuntimeKeyRequestedAuthClasses: "urn:thunder:acr:generated-code urn:thunder:acr:password",
+		},
+	}
+	resp, err := node.Execute(ctx)
+
+	s.Nil(err)
+	s.Require().Len(resp.Actions, 2)
+	s.Equal("otp", resp.Actions[0].Ref, "OTP should be first per preference order")
+	s.Equal("pwd", resp.Actions[1].Ref, "password should be second per preference order")
+}
+
+func (s *PromptOnlyNodeTestSuite) TestLoginOptionsVariant_UntaggedPromptsAlwaysIncluded() {
+	// authMethodMapping covers only "pwd"; "other" is not gated by ACR and should always appear.
+	node := newPromptNode("login-chooser", map[string]interface{}{
+		common.NodePropertyAuthMethodMapping: map[string]interface{}{
+			"urn:thunder:acr:password": "pwd",
+		},
+	}, false, false)
+	pn := node.(PromptNodeInterface)
+	pn.SetVariant(common.NodeVariantLoginOptions)
+	pn.SetPrompts([]common.Prompt{
+		{Action: &common.Action{Ref: "pwd", NextNode: "pwd-node"}},
+		// Action ref not in authMethodMapping — non-ACR-gated, should always be included
+		{Action: &common.Action{Ref: "other", NextNode: "other-node"}},
+	})
+
+	ctx := &NodeContext{
+		ExecutionID: "test-flow",
+		UserInputs:  map[string]string{},
+		RuntimeData: map[string]string{
+			// Only password requested; non-gated prompt should still appear
+			common.RuntimeKeyRequestedAuthClasses: "urn:thunder:acr:password",
+		},
+	}
+	resp, err := node.Execute(ctx)
+
+	s.Nil(err)
+	s.Require().Len(resp.Actions, 2)
+	refs := []string{resp.Actions[0].Ref, resp.Actions[1].Ref}
+	s.Contains(refs, "pwd")
+	s.Contains(refs, "other")
+}
+
+func (s *PromptOnlyNodeTestSuite) TestLoginOptionsVariant_GracefulFallback_NoMatchingACR() {
+	node := newPromptNode("login-chooser", loginOptionsProps(), false, false)
+	pn := node.(PromptNodeInterface)
+	pn.SetVariant(common.NodeVariantLoginOptions)
+	pn.SetPrompts([]common.Prompt{
+		{Action: &common.Action{Ref: "pwd", NextNode: "pwd-node"}},
+		{Action: &common.Action{Ref: "otp", NextNode: "otp-node"}},
+	})
+
+	// Requested ACR not present in any prompt → graceful fallback returns all
+	ctx := &NodeContext{
+		ExecutionID: "test-flow",
+		UserInputs:  map[string]string{},
+		RuntimeData: map[string]string{
+			common.RuntimeKeyRequestedAuthClasses: "urn:thunder:acr:biometrics",
+		},
+	}
+	resp, err := node.Execute(ctx)
+
+	s.Nil(err)
+	s.Require().Len(resp.Actions, 2, "all prompts should be returned as fallback")
+}
+
+func (s *PromptOnlyNodeTestSuite) TestLoginOptionsVariant_CompletedACRWritten() {
+	node := newPromptNode("login-chooser", loginOptionsProps(), false, false)
+	pn := node.(PromptNodeInterface)
+	pn.SetVariant(common.NodeVariantLoginOptions)
+	pn.SetPrompts([]common.Prompt{
+		{Action: &common.Action{Ref: "pwd", NextNode: "pwd-node"}},
+		{Action: &common.Action{Ref: "otp", NextNode: "otp-node"}},
+	})
+
+	ctx := &NodeContext{
+		ExecutionID:   "test-flow",
+		UserInputs:    map[string]string{},
+		CurrentAction: "pwd",
+		RuntimeData:   map[string]string{},
+	}
+	resp, err := node.Execute(ctx)
+
+	s.Nil(err)
+	s.Equal(common.NodeStatusComplete, resp.Status)
+	s.Equal("pwd-node", resp.NextNodeID)
+	s.Equal("urn:thunder:acr:password", resp.RuntimeData[common.RuntimeKeySelectedAuthClass])
+}
+
+func (s *PromptOnlyNodeTestSuite) TestLoginOptionsVariant_CompletedACRWritten_WithACRFilter() {
+	node := newPromptNode("login-chooser", loginOptionsProps(), false, false)
+	pn := node.(PromptNodeInterface)
+	pn.SetVariant(common.NodeVariantLoginOptions)
+	pn.SetPrompts([]common.Prompt{
+		{Action: &common.Action{Ref: "pwd", NextNode: "pwd-node"}},
+		{Action: &common.Action{Ref: "otp", NextNode: "otp-node"}},
+	})
+
+	// Only OTP requested; user picks otp
+	ctx := &NodeContext{
+		ExecutionID:   "test-flow",
+		UserInputs:    map[string]string{},
+		CurrentAction: "otp",
+		RuntimeData: map[string]string{
+			common.RuntimeKeyRequestedAuthClasses: "urn:thunder:acr:generated-code",
+			common.RuntimeKeyAllowedLoginOptions:  "otp",
+		},
+	}
+	resp, err := node.Execute(ctx)
+
+	s.Nil(err)
+	s.Equal(common.NodeStatusComplete, resp.Status)
+	s.Equal("otp-node", resp.NextNodeID)
+	s.Equal("urn:thunder:acr:generated-code", resp.RuntimeData[common.RuntimeKeySelectedAuthClass])
+}
+
+func (s *PromptOnlyNodeTestSuite) TestLoginOptionsVariant_DisallowedActionRejected() {
+	node := newPromptNode("login-chooser", loginOptionsProps(), false, false)
+	pn := node.(PromptNodeInterface)
+	pn.SetVariant(common.NodeVariantLoginOptions)
+	pn.SetPrompts([]common.Prompt{
+		{Action: &common.Action{Ref: "pwd", NextNode: "pwd-node"}},
+		{Action: &common.Action{Ref: "otp", NextNode: "otp-node"}},
+	})
+
+	// Allowed list (from a prior prompt-out leg) restricts to "otp" only.
+	ctx := &NodeContext{
+		ExecutionID:   "test-flow",
+		UserInputs:    map[string]string{},
+		CurrentAction: "pwd",
+		RuntimeData: map[string]string{
+			common.RuntimeKeyAllowedLoginOptions: "otp",
+		},
+	}
+	resp, err := node.Execute(ctx)
+
+	s.Nil(err)
+	s.Equal(common.NodeStatusFailure, resp.Status,
+		"selecting an action outside allowed_login_options must fail")
+	s.Equal("Invalid action selected", resp.FailureReason)
+}
+
+func (s *PromptOnlyNodeTestSuite) TestLoginOptionsVariant_AllowedLoginOptionsCaptured() {
+	node := newPromptNode("login-chooser", loginOptionsProps(), false, false)
+	pn := node.(PromptNodeInterface)
+	pn.SetVariant(common.NodeVariantLoginOptions)
+	pn.SetPrompts([]common.Prompt{
+		{Action: &common.Action{Ref: "pwd", NextNode: "pwd-node"}},
+		{Action: &common.Action{Ref: "otp", NextNode: "otp-node"}},
+		{Action: &common.Action{Ref: "wallet", NextNode: "wallet-node"}},
+	})
+
+	// Two requested ACRs ⇒ two allowed options on the prompt-out leg.
+	ctx := &NodeContext{
+		ExecutionID: "test-flow",
+		UserInputs:  map[string]string{},
+		RuntimeData: map[string]string{
+			common.RuntimeKeyRequestedAuthClasses: "urn:thunder:acr:generated-code urn:thunder:acr:password",
+		},
+	}
+	resp, err := node.Execute(ctx)
+
+	s.Nil(err)
+	s.Equal(common.NodeStatusIncomplete, resp.Status)
+	s.Equal("otp pwd", resp.RuntimeData[common.RuntimeKeyAllowedLoginOptions],
+		"allowed_login_options must list refs in ACR-preference order")
+}
+
+func (s *PromptOnlyNodeTestSuite) TestNonLoginOptionsVariant_UnaffectedByACRValues() {
+	node := newPromptNode("standard-prompt", map[string]interface{}{}, false, false)
+	pn := node.(PromptNodeInterface)
+	// No variant set
+	pn.SetPrompts([]common.Prompt{
+		{Action: &common.Action{Ref: "pwd", NextNode: "pwd-node"}},
+		{Action: &common.Action{Ref: "otp", NextNode: "otp-node"}},
+	})
+
+	ctx := &NodeContext{
+		ExecutionID: "test-flow",
+		UserInputs:  map[string]string{},
+		RuntimeData: map[string]string{
+			common.RuntimeKeyRequestedAuthClasses: "urn:thunder:acr:generated-code",
+		},
+	}
+	resp, err := node.Execute(ctx)
+
+	// Both actions must be returned — no filtering for non-login_options nodes
+	s.Nil(err)
+	s.Require().Len(resp.Actions, 2)
+	s.Empty(resp.RuntimeData[common.RuntimeKeyAllowedLoginOptions],
+		"allowed_login_options must not be set for non-login_options nodes")
+}
+
+func (s *PromptOnlyNodeTestSuite) TestFilteredMeta_ActionComponentsReorderedByACR() {
+	node := newPromptNode("login-chooser", loginOptionsProps(), false, false)
+	pn := node.(*promptNode)
+	pn.SetVariant(common.NodeVariantLoginOptions)
+	// Graph order: password, otp, wallet
+	pn.SetPrompts([]common.Prompt{
+		{Action: &common.Action{Ref: "pwd", NextNode: "pwd-node"}},
+		{Action: &common.Action{Ref: "otp", NextNode: "otp-node"}},
+		{Action: &common.Action{Ref: "wallet", NextNode: "wallet-node"}},
+	})
+	pn.SetMeta(map[string]interface{}{
+		"components": []interface{}{
+			map[string]interface{}{"type": "ACTION", "id": "pwd"},
+			map[string]interface{}{"type": "ACTION", "id": "otp"},
+			map[string]interface{}{"type": "ACTION", "id": "wallet"},
+		},
+	})
+
+	// ACR preference: otp first, then wallet, then password
+	ctx := &NodeContext{
+		ExecutionID: "test-flow",
+		UserInputs:  map[string]string{},
+		Verbose:     true,
+		RuntimeData: map[string]string{
+			common.RuntimeKeyRequestedAuthClasses: "urn:thunder:acr:generated-code " +
+				"urn:thunder:acr:linked-wallet " + "urn:thunder:acr:password",
+		},
+	}
+	resp, err := node.Execute(ctx)
+
+	s.Nil(err)
+	s.Equal(common.NodeStatusIncomplete, resp.Status)
+	s.Require().NotNil(resp.Meta)
+
+	metaMap, ok := resp.Meta.(map[string]interface{})
+	s.Require().True(ok)
+	components, ok := metaMap["components"].([]interface{})
+	s.Require().True(ok)
+	s.Require().Len(components, 3)
+
+	ids := make([]string, 3)
+	for i, c := range components {
+		ids[i], _ = c.(map[string]interface{})["id"].(string)
+	}
+	s.Equal([]string{"otp", "wallet", "pwd"}, ids, "ACTION components should follow ACR preference order")
+}
+
+func (s *PromptOnlyNodeTestSuite) TestFilteredMeta_NonActionComponentsRetainPosition() {
+	node := newPromptNode("login-chooser", loginOptionsProps(), false, false)
+	pn := node.(*promptNode)
+	pn.SetVariant(common.NodeVariantLoginOptions)
+	pn.SetPrompts([]common.Prompt{
+		{Action: &common.Action{Ref: "pwd", NextNode: "pwd-node"}},
+		{Action: &common.Action{Ref: "otp", NextNode: "otp-node"}},
+	})
+	pn.SetMeta(map[string]interface{}{
+		"components": []interface{}{
+			map[string]interface{}{"type": "TEXT", "id": "heading"},
+			map[string]interface{}{"type": "ACTION", "id": "pwd"},
+			map[string]interface{}{"type": "DIVIDER", "id": "div1"},
+			map[string]interface{}{"type": "ACTION", "id": "otp"},
+			map[string]interface{}{"type": "TEXT", "id": "footer"},
+		},
+	})
+
+	// Preference: otp first, then password
+	ctx := &NodeContext{
+		ExecutionID: "test-flow",
+		UserInputs:  map[string]string{},
+		Verbose:     true,
+		RuntimeData: map[string]string{
+			common.RuntimeKeyRequestedAuthClasses: "urn:thunder:acr:generated-code urn:thunder:acr:password",
+		},
+	}
+	resp, err := node.Execute(ctx)
+
+	s.Nil(err)
+	s.Require().NotNil(resp.Meta)
+
+	metaMap := resp.Meta.(map[string]interface{})
+	components := metaMap["components"].([]interface{})
+	s.Require().Len(components, 5)
+
+	ids := make([]string, 5)
+	for i, c := range components {
+		ids[i], _ = c.(map[string]interface{})["id"].(string)
+	}
+	// Non-ACTION components stay; ACTION slots are filled in ACR preference order
+	s.Equal([]string{"heading", "otp", "div1", "pwd", "footer"}, ids)
+}
+
+func (s *PromptOnlyNodeTestSuite) TestFilteredMeta_FilteredOutActionsDropped() {
+	node := newPromptNode("login-chooser", loginOptionsProps(), false, false)
+	pn := node.(*promptNode)
+	pn.SetVariant(common.NodeVariantLoginOptions)
+	pn.SetPrompts([]common.Prompt{
+		{Action: &common.Action{Ref: "pwd", NextNode: "pwd-node"}},
+		{Action: &common.Action{Ref: "otp", NextNode: "otp-node"}},
+		{Action: &common.Action{Ref: "wallet", NextNode: "wallet-node"}},
+	})
+	pn.SetMeta(map[string]interface{}{
+		"components": []interface{}{
+			map[string]interface{}{"type": "ACTION", "id": "pwd"},
+			map[string]interface{}{"type": "ACTION", "id": "otp"},
+			map[string]interface{}{"type": "ACTION", "id": "wallet"},
+		},
+	})
+
+	ctx := &NodeContext{
+		ExecutionID: "test-flow",
+		UserInputs:  map[string]string{},
+		Verbose:     true,
+		RuntimeData: map[string]string{
+			common.RuntimeKeyRequestedAuthClasses: "urn:thunder:acr:generated-code",
+		},
+	}
+	resp, err := node.Execute(ctx)
+
+	s.Nil(err)
+	s.Equal(common.NodeStatusComplete, resp.Status,
+		"single ACR filter must trigger auto-selection and complete the node")
+	s.Equal("otp-node", resp.NextNodeID)
+	s.Nil(resp.Meta, "meta is not returned for a completed (auto-selected) chooser node")
 }

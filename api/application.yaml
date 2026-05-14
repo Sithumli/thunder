@@ -48,6 +48,8 @@ paths:
                     authFlowId: "edc013d0-e893-4dc0-990c-3e1d203e005b"
                     registrationFlowId: "80024fb3-29ed-4c33-aa48-8aee5e96d522"
                     isRegistrationFlowEnabled: true
+                    recoveryFlowId: "f60d3e8a-8c9a-4b2f-9e1a-5b3c8d7e2f4a"
+                    isRecoveryFlowEnabled: true
                   - id: "660e8400-e29b-41d4-a716-446655440001"
                     name: "Mobile App"
                     description: "Mobile application for customers"
@@ -56,6 +58,8 @@ paths:
                     authFlowId: "edc013d0-e893-4dc0-990c-3e1d203e005b"
                     registrationFlowId: "80024fb3-29ed-4c33-aa48-8aee5e96d522"
                     isRegistrationFlowEnabled: false
+                    recoveryFlowId: "f60d3e8a-8c9a-4b2f-9e1a-5b3c8d7e2f4a"
+                    isRecoveryFlowEnabled: false
         "400":
           description: Bad request
           content:
@@ -106,6 +110,8 @@ paths:
               authFlowId: "edc013d0-e893-4dc0-990c-3e1d203e005b"
               registrationFlowId: "80024fb3-29ed-4c33-aa48-8aee5e96d522"
               isRegistrationFlowEnabled: true
+              recoveryFlowId: "f60d3e8a-8c9a-4b2f-9e1a-5b3c8d7e2f4a"
+              isRecoveryFlowEnabled: true
               url: "https://myapp.example.com"
               logoUrl: "https://myapp.example.com/logo.png"
               tosUri: "https://myapp.example.com/terms"
@@ -151,6 +157,9 @@ paths:
                       idToken:
                         validityPeriod: 3600
                         userAttributes: ["email", "name", "given_name", "family_name"]
+                        responseType: "JWE"
+                        encryptionAlg: "RSA-OAEP-256"
+                        encryptionEnc: "A256GCM"
                     userInfo:
                       responseType: "JWS"
                       signingAlg: "RS256"
@@ -158,6 +167,7 @@ paths:
                     scopeClaims:
                       profile: ["name", "family_name", "given_name", "picture"]
                       employee: ["emp_id", "department"]
+                    acrValues: ["urn:thunder:silver", "urn:thunder:gold"]
       responses:
         "201":
           description: Application created
@@ -174,6 +184,8 @@ paths:
                 authFlowId: "edc013d0-e893-4dc0-990c-3e1d203e005b"
                 registrationFlowId: "80024fb3-29ed-4c33-aa48-8aee5e96d522"
                 isRegistrationFlowEnabled: true
+                recoveryFlowId: "f60d3e8a-8c9a-4b2f-9e1a-5b3c8d7e2f4a"
+                isRecoveryFlowEnabled: true
                 url: "https://myapp.example.com"
                 logoUrl: "https://myapp.example.com/logo.png"
                 tosUri: "https://myapp.example.com/terms"
@@ -220,6 +232,9 @@ paths:
                         idToken:
                           validityPeriod: 1800
                           userAttributes: ["email", "email_verified", "name", "given_name", "family_name"]
+                          responseType: "JWE"
+                          encryptionAlg: "RSA-OAEP-256"
+                          encryptionEnc: "A256GCM"
                       userInfo:
                         responseType: "JWS"
                         signingAlg: "RS256"
@@ -227,6 +242,7 @@ paths:
                       scopeClaims:
                         profile: ["name", "family_name", "given_name", "picture"]
                         employee: ["emp_id", "department"]
+                      acrValues: ["urn:thunder:silver", "urn:thunder:gold"]
         "400":
           description: Bad request
           content:
@@ -264,6 +280,16 @@ paths:
                     description:
                       key: "error.applicationservice.invalid_grant_type_description"
                       defaultValue: "One or more grant types are not supported"
+                invalid-recovery-flow-id:
+                  summary: Invalid or disabled recovery flow ID
+                  value:
+                    code: "APP-1005"
+                    message:
+                      key: "error.applicationservice.invalid_recovery_flow_id"
+                      defaultValue: "Invalid or disabled recovery flow ID"
+                    description:
+                      key: "error.applicationservice.invalid_recovery_flow_id_description"
+                      defaultValue: "The provided recoveryFlowId does not exist or is not enabled"
         "500":
           description: Internal server error
           content:
@@ -310,6 +336,8 @@ paths:
                 authFlowId: "edc013d0-e893-4dc0-990c-3e1d203e005b"
                 registrationFlowId: "80024fb3-29ed-4c33-aa48-8aee5e96d522"
                 isRegistrationFlowEnabled: true
+                recoveryFlowId: "f60d3e8a-8c9a-4b2f-9e1a-5b3c8d7e2f4a"
+                isRecoveryFlowEnabled: true
                 url: "https://myapp.example.com"
                 logoUrl: "https://myapp.example.com/logo.png"
                 tosUri: "https://myapp.example.com/terms"
@@ -355,6 +383,9 @@ paths:
                         idToken:
                           validityPeriod: 1800
                           userAttributes: ["email", "email_verified", "name", "given_name", "family_name"]
+                          responseType: "JWE"
+                          encryptionAlg: "RSA-OAEP-256"
+                          encryptionEnc: "A256GCM"
                       userInfo:
                         responseType: "JWS"
                         signingAlg: "RS256"
@@ -362,6 +393,7 @@ paths:
                       scopeClaims:
                         profile: ["name", "family_name", "given_name", "picture"]
                         employee: ["emp_id", "department"]
+                      acrValues: ["urn:thunder:silver", "urn:thunder:gold"]
         "400":
           description: Bad request
           content:
@@ -432,6 +464,8 @@ paths:
               authFlowId: "edc013d0-e893-4dc0-990c-3e1d203e005b"
               registrationFlowId: "80024fb3-29ed-4c33-aa48-8aee5e96d522"
               isRegistrationFlowEnabled: true
+              recoveryFlowId: "f60d3e8a-8c9a-4b2f-9e1a-5b3c8d7e2f4a"
+              isRecoveryFlowEnabled: true
               url: "https://myapp.example.com"
               logoUrl: "https://myapp.example.com/updated-logo.png"
               tosUri: "https://myapp.example.com/terms"
@@ -478,6 +512,9 @@ paths:
                       idToken:
                         validityPeriod: 1800
                         userAttributes: ["email", "email_verified", "name", "given_name", "family_name"]
+                        responseType: "JWE"
+                        encryptionAlg: "RSA-OAEP-256"
+                        encryptionEnc: "A256GCM"
                     userInfo:
                       responseType: "JWS"
                       signingAlg: "RS256"
@@ -485,6 +522,7 @@ paths:
                     scopeClaims:
                       profile: ["name", "family_name", "given_name", "picture"]
                       employee: ["emp_id", "department"]
+                    acrValues: ["urn:thunder:silver", "urn:thunder:gold"]
       responses:
         "200":
           description: Application updated
@@ -501,6 +539,8 @@ paths:
                 authFlowId: "edc013d0-e893-4dc0-990c-3e1d203e005b"
                 registrationFlowId: "80024fb3-29ed-4c33-aa48-8aee5e96d522"
                 isRegistrationFlowEnabled: true
+                recoveryFlowId: "f60d3e8a-8c9a-4b2f-9e1a-5b3c8d7e2f4a"
+                isRecoveryFlowEnabled: true
                 url: "https://myapp.example.com"
                 logoUrl: "https://myapp.example.com/updated-logo.png"
                 tosUri: "https://myapp.example.com/terms"
@@ -549,6 +589,9 @@ paths:
                         idToken:
                           validityPeriod: 1800
                           userAttributes: ["email", "email_verified", "name", "given_name", "family_name"]
+                          responseType: "JWE"
+                          encryptionAlg: "RSA-OAEP-256"
+                          encryptionEnc: "A256GCM"
                       userInfo:
                         responseType: "JWS"
                         signingAlg: "RS256"
@@ -556,6 +599,7 @@ paths:
                       scopeClaims:
                         profile: ["name", "family_name", "given_name", "picture"]
                         employee: ["emp_id", "department"]
+                      acrValues: ["urn:thunder:silver", "urn:thunder:gold"]
         "400":
           description: Bad request
           content:
@@ -583,6 +627,16 @@ paths:
                     description:
                       key: "error.applicationservice.invalid_redirect_uri_description"
                       defaultValue: "One or more redirect URIs are not valid"
+                invalid-recovery-flow-id:
+                  summary: Invalid or disabled recovery flow ID
+                  value:
+                    code: "APP-1005"
+                    message:
+                      key: "error.applicationservice.invalid_recovery_flow_id"
+                      defaultValue: "Invalid or disabled recovery flow ID"
+                    description:
+                      key: "error.applicationservice.invalid_recovery_flow_id_description"
+                      defaultValue: "The provided recoveryFlowId does not exist or is not enabled"
         "404":
           description: Application not found
           content:
@@ -720,6 +774,19 @@ components:
           description: Indicates if the registration flow is enabled for the application.
           example: true
           default: false
+        recoveryFlowId:
+          type: string
+          description: The ID of the recovery flow.
+          example: "f60d3e8a-8c9a-4b2f-9e1a-5b3c8d7e2f4a"
+        isRecoveryFlowEnabled:
+          type: boolean
+          description: >
+            Indicates if the recovery flow is enabled for the application.
+            When set to true, recoveryFlowId must also be provided in the
+            ApplicationRequest; omitting recoveryFlowId while setting this
+            field to true will result in a 400 error.
+          example: true
+          default: false
         themeId:
           type: string
           format: uuid
@@ -827,6 +894,14 @@ components:
           type: boolean
           description: Indicates if the registration flow is enabled for the application.
           example: true
+        recoveryFlowId:
+          type: string
+          description: The ID of the recovery flow.
+          example: "f60d3e8a-8c9a-4b2f-9e1a-5b3c8d7e2f4a"
+        isRecoveryFlowEnabled:
+          type: boolean
+          description: Indicates if the recovery flow is enabled for the application.
+          example: true
         themeId:
           type: string
           format: uuid
@@ -932,6 +1007,14 @@ components:
         isRegistrationFlowEnabled:
           type: boolean
           description: Indicates if the registration flow is enabled for the application.
+          example: true
+        recoveryFlowId:
+          type: string
+          description: The ID of the recovery flow.
+          example: "f60d3e8a-8c9a-4b2f-9e1a-5b3c8d7e2f4a"
+        isRecoveryFlowEnabled:
+          type: boolean
+          description: Indicates if the recovery flow is enabled for the application.
           example: true
         themeId:
           type: string
@@ -1040,6 +1123,14 @@ components:
           type: boolean
           description: Indicates if the registration flow is enabled for the application.
           example: true
+        recoveryFlowId:
+          type: string
+          description: The ID of the recovery flow.
+          example: "f60d3e8a-8c9a-4b2f-9e1a-5b3c8d7e2f4a"
+        isRecoveryFlowEnabled:
+          type: boolean
+          description: Indicates if the recovery flow is enabled for the application.
+          example: true
         themeId:
           type: string
           format: uuid
@@ -1117,6 +1208,25 @@ components:
             type: string
           description: The user attributes to include in the ID token. Only claims requested by scopes AND listed here will be included.
           example: ["email", "name", "given_name", "family_name"]
+        responseType:
+          type: string
+          description: |
+            The format of the ID token response.
+            JWT returns a standard signed JWT (default).
+            JWE returns an encrypted JWT — requires encryptionAlg, encryptionEnc, and a client certificate.
+            NESTED_JWT returns a sign-then-encrypt JWT — requires encryptionAlg, encryptionEnc, and a client certificate.
+          enum: ["JWT", "JWE", "NESTED_JWT"]
+          example: "JWE"
+        encryptionAlg:
+          type: string
+          description: JWE key-management algorithm for encrypted ID token responses (e.g. RSA-OAEP-256). Required when responseType is JWE or NESTED_JWT.
+          enum: ["RSA-OAEP", "RSA-OAEP-256"]
+          example: "RSA-OAEP-256"
+        encryptionEnc:
+          type: string
+          description: JWE content-encryption algorithm (e.g. A256GCM). Required when responseType is JWE or NESTED_JWT.
+          enum: ["A128CBC-HS256", "A256GCM"]
+          example: "A256GCM"
 
     UserInfoConfig:
       type: object
@@ -1235,7 +1345,7 @@ components:
           example: ["code"]
         tokenEndpointAuthMethod:
           type: string
-          enum: ["client_secret_basic", "client_secret_post", "none"]
+          enum: ["client_secret_basic", "client_secret_post", "private_key_jwt", "none"]
           description: The token endpoint authentication method for the OAuth application. Defaults to "client_secret_basic" if not specified.
           example: "client_secret_basic"
         pkceRequired:
@@ -1278,6 +1388,18 @@ components:
           example:
             profile: ["name", "family_name", "given_name", "picture"]
             employee: ["emp_id", "department"]
+        acrValues:
+          type: array
+          items:
+            type: string
+          description: |
+            ACR (Authentication Context Class Reference) values for the application.
+            Defines the allowed set of ACR values for authorization requests. When acr_values is
+            provided in an authorization request, only values present in this list are accepted;
+            unrecognised values are silently ignored. If filtering removes all requested ACRs,
+            the full list is used as a fallback. When acr_values is omitted from the request,
+            this configured list is used as the effective ACR set.
+          example: ["urn:thunder:silver", "urn:thunder:gold"]
 
     OAuthAppConfigComplete:
       type: object
@@ -1313,7 +1435,7 @@ components:
           example: ["code"]
         tokenEndpointAuthMethod:
           type: string
-          enum: ["client_secret_basic", "client_secret_post", "none"]
+          enum: ["client_secret_basic", "client_secret_post", "private_key_jwt", "none"]
           description: The token endpoint authentication method for the OAuth application. Defaults to "client_secret_basic" if not specified.
           example: "client_secret_basic"
         pkceRequired:
@@ -1356,6 +1478,18 @@ components:
           example:
             profile: ["name", "family_name", "given_name", "picture"]
             employee: ["emp_id", "department"]
+        acrValues:
+          type: array
+          items:
+            type: string
+          description: |
+            ACR (Authentication Context Class Reference) values for the application.
+            Defines the allowed set of ACR values for authorization requests. When acr_values is
+            provided in an authorization request, only values present in this list are accepted;
+            unrecognised values are silently ignored. If filtering removes all requested ACRs,
+            the full list is used as a fallback. When acr_values is omitted from the request,
+            this configured list is used as the effective ACR set.
+          example: ["urn:thunder:silver", "urn:thunder:gold"]
 
     Error:
       type: object
@@ -1363,7 +1497,7 @@ components:
       properties:
         code:
           type: string
-          description: The error code.
+          description: "Error code. Codes follow the APP-XXXX convention."
           example: "APP-1001"
         message:
           $ref: '#/components/schemas/I18nMessage'

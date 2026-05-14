@@ -24,13 +24,13 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/asgardeo/thunder/internal/entitytype/model"
-	oupkg "github.com/asgardeo/thunder/internal/ou"
-	serverconst "github.com/asgardeo/thunder/internal/system/constants"
-	declarativeresource "github.com/asgardeo/thunder/internal/system/declarative_resource"
-	"github.com/asgardeo/thunder/internal/system/error/serviceerror"
-	"github.com/asgardeo/thunder/internal/system/log"
-	"github.com/asgardeo/thunder/internal/system/security"
+	"github.com/thunder-id/thunderid/internal/entitytype/model"
+	oupkg "github.com/thunder-id/thunderid/internal/ou"
+	serverconst "github.com/thunder-id/thunderid/internal/system/constants"
+	declarativeresource "github.com/thunder-id/thunderid/internal/system/declarative_resource"
+	"github.com/thunder-id/thunderid/internal/system/error/serviceerror"
+	"github.com/thunder-id/thunderid/internal/system/log"
+	"github.com/thunder-id/thunderid/internal/system/security"
 
 	"gopkg.in/yaml.v3"
 )
@@ -72,8 +72,8 @@ func (e *entityTypeExporter) GetAllResourceIDs(ctx context.Context) ([]string, *
 	if err != nil {
 		return nil, err
 	}
-	ids := make([]string, 0, len(response.Schemas))
-	for _, schema := range response.Schemas {
+	ids := make([]string, 0, len(response.Types))
+	for _, schema := range response.Types {
 		if !schema.IsReadOnly {
 			ids = append(ids, schema.ID)
 		}

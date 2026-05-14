@@ -41,13 +41,24 @@ function replaceProductNameInObject(value: unknown, productName: string, product
   }
   if (value !== null && typeof value === 'object') {
     return Object.fromEntries(
-      Object.entries(value as Record<string, unknown>).map(([k, v]) => [k, replaceProductNameInObject(v, productName, productSlug)]),
+      Object.entries(value as Record<string, unknown>).map(([k, v]) => [
+        k,
+        replaceProductNameInObject(v, productName, productSlug),
+      ]),
     );
   }
   return value;
 }
 
-const baseUrl = `/${productConfig.documentation.deployment.production.baseUrl}/`;
+const baseUrl =
+  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+  process.env.DOCUSAURUS_BASE_URL ||
+  (productConfig.documentation.deployment.production.baseUrl
+    ? `/${productConfig.documentation.deployment.production.baseUrl}/`
+    : '/');
+
+// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+const siteUrl = process.env.DOCUSAURUS_URL || productConfig.documentation.deployment.production.url;
 
 const config: Config = {
   title: productConfig.project.name,
@@ -56,7 +67,7 @@ const config: Config = {
 
   // Prevent search engine indexing
   // TODO: Remove this flag when the docs are ready for public access
-  // Tracker: https://github.com/asgardeo/thunder/issues/1209
+  // Tracker: https://github.com/thunder-id/thunderid/issues/1209
   noIndex: true,
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
@@ -64,8 +75,7 @@ const config: Config = {
     v4: true, // Improve compatibility with the upcoming Docusaurus v4
   },
 
-  url: productConfig.documentation.deployment.production.url,
-  // Since we use GitHub pages, the base URL is the repository name.
+  url: siteUrl,
   baseUrl,
 
   // GitHub pages deployment config.
@@ -82,8 +92,8 @@ const config: Config = {
       const result = await params.defaultParseFrontMatter(params);
       result.frontMatter = replaceProductNameInObject(
         result.frontMatter,
-        productConfig.project.name as string,
-        (productConfig.project.name as string).toLowerCase(),
+        productConfig.project.name,
+        productConfig.project.name.toLowerCase(),
       ) as Record<string, unknown>;
       return result;
     },
@@ -124,9 +134,20 @@ const config: Config = {
             },
           },
           // Replace {{ProductName}} and {{productSlug}} placeholders inside fenced code blocks at build time.
-          rehypePlugins: [[rehypeProductName, {productName: productConfig.project.name, productSlug: (productConfig.project.name as string).toLowerCase()}]],
+          rehypePlugins: [
+            [
+              rehypeProductName,
+              {productName: productConfig.project.name, productSlug: productConfig.project.name.toLowerCase()},
+            ],
+          ],
         },
-        blog: false,
+        blog: {
+          path: 'blog',
+          routeBasePath: 'blog',
+          showReadingTime: true,
+          blogSidebarTitle: 'All posts',
+          blogSidebarCount: 'ALL',
+        },
         theme: {
           customCss: './src/css/custom.css',
         },
@@ -135,11 +156,6 @@ const config: Config = {
   ],
 
   themeConfig: {
-    announcementBar: {
-      id: 'docs_wip',
-      content: '🚧 WIP: Docs are under active development and may change frequently.',
-      isCloseable: false,
-    },
     image: 'assets/images/social-card.png',
     colorMode: {
       respectPrefersColorScheme: true,
@@ -151,8 +167,8 @@ const config: Config = {
         src: '/assets/images/logo.svg',
         srcDark: '/assets/images/logo-inverted.svg',
         alt: `${productConfig.project.name} Logo`,
-        height: '40px',
-        width: '101px',
+        height: '40',
+        width: '150',
       },
       items: [
         {
@@ -185,15 +201,19 @@ const config: Config = {
           label: 'SDKs',
         },
         {
+          to: '/blog',
+          label: 'Blog',
+          position: 'right',
+        },
+        {
           label: 'Resources',
           type: 'dropdown',
           position: 'right',
           className: 'navbar__link--dropdown',
           items: [
             {
-              type: 'doc',
-              docId: 'releases',
               label: 'Releases',
+              href: '/docs/next/releases',
               className: 'navbar-resources__releases',
             },
             {
@@ -231,7 +251,7 @@ const config: Config = {
               value: '<hr style="margin: 0.3rem 0;">',
             },
             {
-              href: 'https://github.com/asgardeo/thunder/issues/1912',
+              href: 'https://github.com/thunder-id/thunderid/issues/1912',
               label: '🌍 Help translate',
             },
           ],

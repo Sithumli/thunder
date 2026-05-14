@@ -23,19 +23,20 @@ import (
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 
-	"github.com/asgardeo/thunder/internal/authn/assert"
-	"github.com/asgardeo/thunder/internal/authn/common"
-	"github.com/asgardeo/thunder/internal/authn/github"
-	"github.com/asgardeo/thunder/internal/authn/google"
-	"github.com/asgardeo/thunder/internal/authn/oauth"
-	"github.com/asgardeo/thunder/internal/authn/oidc"
-	"github.com/asgardeo/thunder/internal/authn/otp"
-	"github.com/asgardeo/thunder/internal/authn/passkey"
-	"github.com/asgardeo/thunder/internal/authn/reactsdk"
-	authnprovidermgr "github.com/asgardeo/thunder/internal/authnprovider/manager"
-	"github.com/asgardeo/thunder/internal/idp"
-	"github.com/asgardeo/thunder/internal/system/jose/jwt"
-	"github.com/asgardeo/thunder/internal/system/middleware"
+	"github.com/thunder-id/thunderid/internal/authn/assert"
+	"github.com/thunder-id/thunderid/internal/authn/common"
+	"github.com/thunder-id/thunderid/internal/authn/github"
+	"github.com/thunder-id/thunderid/internal/authn/google"
+	"github.com/thunder-id/thunderid/internal/authn/magiclink"
+	"github.com/thunder-id/thunderid/internal/authn/oauth"
+	"github.com/thunder-id/thunderid/internal/authn/oidc"
+	"github.com/thunder-id/thunderid/internal/authn/otp"
+	"github.com/thunder-id/thunderid/internal/authn/passkey"
+	"github.com/thunder-id/thunderid/internal/authn/reactsdk"
+	authnprovidermgr "github.com/thunder-id/thunderid/internal/authnprovider/manager"
+	"github.com/thunder-id/thunderid/internal/idp"
+	"github.com/thunder-id/thunderid/internal/system/jose/jwt"
+	"github.com/thunder-id/thunderid/internal/system/middleware"
 )
 
 // Initialize initializes the authentication service and registers its routes.
@@ -48,6 +49,7 @@ func Initialize(
 	authAssertGen assert.AuthAssertGeneratorInterface,
 	passkeySvc passkey.PasskeyServiceInterface,
 	otpSvc otp.OTPAuthnServiceInterface,
+	magicLinkSvc magiclink.MagicLinkAuthnServiceInterface,
 	oauthSvc oauth.OAuthAuthnServiceInterface,
 	oidcSvc oidc.OIDCAuthnServiceInterface,
 	googleSvc google.GoogleOIDCAuthnServiceInterface,
@@ -85,6 +87,10 @@ func Initialize(
 		Factors:       []common.AuthenticationFactor{common.FactorKnowledge},
 		AssociatedIDP: idp.IDPTypeGoogle,
 	})
+	common.RegisterAuthenticator(common.AuthenticatorMeta{
+		Name:    common.AuthenticatorMagicLink,
+		Factors: []common.AuthenticationFactor{common.FactorPossession},
+	})
 
 	authnService := newAuthenticationService(
 		idpSvc,
@@ -92,6 +98,7 @@ func Initialize(
 		authAssertGen,
 		authnProvider,
 		otpSvc,
+		magicLinkSvc,
 		oauthSvc,
 		oidcSvc,
 		googleSvc,
@@ -191,6 +198,6 @@ func registerRoutes(mux *http.ServeMux, authnHandler *authenticationHandler) {
 }
 
 // optionsNoContentHandler handles OPTIONS requests by responding with 204 No Content.
-func optionsNoContentHandler(w http.ResponseWriter, r *http.Request) {
+func optionsNoContentHandler(w http.ResponseWriter, _ *http.Request) {
 	w.WriteHeader(http.StatusNoContent)
 }

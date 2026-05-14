@@ -28,13 +28,13 @@ import (
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
 
-	inboundmodel "github.com/asgardeo/thunder/internal/inboundclient/model"
-	oauth2const "github.com/asgardeo/thunder/internal/oauth/oauth2/constants"
-	"github.com/asgardeo/thunder/internal/oauth/oauth2/model"
-	"github.com/asgardeo/thunder/internal/resource"
-	"github.com/asgardeo/thunder/internal/system/config"
-	"github.com/asgardeo/thunder/internal/system/error/serviceerror"
-	"github.com/asgardeo/thunder/tests/mocks/resourcemock"
+	inboundmodel "github.com/thunder-id/thunderid/internal/inboundclient/model"
+	oauth2const "github.com/thunder-id/thunderid/internal/oauth/oauth2/constants"
+	"github.com/thunder-id/thunderid/internal/oauth/oauth2/model"
+	"github.com/thunder-id/thunderid/internal/resource"
+	"github.com/thunder-id/thunderid/internal/system/config"
+	"github.com/thunder-id/thunderid/internal/system/error/serviceerror"
+	"github.com/thunder-id/thunderid/tests/mocks/resourcemock"
 )
 
 type ServiceTestSuite struct {
@@ -353,6 +353,28 @@ func (s *ServiceTestSuite) TestHandlePAR_ScopesDownscopedAgainstResourceServers(
 	assert.Empty(s.T(), errCode)
 	assert.NotNil(s.T(), resp)
 	assert.Equal(s.T(), []string{"read"}, captured.OAuthParameters.PermissionScopes)
+}
+
+func (s *ServiceTestSuite) TestHandlePAR_AcrValuesPropagated() {
+	store := newParStoreInterfaceMock(s.T())
+	var captured pushedAuthorizationRequest
+	store.EXPECT().Store(mock.Anything, mock.Anything, mock.Anything).
+		Run(func(_ context.Context, req pushedAuthorizationRequest, _ int64) {
+			captured = req
+		}).Return("test-uri", nil)
+
+	svc := newPARService(store, s.newPermissiveResourceMock())
+	app := s.newTestApp()
+	params := s.newValidParams()
+	params[oauth2const.RequestParamAcrValues] = "urn:thunder:acr:password urn:thunder:acr:generated-code"
+
+	resp, errCode, _ := svc.HandlePushedAuthorizationRequest(s.ctx, params, nil, app)
+
+	assert.Empty(s.T(), errCode)
+	assert.NotNil(s.T(), resp)
+	assert.Equal(s.T(),
+		"urn:thunder:acr:password urn:thunder:acr:generated-code",
+		captured.OAuthParameters.AcrValues)
 }
 
 func (s *ServiceTestSuite) TestHandlePAR_NonceTooLong() {

@@ -21,25 +21,27 @@ package entitytype
 import (
 	"net/http"
 
-	"github.com/asgardeo/thunder/internal/consent"
-	oupkg "github.com/asgardeo/thunder/internal/ou"
-	serverconst "github.com/asgardeo/thunder/internal/system/constants"
-	declarativeresource "github.com/asgardeo/thunder/internal/system/declarative_resource"
-	"github.com/asgardeo/thunder/internal/system/middleware"
-	"github.com/asgardeo/thunder/internal/system/sysauthz"
-	"github.com/asgardeo/thunder/internal/system/transaction"
+	"github.com/thunder-id/thunderid/internal/consent"
+	oupkg "github.com/thunder-id/thunderid/internal/ou"
+	"github.com/thunder-id/thunderid/internal/system/cache"
+	serverconst "github.com/thunder-id/thunderid/internal/system/constants"
+	declarativeresource "github.com/thunder-id/thunderid/internal/system/declarative_resource"
+	"github.com/thunder-id/thunderid/internal/system/middleware"
+	"github.com/thunder-id/thunderid/internal/system/sysauthz"
+	"github.com/thunder-id/thunderid/internal/system/transaction"
 )
 
 // Initialize initializes the entity type service and registers its routes.
 func Initialize(
 	mux *http.ServeMux,
+	cacheManager cache.CacheManagerInterface,
 	ouService oupkg.OrganizationUnitServiceInterface,
 	authzService sysauthz.SystemAuthorizationServiceInterface,
 	consentService consent.ConsentServiceInterface,
 ) (EntityTypeServiceInterface, declarativeresource.ResourceExporter, error) {
 	// Step 1: Determine store mode and initialize store and transactioner
 	storeMode := getEntityTypeStoreMode()
-	entityTypeStore, transactioner, err := initializeStore(storeMode)
+	entityTypeStore, transactioner, err := initializeStore(storeMode, cacheManager)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -91,7 +93,11 @@ func Initialize(
 // - If entity_type.store is not specified, falls back to global declarative_resources.enabled:
 //   - If declarative_resources.enabled = true: behaves as IMMUTABLE mode
 //   - If declarative_resources.enabled = false: behaves as MUTABLE mode
-func initializeStore(storeMode serverconst.StoreMode) (entityTypeStoreInterface, transaction.Transactioner, error) {
+func initializeStore(storeMode serverconst.StoreMode, cacheManager cache.CacheManagerInterface) (
+	entityTypeStoreInterface, transaction.Transactioner, error) {
+	entityTypeByIDCache := cache.GetCache[*EntityType](cacheManager, "EntityTypeByIDCache")
+	entityTypeByNameCache := cache.GetCache[*EntityType](cacheManager, "EntityTypeByNameCache")
+
 	switch storeMode {
 	case serverconst.StoreModeComposite:
 		fileStore, _ := newEntityTypeFileBasedStore()
@@ -99,7 +105,8 @@ func initializeStore(storeMode serverconst.StoreMode) (entityTypeStoreInterface,
 		if err != nil {
 			return nil, nil, err
 		}
-		return newCompositeEntityTypeStore(fileStore, dbStore), transactioner, nil
+		cachedDBStore := newCachedBackedEntityTypeStore(dbStore, entityTypeByIDCache, entityTypeByNameCache)
+		return newCompositeEntityTypeStore(fileStore, cachedDBStore), transactioner, nil
 
 	case serverconst.StoreModeDeclarative:
 		fileStore, transactioner := newEntityTypeFileBasedStore()
@@ -110,7 +117,7 @@ func initializeStore(storeMode serverconst.StoreMode) (entityTypeStoreInterface,
 		if err != nil {
 			return nil, nil, err
 		}
-		return newCachedBackedEntityTypeStore(dbStore), transactioner, nil
+		return newCachedBackedEntityTypeStore(dbStore, entityTypeByIDCache, entityTypeByNameCache), transactioner, nil
 	}
 }
 

@@ -26,12 +26,12 @@ import (
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
 
-	"github.com/asgardeo/thunder/internal/flow/common"
-	"github.com/asgardeo/thunder/internal/flow/core"
-	"github.com/asgardeo/thunder/internal/system/config"
-	"github.com/asgardeo/thunder/internal/system/log"
-	"github.com/asgardeo/thunder/tests/mocks/flow/coremock"
-	"github.com/asgardeo/thunder/tests/mocks/flow/executormock"
+	"github.com/thunder-id/thunderid/internal/flow/common"
+	"github.com/thunder-id/thunderid/internal/flow/core"
+	"github.com/thunder-id/thunderid/internal/system/config"
+	"github.com/thunder-id/thunderid/internal/system/log"
+	"github.com/thunder-id/thunderid/tests/mocks/flow/coremock"
+	"github.com/thunder-id/thunderid/tests/mocks/flow/executormock"
 )
 
 type GraphBuilderTestSuite struct {
@@ -660,6 +660,52 @@ func (s *GraphBuilderTestSuite) TestBuildGraph_WithMeta() {
 	mockGraph.EXPECT().GetNodes().Return(
 		map[string]core.NodeInterface{"start": mockStartNode, "prompt": mockPromptNode})
 	// Map iteration order is non-deterministic, so other nodes might be checked before START is found
+	mockStartNode.EXPECT().GetType().Return(common.NodeTypeStart)
+	mockPromptNode.EXPECT().GetType().Return(common.NodeTypePrompt).Maybe()
+	mockStartNode.EXPECT().GetID().Return("start")
+	mockGraph.EXPECT().SetStartNode("start").Return(nil)
+
+	graph, err := s.builder.buildGraph(flow)
+
+	s.NotNil(graph)
+	s.Nil(err)
+}
+
+func (s *GraphBuilderTestSuite) TestBuildGraph_VariantExplicitlySet() {
+	flow := &CompleteFlowDefinition{
+		ID:       "flow-1",
+		Handle:   "test-handle",
+		Name:     "Test Flow",
+		FlowType: common.FlowTypeAuthentication,
+		Nodes: []NodeDefinition{
+			{ID: "start", Type: "START", OnSuccess: "chooser"},
+			{
+				ID:      "chooser",
+				Type:    "PROMPT",
+				Variant: common.NodeVariantLoginOptions,
+			},
+		},
+	}
+
+	mockGraph := coremock.NewGraphInterfaceMock(s.T())
+	mockStartNode := coremock.NewRepresentationNodeInterfaceMock(s.T())
+	mockPromptNode := coremock.NewPromptNodeInterfaceMock(s.T())
+
+	s.mockFlowFactory.EXPECT().CreateGraph(
+		"flow-1", common.FlowTypeAuthentication).Return(mockGraph)
+	s.mockFlowFactory.EXPECT().CreateNode(
+		"start", "START", map[string]interface{}(nil), false, false).Return(mockStartNode, nil)
+	s.mockFlowFactory.EXPECT().CreateNode(
+		"chooser", "PROMPT", map[string]interface{}(nil), false, true).Return(mockPromptNode, nil)
+
+	mockStartNode.EXPECT().SetOnSuccess("chooser")
+	mockPromptNode.EXPECT().SetVariant(common.NodeVariantLoginOptions)
+
+	mockGraph.EXPECT().AddNode(mockStartNode).Return(nil)
+	mockGraph.EXPECT().AddNode(mockPromptNode).Return(nil)
+	mockGraph.EXPECT().AddEdge("start", "chooser").Return(nil)
+	mockGraph.EXPECT().GetNodes().Return(
+		map[string]core.NodeInterface{"start": mockStartNode, "chooser": mockPromptNode})
 	mockStartNode.EXPECT().GetType().Return(common.NodeTypeStart)
 	mockPromptNode.EXPECT().GetType().Return(common.NodeTypePrompt).Maybe()
 	mockStartNode.EXPECT().GetID().Return("start")

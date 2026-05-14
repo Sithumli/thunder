@@ -28,22 +28,23 @@ import (
 	"strings"
 	"time"
 
-	flowcm "github.com/asgardeo/thunder/internal/flow/common"
-	"github.com/asgardeo/thunder/internal/flow/flowexec"
-	"github.com/asgardeo/thunder/internal/inboundclient"
-	inboundmodel "github.com/asgardeo/thunder/internal/inboundclient/model"
-	oauth2const "github.com/asgardeo/thunder/internal/oauth/oauth2/constants"
-	oauth2model "github.com/asgardeo/thunder/internal/oauth/oauth2/model"
-	"github.com/asgardeo/thunder/internal/oauth/oauth2/par"
-	"github.com/asgardeo/thunder/internal/oauth/oauth2/resourceindicators"
-	"github.com/asgardeo/thunder/internal/oauth/oauth2/tokenservice"
-	oauth2utils "github.com/asgardeo/thunder/internal/oauth/oauth2/utils"
-	"github.com/asgardeo/thunder/internal/resource"
-	"github.com/asgardeo/thunder/internal/system/config"
-	"github.com/asgardeo/thunder/internal/system/jose/jwt"
-	"github.com/asgardeo/thunder/internal/system/log"
-	"github.com/asgardeo/thunder/internal/system/transaction"
-	"github.com/asgardeo/thunder/internal/system/utils"
+	flowcm "github.com/thunder-id/thunderid/internal/flow/common"
+	"github.com/thunder-id/thunderid/internal/flow/flowexec"
+	"github.com/thunder-id/thunderid/internal/inboundclient"
+	inboundmodel "github.com/thunder-id/thunderid/internal/inboundclient/model"
+	"github.com/thunder-id/thunderid/internal/oauth/oauth2/authz/requestvalidator"
+	oauth2const "github.com/thunder-id/thunderid/internal/oauth/oauth2/constants"
+	oauth2model "github.com/thunder-id/thunderid/internal/oauth/oauth2/model"
+	"github.com/thunder-id/thunderid/internal/oauth/oauth2/par"
+	"github.com/thunder-id/thunderid/internal/oauth/oauth2/resourceindicators"
+	"github.com/thunder-id/thunderid/internal/oauth/oauth2/tokenservice"
+	oauth2utils "github.com/thunder-id/thunderid/internal/oauth/oauth2/utils"
+	"github.com/thunder-id/thunderid/internal/resource"
+	"github.com/thunder-id/thunderid/internal/system/config"
+	"github.com/thunder-id/thunderid/internal/system/jose/jwt"
+	"github.com/thunder-id/thunderid/internal/system/log"
+	"github.com/thunder-id/thunderid/internal/system/transaction"
+	"github.com/thunder-id/thunderid/internal/system/utils"
 )
 
 // AuthorizeServiceInterface defines the interface for authorization services.
@@ -219,6 +220,7 @@ func (as *authorizeService) handleStandardAuthorizationRequest(
 	claimsLocales := msg.RequestQueryParams[oauth2const.RequestParamClaimsLocales]
 
 	nonce := msg.RequestQueryParams[oauth2const.RequestParamNonce]
+	acrValues := msg.RequestQueryParams[oauth2const.RequestParamAcrValues]
 
 	// Parse the claims parameter if present.
 	var claimsRequest *oauth2model.ClaimsRequest
@@ -280,6 +282,7 @@ func (as *authorizeService) handleStandardAuthorizationRequest(
 		ClaimsRequest:       claimsRequest,
 		ClaimsLocales:       claimsLocales,
 		Nonce:               nonce,
+		AcrValues:           acrValues,
 	}
 
 	// Set the redirect URI if not provided in the request. Invalid cases are already handled at this point.
@@ -304,6 +307,7 @@ func (as *authorizeService) handleStandardAuthorizationRequest(
 func (as *authorizeService) initiateFlowAndStoreRequest(
 	ctx context.Context, oauthParams *oauth2model.OAuthParameters, app *inboundmodel.OAuthClient,
 ) (*AuthorizationInitResult, *AuthorizationError) {
+	effectiveAcrValues := requestvalidator.ResolveACRValues(oauthParams.AcrValues, app.AcrValues)
 	essentialAttributes, optionalAttributes := getRequiredAttributes(
 		oauthParams.StandardScopes, oauthParams.ClaimsRequest, oauthParams.ResponseType, app)
 
@@ -316,8 +320,11 @@ func (as *authorizeService) initiateFlowAndStoreRequest(
 		flowcm.RuntimeKeyRequiredLocales:               oauthParams.ClaimsLocales,
 		flowcm.RuntimeKeyUserAttributesCacheTTLSeconds: fmt.Sprintf("%d", resolveUserAttributesCacheTTL(app)),
 	}
+	if effectiveAcrValues != "" {
+		runtimeData[flowcm.RuntimeKeyRequestedAuthClasses] = effectiveAcrValues
+	}
 	flowInitCtx := &flowexec.FlowInitContext{
-		ApplicationID: app.AppID,
+		ApplicationID: app.ID,
 		FlowType:      string(flowcm.FlowTypeAuthentication),
 		RuntimeData:   runtimeData,
 	}
@@ -355,7 +362,7 @@ func (as *authorizeService) initiateFlowAndStoreRequest(
 	// Build query parameters for login page redirect.
 	queryParams := make(map[string]string)
 	queryParams[oauth2const.AuthID] = identifier
-	queryParams[oauth2const.AppID] = app.AppID
+	queryParams[oauth2const.AppID] = app.ID
 	queryParams[oauth2const.ExecutionID] = executionID
 
 	// Add insecure warning if the redirect URI is not using TLS.
@@ -625,6 +632,15 @@ func decodeAttributesFromAssertion(assertion string) (assertionClaims, time.Time
 			claims.attributeCacheID = strValue
 			continue
 		}
+
+		if key == oauth2const.ClaimCompletedAuthClass {
+			strValue, ok := value.(string)
+			if !ok {
+				return claims, time.Time{}, errors.New("JWT 'completed_auth_class' claim is not a string")
+			}
+			claims.completedACR = strValue
+			continue
+		}
 	}
 
 	return claims, authTime, nil
@@ -689,6 +705,7 @@ func createAuthorizationCode(
 		ClaimsRequest:       authRequestCtx.OAuthParameters.ClaimsRequest,
 		ClaimsLocales:       authRequestCtx.OAuthParameters.ClaimsLocales,
 		Nonce:               authRequestCtx.OAuthParameters.Nonce,
+		CompletedACR:        claims.completedACR,
 	}, nil
 }
 

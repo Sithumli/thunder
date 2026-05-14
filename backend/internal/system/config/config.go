@@ -30,11 +30,13 @@ import (
 	"strings"
 	"time"
 
-	"github.com/asgardeo/thunder/internal/system/cors"
-	"github.com/asgardeo/thunder/internal/system/utils"
+	"github.com/thunder-id/thunderid/internal/system/cors"
+	"github.com/thunder-id/thunderid/internal/system/utils"
 
 	yaml "gopkg.in/yaml.v3"
 )
+
+const schemeHTTPS = "https"
 
 // SecurityConfig holds the security-related configuration details.
 //
@@ -218,6 +220,7 @@ type OAuthConfig struct {
 	AuthorizationCode AuthorizationCodeConfig `yaml:"authorization_code" json:"authorization_code"`
 	DCR               DCRConfig               `yaml:"dcr" json:"dcr"`
 	PAR               PARConfig               `yaml:"par" json:"par"`
+	AuthClass         AuthClassConfig         `yaml:"auth_class" json:"auth_class"`
 	// AllowWildcardRedirectURI enables wildcard pattern matching for redirect URIs.
 	// When false (default), only exact redirect URI matching is performed.
 	AllowWildcardRedirectURI bool `yaml:"allow_wildcard_redirect_uri" json:"allow_wildcard_redirect_uri"`
@@ -451,6 +454,16 @@ type LayoutConfig struct {
 	Store string `yaml:"store" json:"store"`
 }
 
+// TranslationConfig holds the translation service configuration.
+type TranslationConfig struct {
+	// Store defines the storage mode for translations.
+	// Valid values: "mutable", "declarative", "composite" (hybrid mode)
+	// If not specified, falls back to global DeclarativeResources.Enabled setting:
+	//   - If DeclarativeResources.Enabled = true: behaves as "declarative"
+	//   - If DeclarativeResources.Enabled = false: behaves as "mutable"
+	Store string `yaml:"store" json:"store"`
+}
+
 // PasskeyConfig holds the passkey configuration details.
 type PasskeyConfig struct {
 	AllowedOrigins []string `yaml:"allowed_origins" json:"allowed_origins"`
@@ -561,7 +574,7 @@ func (c *TrustedIssuerConfig) Validate() error {
 		return fmt.Errorf("trusted_issuer.jwks_url is not a valid URL: %w", err)
 	}
 	switch parsed.Scheme {
-	case "https":
+	case schemeHTTPS:
 		return nil
 	case "http":
 		host := parsed.Hostname()
@@ -574,6 +587,46 @@ func (c *TrustedIssuerConfig) Validate() error {
 	default:
 		return fmt.Errorf("trusted_issuer.jwks_url must use https scheme (got %q)", parsed.Scheme)
 	}
+}
+
+// AuthClassConfig holds the ACR-AMR mapping configuration.
+type AuthClassConfig struct {
+	Amrs   []string            `yaml:"amrs" json:"amrs"`
+	AcrAMR map[string][]string `yaml:"acr_amr" json:"acr_amr"`
+}
+
+// Validate checks the ACR-AMR mapping for configuration errors.
+func (c *AuthClassConfig) Validate() error {
+	amrSet := make(map[string]struct{}, len(c.Amrs))
+	for _, amr := range c.Amrs {
+		if strings.TrimSpace(amr) == "" {
+			return fmt.Errorf("auth_class: AMR entry must not be empty")
+		}
+		amrSet[amr] = struct{}{}
+	}
+
+	if len(c.AcrAMR) == 0 {
+		return nil
+	}
+
+	for acr, amrKeys := range c.AcrAMR {
+		if strings.TrimSpace(acr) == "" {
+			return fmt.Errorf("auth_class: ACR value must not be empty")
+		}
+		if len(amrKeys) == 0 {
+			return fmt.Errorf("auth_class: ACR %q has an empty AMR list", acr)
+		}
+		for _, amrKey := range amrKeys {
+			if strings.TrimSpace(amrKey) == "" {
+				return fmt.Errorf("auth_class: ACR %q references an empty AMR key", acr)
+			}
+			if _, ok := amrSet[amrKey]; !ok {
+				return fmt.Errorf("auth_class: ACR %q references unknown AMR key %q", acr, amrKey)
+			}
+		}
+	}
+
+	return nil
 }
 
 // Config holds the complete configuration details of the server.
@@ -603,6 +656,7 @@ type Config struct {
 	Role                 RoleConfig             `yaml:"role" json:"role"`
 	Theme                ThemeConfig            `yaml:"theme" json:"theme"`
 	Layout               LayoutConfig           `yaml:"layout" json:"layout"`
+	Translation          TranslationConfig      `yaml:"translation" json:"translation"`
 	Email                EmailConfig            `yaml:"email" json:"email"`
 	Consent              ConsentConfig          `yaml:"consent" json:"consent"`
 }
@@ -653,6 +707,11 @@ func LoadConfig(configPath string, defaultPath string, serverHome string) (*Conf
 		return nil, err
 	}
 	if err := cfg.CORS.Validate(); err != nil {
+		return nil, err
+	}
+
+	// Validate ACR-AMR mapping.
+	if err := cfg.OAuth.AuthClass.Validate(); err != nil {
 		return nil, err
 	}
 
@@ -708,7 +767,7 @@ func GetServerURL(server *ServerConfig) string {
 	if server.PublicURL != "" {
 		return server.PublicURL
 	}
-	scheme := "https"
+	scheme := schemeHTTPS
 	if server.HTTPOnly {
 		scheme = "http"
 	}

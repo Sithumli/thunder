@@ -195,7 +195,7 @@ export default function UserTypesList() {
       <ListingTable.Provider variant="data-grid-card" loading={isLoading}>
         <ListingTable.Container disablePaper>
           <ListingTable.DataGrid
-            rows={userTypesData?.schemas ?? []}
+            rows={userTypesData?.types ?? []}
             columns={columns}
             getRowId={(row) => (row as UserTypeListItem).id}
             onRowClick={(params) => {
@@ -209,8 +209,8 @@ export default function UserTypesList() {
             pageSizeOptions={[5, 10, 25, 50]}
             disableRowSelectionOnClick
             localeText={dataGridLocaleText}
+            autoHeight
             sx={{
-              height: 'auto',
               '& .MuiDataGrid-row': {
                 cursor: 'pointer',
               },

@@ -22,8 +22,8 @@ import (
 	"context"
 	"errors"
 
-	"github.com/asgardeo/thunder/internal/system/cache"
-	"github.com/asgardeo/thunder/internal/system/log"
+	"github.com/thunder-id/thunderid/internal/system/cache"
+	"github.com/thunder-id/thunderid/internal/system/log"
 )
 
 // cachedBackedEntityTypeStore wraps a entityTypeStoreInterface with in-memory caching
@@ -37,10 +37,14 @@ type cachedBackedEntityTypeStore struct {
 }
 
 // newCachedBackedEntityTypeStore creates a cache-backed wrapper around the given store.
-func newCachedBackedEntityTypeStore(store entityTypeStoreInterface) entityTypeStoreInterface {
+func newCachedBackedEntityTypeStore(
+	store entityTypeStoreInterface,
+	entityTypeByIDCache cache.CacheInterface[*EntityType],
+	entityTypeByNameCache cache.CacheInterface[*EntityType],
+) entityTypeStoreInterface {
 	return &cachedBackedEntityTypeStore{
-		schemaByIDCache:   cache.GetCache[*EntityType]("EntityTypeByIDCache"),
-		schemaByNameCache: cache.GetCache[*EntityType]("EntityTypeByNameCache"),
+		schemaByIDCache:   entityTypeByIDCache,
+		schemaByNameCache: entityTypeByNameCache,
 		store:             store,
 		logger: log.GetLogger().With(
 			log.String(log.LoggerKeyComponentName, "CacheBackedEntityTypeStore")),

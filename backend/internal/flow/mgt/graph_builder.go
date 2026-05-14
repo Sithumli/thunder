@@ -23,12 +23,12 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/asgardeo/thunder/internal/flow/common"
-	"github.com/asgardeo/thunder/internal/flow/core"
-	"github.com/asgardeo/thunder/internal/flow/executor"
-	"github.com/asgardeo/thunder/internal/system/error/serviceerror"
-	i18ncore "github.com/asgardeo/thunder/internal/system/i18n/core"
-	"github.com/asgardeo/thunder/internal/system/log"
+	"github.com/thunder-id/thunderid/internal/flow/common"
+	"github.com/thunder-id/thunderid/internal/flow/core"
+	"github.com/thunder-id/thunderid/internal/flow/executor"
+	"github.com/thunder-id/thunderid/internal/system/error/serviceerror"
+	i18ncore "github.com/thunder-id/thunderid/internal/system/i18n/core"
+	"github.com/thunder-id/thunderid/internal/system/log"
 )
 
 // graphBuilderInterface defines the interface for building flow graphs.
@@ -158,6 +158,7 @@ func (b *graphBuilder) processNode(nodeDef *NodeDefinition, allNodes []NodeDefin
 
 	b.configureNodeInputs(nodeDef, node)
 	b.configureNodeMeta(nodeDef, node)
+	b.configureNodeVariant(nodeDef, node)
 	b.configureNodeCondition(nodeDef, node)
 
 	if err := b.configureNodePrompts(nodeDef, node, edges); err != nil {
@@ -282,6 +283,16 @@ func (b *graphBuilder) configureNodeInputs(nodeDef *NodeDefinition, node core.No
 		}
 	}
 	executorNode.SetInputs(inputs)
+}
+
+// configureNodeVariant sets the prompt node's variant from the node definition.
+func (b *graphBuilder) configureNodeVariant(nodeDef *NodeDefinition, node core.NodeInterface) {
+	if nodeDef.Variant == "" {
+		return
+	}
+	if promptNode, ok := node.(core.PromptNodeInterface); ok {
+		promptNode.SetVariant(nodeDef.Variant)
+	}
 }
 
 // configureNodeMeta configures the meta object for a prompt node.

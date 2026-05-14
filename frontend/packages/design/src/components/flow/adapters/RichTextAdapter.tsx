@@ -26,6 +26,15 @@ import type {FlowComponent} from '../../../models/flow';
 /** The meta key used by the server to embed the application's sign-up URL. */
 const SIGN_UP_URL_META_KEY = 'application.sign_up_url';
 
+/** The meta key used by the server to embed the application's sign-in URL. */
+const SIGN_IN_URL_META_KEY = 'application.sign_in_url';
+
+/** The meta key used by the server to embed the application's forgot-password URL. */
+const FORGOT_PASSWORD_URL_META_KEY = 'application.forgot_password_url';
+
+/** The meta key used by the server to embed the application's access URL. */
+const APPLICATION_URL_META_KEY = 'application.url';
+
 const REGISTRATION_ENABLED_META_KEY = 'isRegistrationFlowEnabled';
 
 DOMPurify.removeHooks('afterSanitizeAttributes');
@@ -34,6 +43,7 @@ DOMPurify.addHook('afterSanitizeAttributes', (node: globalThis.Element) => {
     node.setAttribute('rel', 'noopener noreferrer');
   }
 });
+const RECOVERY_ENABLED_META_KEY = 'isRecoveryFlowEnabled';
 
 interface RichTextAdapterProps {
   component: FlowComponent;
@@ -43,12 +53,24 @@ interface RichTextAdapterProps {
    * `application.sign_up_url` but self registration is enabled.
    */
   signUpFallbackUrl?: string;
+  /**
+   * Fallback sign-in URL used when the flow meta does not supply
+   * `application.sign_in_url`.
+   */
+  signInFallbackUrl?: string;
+  /**
+   * Fallback forgot-password URL used when the flow meta does not supply
+   * `application.forgot_password_url` but recovery is enabled.
+   */
+  forgotPasswordFallbackUrl?: string;
 }
 
 export default function RichTextAdapter({
   component,
   resolve,
   signUpFallbackUrl = undefined,
+  signInFallbackUrl = undefined,
+  forgotPasswordFallbackUrl = undefined,
 }: RichTextAdapterProps): JSX.Element | null {
   const {isDesignEnabled} = useDesign();
   const rawLabel = typeof component.label === 'string' ? component.label : undefined;
@@ -79,6 +101,75 @@ export default function RichTextAdapter({
         sx={{mb: 1, textAlign: isDesignEnabled ? 'center' : 'left'}}
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(resolvedLabel, {ADD_ATTR: ['target']})}}
+      />
+    );
+  }
+
+  // When any component label embeds a forgot-password URL meta template, treat it
+  // as the "forgot password link" block. Show it only when recovery is enabled.
+  if (rawLabel && containsMetaTemplate(rawLabel, FORGOT_PASSWORD_URL_META_KEY)) {
+    const isRecoveryEnabled = resolve(`{{meta(${RECOVERY_ENABLED_META_KEY})}}`) === 'true';
+
+    if (!isRecoveryEnabled) {
+      return null;
+    }
+
+    let resolvedLabel = resolve(rawLabel) ?? rawLabel;
+
+    if (containsMetaTemplate(resolvedLabel, FORGOT_PASSWORD_URL_META_KEY) && forgotPasswordFallbackUrl) {
+      resolvedLabel = replaceMetaTemplate(resolvedLabel, FORGOT_PASSWORD_URL_META_KEY, forgotPasswordFallbackUrl);
+    }
+
+    return (
+      <Box
+        className={cn('Flow--richText')}
+        sx={{mb: 1, textAlign: isDesignEnabled ? 'center' : 'left'}}
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(resolvedLabel)}}
+      />
+    );
+  }
+
+  // When any component label embeds a sign-in URL meta template, treat it
+  // as the "sign in link" block.
+  if (rawLabel && containsMetaTemplate(rawLabel, SIGN_IN_URL_META_KEY)) {
+    let resolvedLabel = resolve(rawLabel) ?? rawLabel;
+
+    if (containsMetaTemplate(resolvedLabel, SIGN_IN_URL_META_KEY) && signInFallbackUrl) {
+      resolvedLabel = replaceMetaTemplate(resolvedLabel, SIGN_IN_URL_META_KEY, signInFallbackUrl);
+    }
+
+    return (
+      <Box
+        className={cn('Flow--richText')}
+        sx={{mb: 1, textAlign: isDesignEnabled ? 'center' : 'left'}}
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(resolvedLabel)}}
+      />
+    );
+  }
+
+  // When any component label embeds the application's URL, render it only when
+  // the URL is present. There is no sensible local fallback route for this.
+  if (rawLabel && containsMetaTemplate(rawLabel, APPLICATION_URL_META_KEY)) {
+    const resolvedUrl = resolve(`{{meta(${APPLICATION_URL_META_KEY})}}`);
+
+    if (!resolvedUrl || containsMetaTemplate(resolvedUrl, APPLICATION_URL_META_KEY)) {
+      return null;
+    }
+
+    let resolvedLabel = resolve(rawLabel) ?? rawLabel;
+
+    if (containsMetaTemplate(resolvedLabel, APPLICATION_URL_META_KEY)) {
+      resolvedLabel = replaceMetaTemplate(resolvedLabel, APPLICATION_URL_META_KEY, resolvedUrl);
+    }
+
+    return (
+      <Box
+        className={cn('Flow--richText')}
+        sx={{mb: 1, textAlign: isDesignEnabled ? 'center' : 'left'}}
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(resolvedLabel)}}
       />
     );
   }

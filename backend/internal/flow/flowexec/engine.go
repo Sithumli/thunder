@@ -24,15 +24,15 @@ import (
 	"maps"
 	"time"
 
-	"github.com/asgardeo/thunder/internal/flow/common"
-	"github.com/asgardeo/thunder/internal/flow/core"
-	"github.com/asgardeo/thunder/internal/flow/executor"
-	"github.com/asgardeo/thunder/internal/system/cryptolab"
-	"github.com/asgardeo/thunder/internal/system/error/serviceerror"
-	"github.com/asgardeo/thunder/internal/system/log"
-	"github.com/asgardeo/thunder/internal/system/observability"
-	"github.com/asgardeo/thunder/internal/system/observability/event"
-	sysutils "github.com/asgardeo/thunder/internal/system/utils"
+	"github.com/thunder-id/thunderid/internal/flow/common"
+	"github.com/thunder-id/thunderid/internal/flow/core"
+	"github.com/thunder-id/thunderid/internal/flow/executor"
+	"github.com/thunder-id/thunderid/internal/system/cryptolab"
+	"github.com/thunder-id/thunderid/internal/system/error/serviceerror"
+	"github.com/thunder-id/thunderid/internal/system/log"
+	"github.com/thunder-id/thunderid/internal/system/observability"
+	"github.com/thunder-id/thunderid/internal/system/observability/event"
+	sysutils "github.com/thunder-id/thunderid/internal/system/utils"
 )
 
 // flowEngineInterface defines the interface for the flow engine.
@@ -94,7 +94,7 @@ func (fe *flowEngine) Execute(ctx *EngineContext) (FlowStep, *serviceerror.Servi
 			Context:           ctx.Context,
 			ExecutionID:       ctx.ExecutionID,
 			FlowType:          ctx.FlowType,
-			AppID:             ctx.AppID,
+			EntityID:          ctx.AppID,
 			CurrentAction:     ctx.CurrentAction,
 			Verbose:           ctx.Verbose,
 			NodeInputs:        getNodeInputs(ctx.CurrentNode),
@@ -460,6 +460,11 @@ func (fe *flowEngine) shouldUpdateAuthenticatedUser(engineCtx *EngineContext) bo
 	if engineCtx.FlowType == common.FlowTypeUserOnboarding {
 		return executorInst.GetType() == common.ExecutorTypeAuthentication ||
 			executorInst.GetName() == executor.ExecutorNameProvisioning
+	}
+
+	// For recovery flows, update from authentication executors (e.g., OTP verification).
+	if engineCtx.FlowType == common.FlowTypeRecovery {
+		return executorInst.GetType() == common.ExecutorTypeAuthentication
 	}
 
 	return false
@@ -954,7 +959,7 @@ func publishNodeExecutionStartedEvent(
 		WithData(event.DataKey.NodeType, string(node.GetType())).
 		WithData(event.DataKey.StepNumber, fmt.Sprintf("%d", stepNumber)).
 		WithData(event.DataKey.AttemptNumber, fmt.Sprintf("%d", attemptNumber)).
-		WithData(event.DataKey.AppID, ctx.AppID)
+		WithData(event.DataKey.EntityID, ctx.AppID)
 
 	obsSvc.PublishEvent(evt)
 }
@@ -1027,7 +1032,7 @@ func publishNodeExecutionCompletedEvent(ctx *EngineContext, node core.NodeInterf
 		WithData(event.DataKey.StepNumber, fmt.Sprintf("%d", stepNumber)).
 		WithData(event.DataKey.AttemptNumber, fmt.Sprintf("%d", attemptNumber)).
 		WithData(event.DataKey.DurationMs, fmt.Sprintf("%d", durationMs)).
-		WithData(event.DataKey.AppID, ctx.AppID)
+		WithData(event.DataKey.EntityID, ctx.AppID)
 
 	// Add error or failure details
 	if nodeErr != nil {
@@ -1063,7 +1068,7 @@ func publishFlowStartedEvent(ctx *EngineContext, obsSvc observability.Observabil
 		WithStatus(event.StatusInProgress).
 		WithData(event.DataKey.ExecutionID, ctx.ExecutionID).
 		WithData(event.DataKey.FlowType, string(ctx.FlowType)).
-		WithData(event.DataKey.AppID, ctx.AppID)
+		WithData(event.DataKey.EntityID, ctx.AppID)
 
 	// Add user ID if already authenticated
 	if ctx.AuthenticatedUser.IsAuthenticated && ctx.AuthenticatedUser.UserID != "" {
@@ -1095,7 +1100,7 @@ func publishFlowCompletedEvent(
 		WithStatus(event.StatusSuccess).
 		WithData(event.DataKey.ExecutionID, ctx.ExecutionID).
 		WithData(event.DataKey.FlowType, string(ctx.FlowType)).
-		WithData(event.DataKey.AppID, ctx.AppID).
+		WithData(event.DataKey.EntityID, ctx.AppID).
 		WithData(event.DataKey.DurationMs, fmt.Sprintf("%d", durationMs))
 
 	// Add user ID if authenticated
@@ -1124,7 +1129,7 @@ func publishFlowFailedEvent(ctx *EngineContext, svcErr *serviceerror.ServiceErro
 		WithStatus(event.StatusFailure).
 		WithData(event.DataKey.ExecutionID, ctx.ExecutionID).
 		WithData(event.DataKey.FlowType, string(ctx.FlowType)).
-		WithData(event.DataKey.AppID, ctx.AppID).
+		WithData(event.DataKey.EntityID, ctx.AppID).
 		WithData(event.DataKey.DurationMs, fmt.Sprintf("%d", durationMs))
 
 	// Add error details if available

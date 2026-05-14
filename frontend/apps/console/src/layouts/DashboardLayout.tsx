@@ -33,6 +33,7 @@ import {
   UserMenu,
 } from '@wso2/oxygen-ui';
 import {
+  Bot,
   Building,
   FileDown,
   Group,
@@ -46,10 +47,9 @@ import {
   UsersRound,
   Workflow,
 } from '@wso2/oxygen-ui-icons-react';
-import {useEffect, useMemo, useState, type ReactNode} from 'react';
+import {useMemo, type ReactNode} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Link as NavigateLink, Outlet, useNavigate} from 'react-router';
-import getWelcomeDismissedStorageKey from '../features/welcome/utils/getWelcomeDismissedStorageKey';
 
 function ExportConfigButton(): ReactNode {
   const {t} = useTranslation();
@@ -81,23 +81,10 @@ function ExportConfigButton(): ReactNode {
 
 export default function DashboardLayout(): ReactNode {
   const {signIn, clearSession, discovery} = useAsgardeo();
-  const {config, isTrustedIssuerGenericOidc, getTrustedIssuerClientId, getClientUrl} = useConfig();
+  const {isTrustedIssuerGenericOidc, getTrustedIssuerClientId, getClientUrl} = useConfig();
   const {t} = useTranslation();
   const logger = useLogger();
   const navigate = useNavigate();
-  const [welcomeCheckComplete, setWelcomeCheckComplete] = useState(false);
-
-  useEffect(() => {
-    const productName = config.brand.product_name;
-    const dismissed = sessionStorage.getItem(getWelcomeDismissedStorageKey(productName)) === 'true';
-
-    if (!dismissed) {
-      sessionStorage.setItem(getWelcomeDismissedStorageKey(productName), 'true');
-      void navigate('/welcome', {replace: true});
-    } else {
-      setWelcomeCheckComplete(true);
-    }
-  }, [navigate, config.brand.product_name]);
 
   const handleSignOut = (signOut: () => Promise<void>): void => {
     if (isTrustedIssuerGenericOidc()) {
@@ -162,6 +149,12 @@ export default function DashboardLayout(): ReactNode {
             text: t('navigation:pages.users'),
             icon: <UsersRound />,
             path: '/users',
+          },
+          {
+            id: 'agents',
+            text: t('navigation:pages.agents', 'Agents'),
+            icon: <Bot />,
+            path: '/agents',
           },
           {
             id: 'groups',
@@ -298,7 +291,9 @@ export default function DashboardLayout(): ReactNode {
         </Sidebar>
       </AppShell.Sidebar>
 
-      <AppShell.Main>{welcomeCheckComplete ? <Outlet /> : null}</AppShell.Main>
+      <AppShell.Main>
+        <Outlet />
+      </AppShell.Main>
 
       <AppShell.Footer>
         <Footer>

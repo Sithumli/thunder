@@ -1327,17 +1327,35 @@ describe('ExecutionExtendedProperties', () => {
 
       expect(screen.getByText('flows:core.executions.provisioning.description')).toBeInTheDocument();
       expect(screen.getByText('flows:core.executions.federation.allowCrossOUProvisioning.label')).toBeInTheDocument();
+      expect(
+        screen.getByText('flows:core.executions.provisioning.includeOptionalCredentials.label'),
+      ).toBeInTheDocument();
       expect(screen.getByLabelText('flows:core.executions.provisioning.assignGroup.label')).toBeInTheDocument();
       expect(screen.getByLabelText('flows:core.executions.provisioning.assignRole.label')).toBeInTheDocument();
     });
 
-    it('should call onChange without debounce when checkbox is toggled', () => {
+    it('should call onChange without debounce when allowCrossOUProvisioning checkbox is toggled', () => {
       render(<ExecutionExtendedProperties resource={provisioningResource} onChange={mockOnChange} />);
 
-      const checkbox = screen.getByRole('checkbox');
-      fireEvent.click(checkbox);
+      const checkboxes = screen.getAllByRole('checkbox');
+      const allowCrossOUCheckbox = checkboxes[0];
+      fireEvent.click(allowCrossOUCheckbox);
 
       expect(mockOnChange).toHaveBeenCalledWith('data.properties.allowCrossOUProvisioning', true, provisioningResource);
+    });
+
+    it('should call onChange without debounce when includeOptionalCredentials checkbox is toggled', () => {
+      render(<ExecutionExtendedProperties resource={provisioningResource} onChange={mockOnChange} />);
+
+      const checkboxes = screen.getAllByRole('checkbox');
+      const includeOptionalCredentialsCheckbox = checkboxes[1];
+      fireEvent.click(includeOptionalCredentialsCheckbox);
+
+      expect(mockOnChange).toHaveBeenCalledWith(
+        'data.properties.includeOptionalCredentials',
+        true,
+        provisioningResource,
+      );
     });
 
     it('should call onChange with debounce when assignGroup changes', () => {
@@ -1755,7 +1773,7 @@ describe('ExecutionExtendedProperties', () => {
       expect(container.firstChild).toBeNull();
     });
 
-    it('should return null when executor type is not mapped', () => {
+    it('should render only the inputs editor when executor type is not mapped', () => {
       const resourceWithUnmappedExecutor = {
         id: 'resource-1',
         data: {
@@ -1771,7 +1789,8 @@ describe('ExecutionExtendedProperties', () => {
         <ExecutionExtendedProperties resource={resourceWithUnmappedExecutor} onChange={mockOnChange} />,
       );
 
-      expect(container.firstChild).toBeNull();
+      expect(container.firstChild).not.toBeNull();
+      expect(screen.getByText('flows:core.executions.inputs.title')).toBeInTheDocument();
     });
 
     it('should handle undefined resource gracefully', () => {

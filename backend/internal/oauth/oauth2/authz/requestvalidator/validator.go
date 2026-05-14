@@ -24,9 +24,9 @@ import (
 	"slices"
 	"strings"
 
-	inboundmodel "github.com/asgardeo/thunder/internal/inboundclient/model"
-	"github.com/asgardeo/thunder/internal/oauth/oauth2/constants"
-	"github.com/asgardeo/thunder/internal/oauth/oauth2/pkce"
+	inboundmodel "github.com/thunder-id/thunderid/internal/inboundclient/model"
+	"github.com/thunder-id/thunderid/internal/oauth/oauth2/constants"
+	"github.com/thunder-id/thunderid/internal/oauth/oauth2/pkce"
 )
 
 // ValidateAuthorizationRequestParams validates the common authorization request parameters
@@ -132,4 +132,34 @@ func ValidatePromptParameter(prompt string) (string, string) {
 	}
 
 	return "", ""
+}
+
+// ResolveACRValues returns the effective acr_values: requested ACRs filtered against the
+// app's list, falling back to the app's full list when nothing matches or none were requested.
+func ResolveACRValues(requestedAcrValues string, appAcrValues []string) string {
+	requested := parseACRValues(requestedAcrValues)
+	filtered := make([]string, 0, len(requested))
+	for _, acr := range requested {
+		if slices.Contains(appAcrValues, acr) {
+			filtered = append(filtered, acr)
+		}
+	}
+	if len(filtered) == 0 {
+		return strings.Join(appAcrValues, " ")
+	}
+	return strings.Join(filtered, " ")
+}
+
+// parseACRValues splits acr_values into a deduplicated, order-preserving slice.
+func parseACRValues(acrValues string) []string {
+	parts := strings.Fields(acrValues)
+	seen := make(map[string]bool, len(parts))
+	result := make([]string, 0, len(parts))
+	for _, acr := range parts {
+		if !seen[acr] {
+			seen[acr] = true
+			result = append(result, acr)
+		}
+	}
+	return result
 }

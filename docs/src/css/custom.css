@@ -87,6 +87,7 @@
   /* Sidebar, TOC */
   --doc-sidebar-width: 320px;
   --ifm-toc-border-color: var(--oxygen-palette-divider);
+  --ifm-toc-padding-vertical: 0.8rem;
   --ifm-menu-link-sublist-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m18 15-6-6-6 6'/%3E%3C/svg%3E");
   --ifm-menu-color-background-hover: none;
 
@@ -95,15 +96,19 @@
   /* Body Background */
   --site-background-attachment: fixed;
   --site-background-blend-mode: normal;
-  --site-background: radial-gradient(circle at 65% 30%, rgba(255, 116, 0, 0.1) 10%, rgba(255, 255, 255, 0) 40% 40%), radial-gradient(circle at 15% 50%, rgba(74, 41, 165, 0.1) 1%, rgba(255, 255, 255, 0) 40% 70%), radial-gradient(circle at center, rgba(255, 255, 255, 0.6) 0%, var(--oxygen-palette-background-default) 100%);
+  --site-background: radial-gradient(circle at 65% 30%, rgb(0 127 242 / 8%) 10%, rgba(0, 0, 0, 0) 60% 40%),
+      radial-gradient(circle at 15% 50%, rgb(0 213 255 / 12%) 1%, rgb(0 0 0 / 0%) 40% 70%),
+      radial-gradient(circle at center, rgba(255, 255, 255, 0.6) 0%, var(--oxygen-palette-background-default) 100%);
 }
-
+       
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 
   /* Body Background */
-  --site-background: radial-gradient(circle at 65% 30%, rgb(255 116 0 / 13%) 10%, rgba(0, 0, 0, 0) 60% 40%), radial-gradient(circle at 15% 50%, rgb(132 40 0 / 18%) 1%, rgba(0, 0, 0, 0) 40% 70%), radial-gradient(circle at center, rgba(0, 0, 0, 0.6) 0%, var(--oxygen-palette-background-default) 100%);
+  --site-background: radial-gradient(circle at 15% 50%, rgb(0 136 255 / 13%) 0%, rgb(6 13 26 / 0%) 40% 70%),
+      radial-gradient(circle at 65% 30%, rgb(0 127 242 / 22%) 10%, rgba(6, 13, 26, 0%) 60% 40%),
+      radial-gradient(circle at center, rgba(0, 0, 0, 0.6) 0%, var(--oxygen-palette-background-default) 100%);
 }
 
 /* ------------------------------ Custom CSS -------------------------- */
@@ -136,24 +141,20 @@ h5 {
 /* ------------------------------ Announcement Banner ---------------------- */
 
 .theme-announcement-bar {
-  font-size: 20px;
-
-  --site-announcement-bar-stripe-color1: #e8d7ff;
-  --site-announcement-bar-stripe-color2: #ffe9d1;
-
-  background: repeating-linear-gradient(
-    35deg,
-    var(--site-announcement-bar-stripe-color1),
-    var(--site-announcement-bar-stripe-color1) 20px,
-    var(--site-announcement-bar-stripe-color2) 10px,
-    var(--site-announcement-bar-stripe-color2) 40px
-  );
-  font-weight: bold;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  border-bottom: 1px solid rgb(var(--oxygen-palette-primary-mainChannel) / 0.2);
+  background: rgb(var(--oxygen-palette-primary-mainChannel) / 0.06);
   color: var(--oxygen-palette-text-primary);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 html[data-theme='dark'] .theme-announcement-bar {
-  color: var(--oxygen-palette-common-black);
+  background: rgb(var(--oxygen-palette-primary-mainChannel) / 0.08);
+  border-bottom-color: rgb(var(--oxygen-palette-primary-mainChannel) / 0.18);
+  color: var(--oxygen-palette-text-primary);
 }
 
 
@@ -210,11 +211,6 @@ html[data-page='home'][data-theme='dark'] .navbar .navbar__item {
 html[data-page='home'][data-theme='light'] .navbar .navbar__link,
 html[data-page='home'][data-theme='light'] .navbar .navbar__item {
   color: rgba(0, 0, 0, 0.75) !important;
-}
-
-html[data-page='home'] .navbar .navbar__link:hover,
-html[data-page='home'] .navbar .navbar__link--active {
-  color: #FF6B00 !important;
 }
 
 /* Homepage GitHub icon - dark mode */
@@ -346,7 +342,7 @@ html[data-theme='dark'] .dropdown>.navbar__link:after {
 }
 
 .dropdown:hover>.navbar__link:after {
-  background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' fill='none' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4.293 8.293a1 1 0 0 1 1.414 0L12 14.586l6.293-6.293a1 1 0 1 1 1.414 1.414l-7 7a1 1 0 0 1-1.414 0l-7-7a1 1 0 0 1 0-1.414Z' fill='%23F87643'/%3E%3C/svg%3E") !important;
+  background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' fill='none' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4.293 8.293a1 1 0 0 1 1.414 0L12 14.586l6.293-6.293a1 1 0 1 1 1.414 1.414l-7 7a1 1 0 0 1-1.414 0l-7-7a1 1 0 0 1 0-1.414Z' fill='%234d9ef7'/%3E%3C/svg%3E") !important;
 }
 
 /* Homepage dropdown chevron - dark mode: white */
@@ -518,11 +514,438 @@ html[data-page='home'][data-theme='dark'] .dropdown>.navbar__link:after {
   text-transform: capitalize;
 }
 
-/* ------------------------------ Releases Page TOC Spacing ---------------------- */
+/* ------------------------------ Releases Page ---------------------- */
 
-/* Increase space between main content and right sidebar TOC */
-.theme-doc-toc-desktop {
-  padding-left: 10rem;
+.releases-page main {
+  background-attachment: var(--site-background-attachment);
+  background-image: var(--site-background);
+  background-blend-mode: var(--site-background-blend-mode);
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+.releases-shell {
+  width: 100%;
+  max-width: 1200px;
+  min-width: 0;
+  margin: 0 auto;
+  padding: 4rem 1.5rem 5rem;
+}
+
+.releases-hero {
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+.releases-hero h1 {
+  margin: 0;
+  font-size: clamp(3rem, 7vw, 5.3rem);
+  line-height: 0.95;
+}
+
+.releases-hero p,
+.releases-status,
+.releases-release-header p,
+.releases-footer-note p {
+  color: rgba(17, 24, 39, 0.7);
+}
+
+.releases-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.releases-status {
+  margin: 0 0 2rem;
+}
+
+.releases-latest {
+  margin-bottom: 3rem;
+}
+
+.releases-release-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.releases-version-picker {
+  display: grid;
+  gap: 0.45rem;
+  min-width: min(100%, 260px);
+}
+
+.releases-version-picker span {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(17, 24, 39, 0.62);
+}
+
+.releases-version-picker select {
+  width: 100%;
+  min-height: 2.9rem;
+  padding: 0.75rem 0.95rem;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: 0.95rem;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ifm-font-color-base);
+  font: inherit;
+}
+
+.releases-release-card {
+  width: 100%;
+  min-width: 0;
+  padding: 2rem;
+  border-radius: 1.8rem;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+}
+
+.releases-release-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.releases-release-title-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.releases-release-header h2 {
+  margin: 0;
+  font-size: 2.2rem;
+  line-height: 1.1;
+}
+
+.releases-release-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.28rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(255, 153, 0, 0.12);
+  color: #b76500;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.releases-section-block {
+  margin-top: 2rem;
+}
+
+.releases-download-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1.25rem;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 1.35rem;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(255, 107, 0, 0.14);
+  background:
+    radial-gradient(circle at top right, rgba(255, 140, 0, 0.14), transparent 35%),
+    linear-gradient(180deg, rgba(255, 250, 245, 0.98) 0%, rgba(255, 255, 255, 0.92) 100%);
+}
+
+.releases-download-feature-copy {
+  display: grid;
+  gap: 0.65rem;
+  min-width: 0;
+}
+
+.releases-download-feature-kicker {
+  color: #FF6B00;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.releases-download-feature h3 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.releases-download-feature-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: rgba(17, 24, 39, 0.58);
+  font-size: 0.9rem;
+}
+
+.releases-download-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 2.9rem;
+  padding: 0.65rem 1rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #FF6B00 0%, #FF8C00 100%);
+  color: #fff !important;
+  font-size: 0.92rem;
+  font-weight: 700;
+  text-decoration: none !important;
+}
+
+.releases-download-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(255, 107, 0, 0.24);
+}
+
+.releases-download-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 999px;
+  background: rgba(255, 107, 0, 0.08);
+  color: #FF6B00;
+}
+
+.releases-other-downloads-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.releases-other-downloads-card {
+  padding: 0.95rem 1rem;
+  border-radius: 1.15rem;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: rgba(255, 255, 255, 0.76);
+}
+
+.releases-other-downloads-header {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 0.75rem;
+}
+
+.releases-other-downloads-header h4 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: rgba(17, 24, 39, 0.8);
+}
+
+.releases-other-downloads-os-icon {
+  display: inline-flex;
+  width: 1.3rem;
+  height: 1.3rem;
+  color: rgba(17, 24, 39, 0.72);
+}
+
+.releases-other-downloads-architectures {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.releases-other-downloads-architecture {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.25rem 0.5rem;
+  align-items: center;
+  min-height: 3.7rem;
+  padding: 0.65rem 0.8rem;
+  border-radius: 0.85rem;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  background: rgba(255, 255, 255, 0.62);
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+.releases-other-downloads-architecture-title {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: rgba(17, 24, 39, 0.78);
+  font-size: 0.98rem;
+  font-weight: 600;
+}
+
+.releases-other-downloads-architecture-meta,
+.releases-other-downloads-architecture em {
+  color: rgba(17, 24, 39, 0.52);
+  font-size: 0.82rem;
+}
+
+.releases-other-downloads-architecture em {
+  grid-column: 2 / 3;
+  grid-row: 1 / 3;
+  font-style: normal;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.releases-change-grid {
+  display: grid;
+  gap: 1.4rem;
+  margin-top: 2rem;
+}
+
+.releases-change-group h3 {
+  margin: 0 0 0.7rem;
+  font-size: 1.2rem;
+}
+
+.releases-change-group ul {
+  margin: 0;
+  border-left: 2px solid rgba(255, 107, 0, 0.75);
+  padding-left: 1.35rem;
+}
+
+.releases-change-group li + li {
+  margin-top: 0.55rem;
+}
+
+.releases-change-group li {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.releases-contributors-avatar-group {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.releases-contributors-avatar-group .MuiAvatar-root {
+  width: 2.75rem;
+  height: 2.75rem;
+  font-size: 1rem;
+  border: 2px solid #fff;
+  background: #FF6B00;
+}
+
+.releases-contributor-avatar-link {
+  display: inline-flex;
+  border-radius: 999px;
+  line-height: 0;
+}
+
+.releases-contributor-avatar-link:hover {
+  transform: translateY(-2px);
+}
+
+.releases-footer-note {
+  padding-top: 1rem;
+}
+
+.releases-page .button--primary {
+  background-color: #FF6B00;
+}
+
+.releases-page .button--primary:hover {
+  background-color: #E55A00;
+}
+
+[data-theme='dark'] .releases-hero p,
+[data-theme='dark'] .releases-status,
+[data-theme='dark'] .releases-release-header p,
+[data-theme='dark'] .releases-version-picker span,
+[data-theme='dark'] .releases-footer-note p,
+[data-theme='dark'] .releases-download-feature-meta {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+[data-theme='dark'] .releases-release-card,
+[data-theme='dark'] .releases-other-downloads-card {
+  border-color: rgba(255, 255, 255, 0.08);
+  background: rgba(15, 23, 42, 0.78);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+}
+
+[data-theme='dark'] .releases-other-downloads-architecture {
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+[data-theme='dark'] .releases-other-downloads-header h4,
+[data-theme='dark'] .releases-other-downloads-os-icon,
+[data-theme='dark'] .releases-other-downloads-architecture-title {
+  color: rgba(255, 255, 255, 0.76);
+}
+
+[data-theme='dark'] .releases-other-downloads-architecture-meta,
+[data-theme='dark'] .releases-other-downloads-architecture em {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+[data-theme='dark'] .releases-contributors-avatar-group .MuiAvatar-root {
+  border-color: rgba(15, 23, 42, 0.78);
+}
+
+[data-theme='dark'] .releases-version-picker select {
+  border-color: rgba(255, 255, 255, 0.08);
+  background: rgba(15, 23, 42, 0.78);
+}
+
+[data-theme='dark'] .releases-download-feature {
+  border-color: rgba(255, 140, 0, 0.18);
+  background:
+    radial-gradient(circle at top right, rgba(255, 140, 0, 0.16), transparent 35%),
+    linear-gradient(180deg, rgba(33, 41, 54, 0.96) 0%, rgba(15, 23, 42, 0.88) 100%);
+}
+
+[data-theme='dark'] .releases-release-badge {
+  background: rgba(255, 190, 92, 0.12);
+  color: #ffc170;
+}
+
+[data-theme='dark'] .releases-download-icon {
+  background: rgba(255, 107, 0, 0.14);
+  color: #FF8C00;
+}
+
+@media (max-width: 996px) {
+  .releases-shell {
+    padding: 3rem 1rem 4rem;
+  }
+
+  .releases-change-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .releases-download-feature {
+    grid-template-columns: 1fr;
+  }
+
+  .releases-release-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .releases-download-primary {
+    width: 100%;
+  }
+
+  .releases-release-header {
+    flex-direction: column;
+  }
+
+  .releases-release-header h2 {
+    font-size: 1.8rem;
+  }
 }
 
 /*
@@ -677,4 +1100,23 @@ html[data-page='home'][data-theme='dark'] .dropdown>.navbar__link:after {
 /* When DevOps persona is active, hide non-deployment sections */
 [data-persona='devops'] .sidebar-persona-not-devops {
   display: none;
+}
+
+@media (min-width: 997px) {
+  .container article {
+    max-width: var(--ifm-container-width);
+    margin: 2rem auto;
+  }
+
+  .container article .apis-page {
+    margin: -2rem 0;
+  }
+}
+
+@media (min-width: 997px) {
+  @supports (scrollbar-gutter: stable) {
+    .menu {
+      padding: 3rem 1.5rem 3rem 2rem;
+    }
+  }
 }

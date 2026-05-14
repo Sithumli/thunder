@@ -70,6 +70,10 @@ vi.mock('../layouts/FullScreenLayout', () => ({
   default: () => <div data-testid="full-screen-layout">Full Screen Layout</div>,
 }));
 
+vi.mock('../features/welcome/components/WelcomeRedirect', () => ({
+  default: () => null,
+}));
+
 describe('App', () => {
   it('renders without crashing', () => {
     const {container} = render(<App />);

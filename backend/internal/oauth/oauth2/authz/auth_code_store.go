@@ -24,10 +24,10 @@ import (
 	"errors"
 	"fmt"
 
-	oauth2model "github.com/asgardeo/thunder/internal/oauth/oauth2/model"
-	oauth2utils "github.com/asgardeo/thunder/internal/oauth/oauth2/utils"
-	"github.com/asgardeo/thunder/internal/system/config"
-	"github.com/asgardeo/thunder/internal/system/database/provider"
+	oauth2model "github.com/thunder-id/thunderid/internal/oauth/oauth2/model"
+	oauth2utils "github.com/thunder-id/thunderid/internal/oauth/oauth2/utils"
+	"github.com/thunder-id/thunderid/internal/system/config"
+	"github.com/thunder-id/thunderid/internal/system/database/provider"
 )
 
 const (
@@ -48,6 +48,7 @@ const (
 	jsonDataKeyClaimsRequest       = "claims_request"
 	jsonDataKeyClaimsLocales       = "claims_locales"
 	jsonDataKeyNonce               = "nonce"
+	jsonDataKeyCompletedACR        = "completed_acr"
 )
 
 // AuthorizationCodeStoreInterface defines the interface for managing authorization codes.
@@ -143,6 +144,7 @@ func (acs *authorizationCodeStore) getJSONDataBytes(authzCode AuthorizationCode)
 		jsonDataKeyResource:            authzCode.Resources,
 		jsonDataKeyClaimsLocales:       authzCode.ClaimsLocales,
 		jsonDataKeyNonce:               authzCode.Nonce,
+		jsonDataKeyCompletedACR:        authzCode.CompletedACR,
 	}
 
 	// Include user attributes if present
@@ -268,6 +270,9 @@ func appendAuthzDataJSON(row map[string]interface{}, authzCode *AuthorizationCod
 	}
 	if attributeCacheID, ok := authzData[jsonDataKeyAttributeCacheID].(string); ok {
 		authzCode.AttributeCacheID = attributeCacheID
+	}
+	if completedACR, ok := authzData[jsonDataKeyCompletedACR].(string); ok {
+		authzCode.CompletedACR = completedACR
 	}
 
 	if claimsData, ok := authzData[jsonDataKeyClaimsRequest]; ok && claimsData != nil {
